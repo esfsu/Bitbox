@@ -13,50 +13,51 @@
         <ImageView
             android:id="@+id/playButton"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="16.49"
+            android:layout_height="53dp"
+            android:layout_weight="16.7"
             android:scaleType="fitStart"
             android:src="@drawable/buttonimg2" />
         
         <ImageView
             android:id="@+id/scanDirectoryButton"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="16.49"
+            android:layout_height="53dp"
+            android:layout_weight="16.7"
             android:scaleType="fitStart"
             android:src="@drawable/buttonimg2" />
         
         <ImageView
             android:id="@+id/scanForMissingDataButton"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="16.49"
+            android:layout_height="53dp"
+            android:layout_weight="16.7"
             android:scaleType="fitStart"
             android:src="@drawable/buttonimg2" />
         
         <ImageView
             android:id="@+id/editButton"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="16.49"
-            android:scaleType="fitStart"
+            android:layout_height="53dp"
+            android:layout_weight="16.7"
+            android:scaleType="fitEnd"
             android:src="@drawable/buttonimg2" />
 
         <ImageView
             android:id="@+id/undoButton"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="16.6"
-            android:scaleType="fitStart"
+            android:layout_height="53dp"
+            android:layout_weight="16.50"
+            android:scaleType="fitEnd"
             android:src="@drawable/buttonimg2" />
 
-         <ImageView
-             android:id="@+id/settingsButton"
-             android:layout_width="0dp"
-             android:layout_height="wrap_content"
-             android:layout_weight="16.6"
-             android:scaleType="fitStart"
-             android:src="@drawable/buttonimg2" />
+        <ImageView
+            android:id="@+id/settingsButton"
+            android:layout_width="0dp"
+            android:layout_height="53dp"
+            android:layout_weight="16.50"
+            android:scaleType="fitEnd"
+            android:src="@drawable/buttonimg2" />
+
     </LinearLayout>
 
    <ListView

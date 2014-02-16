@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/label"
+        android:id="@+id/fileNameLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@+id/label"
-        android:textSize="20sp" >
+        android:textSize="15sp"
+        android:paddingBottom="4dp" 
+        android:paddingLeft="4dp"
+        android:paddingTop="4dp">
     </TextView>
 
+     <TextView
+        android:id="@+id/artistLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Artist Name"
+        android:textSize="10sp"
+        android:paddingLeft="4dp"
+        android:paddingBottom="4dp" >
+    </TextView>
 </LinearLayout> 
