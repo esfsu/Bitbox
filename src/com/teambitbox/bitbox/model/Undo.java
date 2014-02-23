@@ -8,11 +8,11 @@ public class Undo
   // ideally we need a list of songs paired with the type of edit
   private String[] songEditList;
   
-  boolean public setUndoList(String[] songList) {
-    return 1; //success
+  public boolean setUndoList(String[] songList) {
+    return true; //success
   }
   
-  boolean public getUndoList(String[] songList) {
-    return 1; //success
+  public boolean getUndoList(String[] songList) {
+    return true; //success
   }
 }

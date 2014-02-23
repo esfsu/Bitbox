@@ -2,23 +2,23 @@
  * Class for handling all file retrieval and saves
  */
 
-import String;
+
 
 public class FileStorageLocal
 {
-  boolean public openFile(Song song, String location) {
-    return 1; //success
+  public boolean openFile(Song song, String location) {
+    return true; //success
   }
   
-  boolean public saveFile(Song song, String location) {
-    return 1; //success
+  public boolean saveFile(Song song, String location) {
+    return true; //success
   }
   
-  boolean public openFile(String name) {
-    return 1; //success
+  public boolean openFile(String name) {
+    return true; //success
   }
   
-  boolean public saveFile(String name) {
-    return 1; //success
+  public boolean saveFile(String name) {
+    return true; //success
   }
 }
