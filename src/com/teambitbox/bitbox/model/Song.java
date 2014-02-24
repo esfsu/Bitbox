@@ -1,6 +1,8 @@
-import java.lang.String;  
 
-public class Song extends Enum
+import java.lang.String; 
+import Enum;
+
+public class Song
 {
     private String name;
 	private String location; 
@@ -140,3 +142,8 @@ public class Song extends Enum
 	public void SetDataFromFile() {
 	}
 }
+
+
+
+
+	
