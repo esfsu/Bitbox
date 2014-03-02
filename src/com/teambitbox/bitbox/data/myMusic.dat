@@ -1,0 +1,38 @@
+<MissingDataList>
+  <Song>
+    <filename value="John Mayer-Your Body is a Wonderland.mp3" />
+    <location value="..\music" />
+    <name value="Your Body is a Wonderland" />
+    <artist value="John Mayer" />
+    <albumArtist value="John Mayer" />
+    <album value="Heavier Things" />
+    <composer value="" />
+    <genre value="Jazz" />
+    <year value="2004" />
+    <trackNum value="12" />
+    <totalTracks value="15" />
+    <discNum value="1" />
+    <totalDiscs value="1" />
+    <explicit value="0" />
+    <bitrate value="128" />
+    <missingData value="composer" />
+  </Song>
+  <Song>
+    <filename value="30 Rock-Muffin Top.mp3" />
+    <location value="..\music" />
+    <name value="Muffin Top" />
+    <artist value="30 Rock" />
+    <albumArtist value="30 Rock" />
+    <album value="" />
+    <composer value="" />
+    <genre value="" />
+    <year value="" />
+    <trackNum value="12" />
+    <totalTracks value="15" />
+    <discNum value="1" />
+    <totalDiscs value="1" />
+    <explicit value="0" />
+    <bitrate value="128" />
+    <missingData value="album,composer,genre,year,trackNum,totalTracks,discNum,totalDiscs" />
+  </Song>
+</MissingDataList>
