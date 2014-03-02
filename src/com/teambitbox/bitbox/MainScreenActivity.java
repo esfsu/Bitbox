@@ -1,6 +1,6 @@
 package com.teambitbox.bitbox;
 
-import com.teambitbox.bitbox.view.Popup;
+import com.teambitbox.bitbox.view.*;
 
 import android.app.Activity;
 import android.content.Context;
@@ -38,43 +38,38 @@ public class MainScreenActivity extends Activity {
     setContentView(R.layout.activity_main_screen);
         
     filelist = (ListView) findViewById(R.id.listView); // initializes ListView
-       
+    scanForMusicOptionButton = (ImageView) findViewById(R.id.scanDirectoryButton); // initializes ListView   
     filelist.setAdapter(new SongListAdapter()); // sets adapter for ListView
 		
     filelist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-	  @Override
-	  public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3){
+	    @Override
+	    public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3){
 	    
       // TODO: Selection of List Item Event  
 	    	
-	  }        
+	    }        
     });
 
     // set ID and Listeners for each button
-    scanForMusicOptionButton.setImageResource(R.id.scanDirectoryButton);
+
     scanForMusicOptionButton.setOnClickListener(new OnClickListener() { 
       @Override
       public void onClick(View arg0) {
-        Popup dialog = new Popup();
-        dialog.createPopup(1, context);
+      PopupFactory.createPopup(PopupType.SCANFORMUSIC, context);
       }
     });
-    
-    scanForMissingDataOptionButton.setImageResource(R.id.scanForMissingDataButton);
+  
+   /* 
     scanForMissingDataOptionButton.setOnClickListener(new OnClickListener() {
       @Override
-      public void onClick(View arg0) {
-        Popup dialog = new Popup();
-        dialog.createPopup(2, context);
+      public void onClick(View arg0) { 
       }
     });
     
-    editOptionButton.setImageResource(R.id.editButton);
+    deitOptionButton.setImageResource(R.id.editButton);
     editOptionButton.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View arg0) {
-        Popup dialog = new Popup();
-        dialog.createPopup(3, context);
       }
     });
     
@@ -82,10 +77,10 @@ public class MainScreenActivity extends Activity {
     undoOptionButton.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View arg0) {
-        Popup dialog = new Popup();
-        dialog.createPopup(4, context);
       }
     });
+  }
+  */
   }
     
   // extends ArrayAdapter Class; this adapter is used to create the Text Views for each list item

@@ -1,61 +1,84 @@
 package com.teambitbox.bitbox.view;
 
-import android.app.Activity;
-import android.app.Dialog;
+import android.app.AlertDialog;
 import android.content.Context;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-public class Popup {
-  
-  
-  public void createPopup(int popupType, Context context){
-  
-    switch(popupType){
-      case 1:
-        ScanForMusicPopup dialog1 = new ScanForMusicPopup(context);
-        break;
-      case 2:
-    	ScanForMissingDataPopup dialog2 = new ScanForMissingDataPopup(context);  
-    	break;
-      case 3:
-      	EditPopup dialog3 = new EditPopup(context);
-        break;
-      case 4:
-      	UndoPopup dialog4 = new UndoPopup(context);  
-      	break; 
-      }
-  }
-}  
-  
-  class ScanForMusicPopup {
-    ScanForMusicPopup(Context context){  
-	  Dialog scanForMusicDialog = new Dialog(context); 
-	  // initialize all widgets in the popup
-    }
-  }
-  
-  class ScanForMissingDataPopup {  
+public abstract class Popup {
+	protected AlertDialog.Builder builder;
+	private Context context;
+	
+	public void setContext(Context c) {
+		context = c;	
+	}
+
+	public Context getContext() {
+		return context;
+	}
+
+	abstract void setLayout();
+	
+	public void showLayout(){
+		builder.show();
+	}
+	
+}
+
+
+
+
+/*
+class ScanForMissingDataPopup implements Popup {  
 	ScanForMissingDataPopup(Context context){  
       Dialog scanForMissingDialog = new Dialog(context);
       // initialize all widgets in the popup
 	}
-  }
+
+	@Override
+	public void setContext(Context context) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setLayout(PopupType popuptype) {
+		// TODO Auto-generated method stub
+		
+	}
+}
   
-  class EditPopup {  
-    EditPopup(Context context){  
+class EditPopup implements Popup {  
+  EditPopup(Context context){  
 	  Dialog settingsDialog = new Dialog(context);
 	  // initialize all widgets in the popup
     }
+
+	@Override
+	public void setContext1(Context context) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setLayout(PopupType popuptype) {
+		// TODO Auto-generated method stub
+		
+	}
   }
       
-  class UndoPopup {  
-    UndoPopup(Context context){  
-      Dialog undoDialog = new Dialog(context);
-      // initialize all widgets in the popup
-    }
+class UndoPopup implements Popup {  
+  UndoPopup(Context context){  
+    Dialog undoDialog = new Dialog(context);
+    // initialize all widgets in the popup
   }
-  
+
+	@Override
+	public void setContext1(Context context) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setLayout(PopupType popuptype) {
+		// TODO Auto-generated method stub
+		
+	}*/
