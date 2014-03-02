@@ -1,4 +1,0 @@
-// sample missing data file, parse by carriage return, split by comma
-// filename, location, songnName, artist, albumArtist, album, composer, genre, year, trackNum, totalTracks, discNum, totalDiscs, explicit, bitrate
-John Mayer-Your Body is a Wonderland.mp3, defaultDir/path/subdir, Your Body is a Wonderland, John Mayer, John Mayer, Heavier Things, , , 199x, 3, 14, 1, 1, 0, 128
-30 Rock-Muffin Top.mp3, dirpath/here, Muffin Top, 30 Rock, 30 Rock, , , , , , , , , 0, 128
