@@ -3,6 +3,15 @@
 
     <string name="app_name">Bitbox</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="yesOption">Yes</string>
+    <string name="noOption">No</string>
+    <string name="scanDirectoryTitle">Scan Directory for Music?</string>
+    <string name="scanning">Scanning...</string>
+    <string-array name="songsFoundListExample">
+        <item>Song Found Example 1</item>
+        <item>Song Found Example 2</item>
+        <item>Song Found Example 3</item>
+        <item>Song Found Example 4</item>
+    </string-array>
 
 </resources>
