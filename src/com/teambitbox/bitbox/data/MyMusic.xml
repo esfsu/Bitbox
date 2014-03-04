@@ -1,4 +1,4 @@
-<MissingDataList>
+<MyMusicList>
   <Song>
     <filename value="John Mayer-Your Body is a Wonderland.mp3" />
     <location value="..\music" />
@@ -35,4 +35,4 @@
     <bitrate value="128" />
     <missingData value="album,composer,genre,year,trackNum,totalTracks,discNum,totalDiscs" />
   </Song>
-</MissingDataList>
+</MyMusicList>
