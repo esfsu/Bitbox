@@ -1,0 +1,7 @@
+<Options>
+  <SortType value="alphaNumeric">
+  <SortOrder value="ascending">
+  <SelectMultiple value="true">
+  <ShowDetailedList value="false">
+  <IsDeviceScanned value="true">
+</Options> 
