@@ -7,14 +7,11 @@ import android.content.Context;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import java.util.ArrayList;
 
 public class SongListView {
   // array of string for file names example
-  private String[] filenames = new String[] { "Android", "iPhone", "WindowsMobile",
-	            "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-	            "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
-	            "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
-	            "Android", "iPhone", "WindowsMobile" };
+  private ArrayList<Song> filenames;
   
   private ListView filelist;
   private Activity currentActivity;
@@ -53,13 +50,20 @@ public class SongListView {
 		return currentContext;
 	}
 	
-	public String[] getFilenames() {
+	public ArrayList<Song> getSongList() {
+	  // TODO: There is a dependency on the file system to load song file list.
+	  // Create sample data of an ArrayList<Song>
+	  
+	  /*
+	   * 
+	   *  for ()
+	  {
+	    Song tempSong = new Song(...);
+	    ArrayList.Put(song);
+	  }
+	  */
 		return filenames;
   }
-
-	private void setFilenames(String[] filenames) {
-		this.filenames = filenames;
-	}
 	
 	public String getElement(int position){
 		return this.filenames[position];
