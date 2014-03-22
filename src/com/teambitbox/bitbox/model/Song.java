@@ -1,5 +1,6 @@
+package com.teambitbox.bitbox;
+
 import java.lang.String;
-import Enum;
 
 public class Song {
   private String fileName;
@@ -10,13 +11,16 @@ public class Song {
   private String album;
   private int duration;
   private String composer;
-  private Enum genre;
+  private Genre genre;
   private int year;
   private int bitrate;
   private int track;
   private int trackTotal;
   private int disc;
   private int discTotal;
+  private int mBitrate;
+  private boolean isExplicit;
+  private String[] missingData;
 
   public Song() {
 
@@ -27,7 +31,7 @@ public class Song {
   }
 
   public void setFileName(String n) {
-    name = n;
+    songName = n;
   }
 
   public String getSongName() {
@@ -35,7 +39,7 @@ public class Song {
   }
 
   public void setSongName(String n) {
-    name = n;
+    songName = n;
   }
 
   public String getLocation() {
@@ -66,7 +70,7 @@ public class Song {
     return album;
   }
 
-  public void setAblum(String al) {
+  public void setAlbum(String al) {
     album = al;
   }
 
@@ -110,11 +114,11 @@ public class Song {
     bitrate = b;
   }
 
-  public int getTrack() {
+  public int getTrackNum() {
     return track;
   }
 
-  public void setTrack(int t) {
+  public void setTrackNum(int t) {
     track = t;
   }
 
@@ -126,11 +130,11 @@ public class Song {
     trackTotal = tt;
   }
 
-  public int getDisc() {
+  public int getDiscNum() {
     return disc;
   }
 
-  public void setDisc(int d) {
+  public void setDiscNum(int d) {
     disc = d;
   }
 
@@ -138,24 +142,30 @@ public class Song {
     return discTotal;
   }
 
-  public void setDiscTotal(in dt) {
+  public void setDiscTotal(int dt) {
     discTotal = dt;
   }
 
-  public Enum getId3Data() {
-    return Id3Option;
+  public void setMissingData(String[] md) {
+    missingData = md;
+  }
+  
+  public String[] getMissingData()
+  {
+    return missingData;
   }
 
-  public void setMissingData() {
+  public void setExplicit(boolean e) {
+    isExplicit = e;
   }
-
-  public void setExplicit(String e) {
-    // TODO Auto-generated method stub
-
+  
+  public boolean getExplicit()
+  {
+    return isExplicit;
   }
-
-  public void setMissingData(String[] missingData) {
-    // TODO Auto-generated method stub
-
+  
+  public void setBitrate(int bitrate)
+  {
+    mBitrate = bitrate;
   }
 }

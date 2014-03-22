@@ -1,21 +1,245 @@
+/*
+* FileEditor
+* A class to contain all file handling
+* 3/2/2014
+* Eric Saunders
+*/
+package com.teambitbox.bitbox;
+
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-import org.xmlpull.v1.XmlPullParser;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.media.MediaMetadataRetriever;
+import android.os.Environment;
 import android.util.Xml;
 
-class FileEditor {
-  ArrayList<Song> songList;
+import java.lang.Integer;
+import java.util.ArrayList;
+import java.util.Map;
 
-  public void parseMyMusicFile() {
-    XmlPullParser parser = Xml.newPullParser();
+import org.xmlpull.v1.XmlPullParser;
+
+class FileEditor {
+  Context mContext;
+  ArrayList<Song> mSongList;
+  Undo mUndoList;
+  
+  private static String DEFAULT_DIR = " Music/";
+  
+  /*
+   * CODE SNIPPETS
+   * This is for Scanner behavior, scans directory and reads metadata
+      MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+      mmr.setDataSource(filePath);
+      Song tempSong;
+      tempSong.setAlbum(mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM));
+      ...
+      ...
+      ...
+   *
+   * Open file for write
+      try {
+        FileOutputStream fOut = openFileOutput(fileName, MODE_PRIVATE);
+        OutputStreamWriter osw = new OutputStreamWriter(fOut);
+        return osw;
+      } catch (FileNotFoundException e) {
+        // TODO
+      }
+   *
+   * OpenFileOnDevice
+    Context fileContext;
+    fileContext.getExternalStoragePublicDirectory(android.os.Environment.DIRECTORY_MUSIC);
+   *
+    private boolean _renameFile(Song song, String newName)
+    {
+      File oldFile = new File(song.getLocation(), song.getFileName());
+      File newFile = new File(song.getLocation(), newName);
+      
+      boolean returnVal = oldFile.renameTo(newFile);
+      if (returnVal)
+      {
+        song.setFileName(newName);
+      }
+      
+      return returnVal;
+    }
+  *
+  *
+    private boolean _moveFile(Song song, String newLoc)
+    {
+      File oldFile = new File(song.getLocation(), song.getFileName());
+      File newFile = new File(newLoc, song.getFileName());
+      
+      boolean returnVal = oldFile.renameTo(newFile);
+      if (returnVal)
+      {
+        song.setLocation(newLoc);
+      }
+      
+      return returnVal;
+    }
+   *
+   */
+  
+  // TODO DOES NOT BELONG IN THIS CLASS!
+  private void _scanDevice()
+  {
+    MediaMetadataRetriever mediaRetriever = new MediaMetadataRetriever();
+    mContext.getFilesDir(Environment.DIRECTORY_MUSIC);
+    //while (songs in list)
+    {
+      File[] mainPath = new File().listRoots();
+      for (File tempFile : mainPath)
+      {
+        FilenameFilter tempFilter;
+        File[] = tempFile.listFiles(tempFilter);
+      }
+      
+      mediaRetriever.setDataSource(filePath);
+      Song tempSong = new Song();
+      String id3Data;
+      String missingData;
+
+      id3Data = mediaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+      if (_validateId3(id3Data))
+        tempSong.setSongName(id3Data);
+      else
+        missingData += id3Data;
+      
+      id3Data = mediaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+      if (_validateId3(id3Data))
+        tempSong.setArtist(id3Data);
+      else
+        missingData += id3Data;
+      
+      id3Data = mediaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUMARTIST);      
+      if (_validateId3(id3Data))
+        tempSong.setAlbumArtist(id3Data);
+      else
+        missingData += id3Data;
+      
+      id3Data = mediaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
+      if (_validateId3(id3Data))
+        tempSong.setAlbum(id3Data);
+      else
+        missingData += id3Data;
+      
+      id3Data = mediaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_COMPOSER);
+      if (_validateId3(id3Data))
+        tempSong.setComposer(id3Data);
+      else
+        missingData += id3Data;
+      
+      id3Data = mediaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_GENRE);
+      if (_validateId3(id3Data))
+        tempSong.setGenre(id3Data);
+      else
+        missingData += id3Data;
+      
+      id3Data = mediaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_NUM_TRACKS);
+      if (_validateId3(id3Data))
+        tempSong.setTrackTotal(Integer.parseInt(id3Data));
+      else
+        missingData += id3Data;
+      
+      id3Data = mediaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_CD_TRACK_NUMBER);
+      if (_validateId3(id3Data))
+        tempSong.setTrackNum(Integer.parseInt(id3Data));
+      else
+        missingData += id3Data;
+      
+      id3Data = mediaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DISC_NUMBER);
+      if (_validateId3(id3Data))
+        tempSong.setDiscNum(Integer.parseInt(id3Data));
+      else
+        missingData += id3Data;
+      
+      id3Data = mediaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_YEAR);
+      if (_validateId3(id3Data))
+        tempSong.setYear(Integer.parseInt(id3Data));
+      else
+        missingData += id3Data;
+      
+      id3Data = mediaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_BITRATE);
+      if (_validateId3(id3Data))
+        tempSong.setBitRate(Integer.parseInt(id3Data));
+      else
+        missingData += id3Data;
+      
+      mSongList.add(tempSong);
+    }
+    
+    mediaRetriever.release();
+    
+    // after scanning, update the 
+    _createMyMusicFile(mSongList);
+  }
+  
+  // Called after Scanner, and for any edits, write the entire file
+  private void _createMyMusicFile(ArrayList<Song> songList)
+  {
     try {
-      FileInputStream fIn = openFileInput("MyMusic.xml");
+      // TODO OPEN FILE
+      FileOutputStream fOut = mContext.openFileOutput("MyMusic.xml", Context.MODE_PRIVATE);
+      OutputStreamWriter osw = new OutputStreamWriter(fOut);
+  
+      String fileContent = "";
+      for (Song item : songList)
+      {
+        fileContent += "  " + Id3.SONG_FIRST.toString() + "\n";
+        fileContent += "    <" + Id3.FILE_NAME.toString() + " value=" + item.getFileName() + " />\n";
+        fileContent += "    <" + Id3.FILE_LOC.toString() + " value=" + item.getLocation() + " />\n";
+        fileContent += "    <" + Id3.SONG_NAME.toString() + " value=" + item.getSongName() + " />\n";
+        fileContent += "    <" + Id3.ARTIST.toString() + " value=" + item.getArtist() + " />\n";
+        fileContent += "    <" + Id3.ALBUM.toString() + " value=" + item.getAlbum() + " />\n";
+        fileContent += "    <" + Id3.ALBUM_ARTIST.toString() + " value=" + item.getAlbumArtist() + " />\n";
+        fileContent += "    <" + Id3.COMPOSER.toString() + " value=" + item.getComposer() + " />\n";
+        fileContent += "    <" + Id3.GENRE.toString() + " value=" + item.getGenre().toString() + " />\n";
+        fileContent += "    <" + Id3.YEAR.toString() + " value=" + item.getYear() + " />\n";
+        fileContent += "    <" + Id3.TRACK_NUM.toString() + " value=" + item.getTrackNum() + " />\n";
+        fileContent += "    <" + Id3.TOTAL_TRACKS.toString() + " value=" + item.getTrackTotal() + " />\n";
+        fileContent += "    <" + Id3.DISC_NUM.toString() + " value=" + item.getDiscNum() + " />\n";
+        fileContent += "    <" + Id3.TOTAL_DISCS.toString() + " value=" + item.getDiscTotal() + " />\n";
+        fileContent += "    <" + Id3.EXPLICIT.toString() + " value=" + item.getExplicit() + " />\n";
+        fileContent += "    <" + Id3.BITRATE.toString() + " value=" + item.getBitRate() + " />\n";
+        
+        fileContent += "    <" + Id3.MISSING.toString() + " value=";
+        for (String missingData : item.getMissingData())
+        {
+          fileContent += missingData + ",";
+        }
+        fileContent += " />\n";
+        
+        fileContent += "  " + Id3.SONG_LAST.toString() + "\n";
+      }
+  
+      osw.write(fileContent);
+      
+      osw.close();
+      fOut.close();
+    } catch (java.io.IOException e) {
+      //do something if an IOException occurs.
+    }
+  }
+    
+  // Internally setup the songList
+  private void _parseMyMusicFile()
+  {
+    XmlPullParser parser = Xml.newPullParser();
+    try
+    {
+      FileInputStream fIn = mContext.openFileInput("MyMusic.xml");
       InputStreamReader isr = new InputStreamReader(fIn);
 
       // auto-detect the encoding from the stream
@@ -24,120 +248,111 @@ class FileEditor {
       Song currentSong = null;
       boolean done = false;
 
-      while (eventType != XmlPullParser.END_DOCUMENT && !done) {
+      while (eventType != XmlPullParser.END_DOCUMENT && !done)
+      {
         String name = null;
-        switch (eventType) {
-        case XmlPullParser.START_DOCUMENT:
-          // move on to the next tag
-          break;
+        switch (eventType)
+        {
+          case XmlPullParser.START_DOCUMENT:
+            // move on to the next tag
+            break;
 
-        case XmlPullParser.START_TAG:
-          name = parser.getName();
-          if (name.equalsIgnoreCase("MyMusic")) {
-            // create a new list container at the root
-            songList = new ArrayList<Song>();
-          } else if (songList != null) {
-            // getting attributes
-            String currentAttribute = "";
-            currentSong = new Song();
-            if (name.equalsIgnoreCase("song")) {
+          case XmlPullParser.START_TAG:
+            name = parser.getName();
+            
+            if (name.equalsIgnoreCase("MyMusic")) {
+              // create a new list container at the root
+              mSongList = new ArrayList<Song>();
+            } else if (mSongList != null) {
+              // getting attributes
+              String currentAttribute = "";
               currentSong = new Song();
+              if (name.equalsIgnoreCase(Id3.SONG_FIRST.toString())) {
+                currentSong = new Song();
+              }
+              else if (name.equalsIgnoreCase(Id3.FILE_NAME.toString())) {
+                currentAttribute = parser.getAttributeValue(0);
+                currentSong.setFileName(currentAttribute);
+              }
+              else if (name.equalsIgnoreCase(Id3.FILE_LOC.toString())) {
+                currentAttribute = parser.getAttributeValue(0);
+                currentSong.setLocation(currentAttribute);
+              }
+              else if (name.equalsIgnoreCase(Id3.SONG_NAME.toString())) {
+                currentAttribute = parser.getAttributeValue(0);
+                currentSong.setSongName(currentAttribute);
+              }
+              else if (name.equalsIgnoreCase(Id3.ARTIST.toString())) {
+                currentAttribute = parser.getAttributeValue(0);
+                currentSong.setArtist(currentAttribute);
+              }
+              else if (name.equalsIgnoreCase(Id3.ALBUM_ARTIST.toString())) {
+                currentAttribute = parser.getAttributeValue(0);
+                currentSong.setAlbumArtist(currentAttribute);
+              }
+  
+              else if (name.equalsIgnoreCase(Id3.ALBUM.toString())) {
+                currentAttribute = parser.getAttributeValue(0);
+                currentSong.setAlbum(currentAttribute);
+              }
+              else if (name.equalsIgnoreCase(Id3.COMPOSER.toString())) {
+                currentAttribute = parser.getAttributeValue(0);
+                currentSong.setComposer(currentAttribute);
+              }
+              else if (name.equalsIgnoreCase(Id3.GENRE.toString())) {
+                currentAttribute = parser.getAttributeValue(0);
+                currentSong.setGenre(currentAttribute);
+              }
+              else if (name.equalsIgnoreCase(Id3.YEAR.toString())) {
+                currentAttribute = parser.getAttributeValue(0);
+                currentSong.setYear(Integer.parseInt(currentAttribute));
+              }
+              else if (name.equalsIgnoreCase(Id3.TRACK_NUM.toString())) {
+                currentAttribute = parser.getAttributeValue(0);
+                currentSong.setTrackNum(Integer.parseInt(currentAttribute));
+              }
+              else if (name.equalsIgnoreCase(Id3.TOTAL_TRACKS.toString())) {
+                currentAttribute = parser.getAttributeValue(0);
+                currentSong.setTrackTotal(Integer.parseInt(currentAttribute));
+              }
+              else if (name.equalsIgnoreCase(Id3.DISC_NUM.toString())) {
+                currentAttribute = parser.getAttributeValue(0);
+                currentSong.setDiscNum(Integer.parseInt(currentAttribute));
+              }
+              else if (name.equalsIgnoreCase(Id3.TOTAL_DISCS.toString())) {
+                currentAttribute = parser.getAttributeValue(0);
+                currentSong.setDiscTotal(Integer.parseInt(currentAttribute));
+              }
+              else if (name.equalsIgnoreCase(Id3.EXPLICIT.toString())) {
+                currentAttribute = parser.getAttributeValue(0);
+                currentSong.setExplicit(Boolean.parseBoolean(currentAttribute));
+              }
+              else if (name.equalsIgnoreCase(Id3.BITRATE.toString())) {
+                currentAttribute = parser.getAttributeValue(0);
+                currentSong.setBitrate(Integer.parseInt(currentAttribute));
+              }
+              else if (name.equalsIgnoreCase(Id3.MISSING.toString())) {
+                // TODO PARSE further?
+                String[] missingData = currentAttribute.split(",");
+                currentSong.setMissingData(missingData);
+              }
             }
+            break;
 
-            else if (name.equalsIgnoreCase("filename")) {
-              currentAttribute = parser.getAttributeValue(0);
-              currentSong.setFilename(currentAttribute);
+          case XmlPullParser.END_TAG:
+            name = parser.getName();
+  
+            if (name.equalsIgnoreCase(Id3.SONG_FIRST.toString()) && currentSong != null)
+            {
+              // add to list at closing song tag
+              mSongList.add(currentSong);
             }
-
-            else if (name.equalsIgnoreCase("location")) {
-              currentAttribute = parser.getAttributeValue(0);
-              currentSong.setLocation(currentAttribute);
+            else if (name.equalsIgnoreCase("MyMusicList"))
+            {
+              // quit if done
+              done = true;
             }
-
-            else if (name.equalsIgnoreCase("songName")) {
-              currentAttribute = parser.getAttributeValue(0);
-              currentSong.setSongName(currentAttribute);
-            }
-
-            else if (name.equalsIgnoreCase("artist")) {
-              currentAttribute = parser.getAttributeValue(0);
-              currentSong.setArtist(currentAttribute);
-            }
-
-            else if (name.equalsIgnoreCase("albumArtist")) {
-              currentAttribute = parser.getAttributeValue(0);
-              currentSong.setAlbumArtist(currentAttribute);
-            }
-
-            else if (name.equalsIgnoreCase("album")) {
-              currentAttribute = parser.getAttributeValue(0);
-              currentSong.setAlbum(currentAttribute);
-            }
-
-            else if (name.equalsIgnoreCase("composer")) {
-              currentAttribute = parser.getAttributeValue(0);
-              currentSong.setComposer(currentAttribute);
-            }
-
-            else if (name.equalsIgnoreCase("genre")) {
-              currentAttribute = parser.getAttributeValue(0);
-              currentSong.setGenre(currentAttribute);
-            }
-
-            else if (name.equalsIgnoreCase("year")) {
-              currentAttribute = parser.getAttributeValue(0);
-              currentSong.setYear(currentAttribute);
-            }
-
-            else if (name.equalsIgnoreCase("trackNum")) {
-              currentAttribute = parser.getAttributeValue(0);
-              currentSong.setTrackNum(currentAttribute);
-            }
-
-            else if (name.equalsIgnoreCase("totalTracks")) {
-              currentAttribute = parser.getAttributeValue(0);
-              currentSong.setTotalTracks(currentAttribute);
-            }
-
-            else if (name.equalsIgnoreCase("discNum")) {
-              currentAttribute = parser.getAttributeValue(0);
-              currentSong.setDiscNum(currentAttribute);
-            }
-
-            else if (name.equalsIgnoreCase("totalDiscs")) {
-              currentAttribute = parser.getAttributeValue(0);
-              currentSong.setTotalDiscs(currentAttribute);
-            }
-
-            else if (name.equalsIgnoreCase("explicit")) {
-              currentAttribute = parser.getAttributeValue(0);
-              currentSong.setExplicit(currentAttribute);
-            }
-
-            else if (name.equalsIgnoreCase("bitrate")) {
-              currentAttribute = parser.getAttributeValue(0);
-              currentSong.setBitrate(currentAttribute);
-            }
-
-            else if (name.equalsIgnoreCase("missingddata")) {
-              // PARSE further
-              String[] missingData = currentAttribute.split(",");
-              currentSong.setMissingData(missingData);
-            }
-          }
-          break;
-
-        case XmlPullParser.END_TAG:
-          name = parser.getName();
-
-          if (name.equalsIgnoreCase("song") && currentSong != null) {
-            // add to list at closing song tag
-            songList.add(currentSong);
-          } else if (name.equalsIgnoreCase("MyMusicList")) {
-            // quit if done
-            done = true;
-          }
-          break;
+            break;
         }
         eventType = parser.next();
       }
@@ -149,122 +364,118 @@ class FileEditor {
       // TODO
     }
   }
-
-  // write a line of XML to an open file
-  private void _writeXmlToFile(Id3 tag, String value, OutputStreamWriter osw) {
-    String fileContent = "";
-    switch (tag) {
-    case SONG_FIRST:
-      fileContent = "  <song>\n";
-      break;
-
-    case SONG_LAST:
-      fileContent = "  </song>\n";
-      break;
-
-    default:
-      fileContent = "    <" + tag.toString() + " value=" + value + " />\n";
-      break;
-    }
-
-    osw.write(fileContent);
+  
+  // For MyMusic screen to get latest data
+  public void getUpdatedSongList()
+  {
+    _parseMyMusicFile();
   }
-
-  private OutputStreamWriter _openFileForWrite(String fileName) {
-    try {
-      FileOutputStream fOut = openFileOutput(fileName, MODE_WORLD_READABLE);
-      OutputStreamWriter osw = new OutputStreamWriter(fOut);
-      
-      return osw;
-    } catch (FileNotFoundException e) {
-      // TODO
-    }
-
-    return 0;
-  }
-
-  private void _closeFileForWrite(OutputStreamWriter osw) {
-    osw.flush();
-    osw.close();
-  }
-
-  public void editFile(Song song, FileOp op, String data) {
-    // TODO
-  }
-
-  private boolean _renameFile(Song song, String newName) {
-    File oldFile = new File(song.getLocation(), song.getFileName());
-    File newFile = new File(song.getLocation(), newName);
     
-    boolean returnVal = oldFile.renameTo(newFile);
-    if (returnVal)
+  // Edit real file and MyMusic Id3 data
+  public void editId3Data(ArrayList<Song> songList, ArrayList<Song> dataList)
+  {
+    mUndoList.setUndoList(songList, FileOp.EDITID3);
+    /*
+    // TODO open MyMusicXml
+    
+    for (int x = 0; x < songList.size(); ++x)
     {
-      song.setFileName(newName);
+      String oldName = songList.get(x).getFileName();
+      String newName = dataList.get(x);
+      if (File.fileName != newName && newName != "")
+      {
+        realFileName.data = newName;
+        
+        MyMusicXML.updateEntry;
+      }
     }
-    
-    return returnVal;
+    */
   }
-
-  private boolean _moveFile(Song song, String newLoc) {
-    File oldFile = new File(song.getLocation(), song.getFileName());
-    File newFile = new File(newLoc, song.getFileName());
+  
+  // Edit real file and MyMusic file name
+  public void renameFile(ArrayList<Song> songList, ArrayList<String> dataList)
+  {
+    mUndoList.setUndoList(songList, FileOp.RENAME);
+    /* TODO open MyMusicXml
     
-    boolean returnVal = oldFile.renameTo(newFile);
-    if (returnVal)
+    for (int x = 0; x < songList.size(); ++x)
     {
-      song.setLocation(newLoc);
+      open realFile
+      realFileName = name
+      MyMusicXML.updateFileName;
     }
+    */
+  }
+  
+  // Edit real file and MyMusic file location
+  public void moveFile(ArrayList<Song> songList, ArrayList<String> dataList)
+  {
+    mUndoList.setUndoList(songList, FileOp.MOVE);
+    /*
+    // TODO open MyMusicXml
     
-    return returnVal;
+    for (int x = 0; x < songList.size(); ++x)
+    {
+      open File
+        realFileName = name
+        MyMusicXML.updateFileName;
+    }
+    */
+  }
+  
+  // Restore real file and MyMusic from Undo list
+  public void restoreFromUndoList()
+  {
+    //mUndoList.getUndoList();
+    
+    /*
+    switch (mUndoList.getFileOp())
+    {
+      case RENAME:
+        for (int x = 0; x < songList.size(); ++x)
+          _renameFile(songList.get(x), dataList.get(x));
+        break;
+        
+      case EDITID3:
+        for (int x = 0; x < songList.size(); ++x)
+          _editId3Data(songList.get(x), dataList.get(x));
+        break;
+        
+      case MOVE:
+        for (int x = 0; x < songList.size(); ++x)
+          _moveFile(songList.get(x), dataList.get(x));
+        break;
+        
+      default:
+        // TODO Throw error
+        break;
+    }
+    */
   }
 
-  private void _setUndoList(ArrayList<Song> undoList) {
-    // must have access to existing persistent Undo item.
-    // access object, set it.
-
+  public void updateSettings(Map<String, ?> values)
+  {
+    SharedPreferences prefsFile = mContext.getSharedPreferences("Settings", Context.MODE_PRIVATE);
+    
+    Editor prefsEditor = prefsFile.edit();
+    prefsEditor.putString(Settings.SORT_TYPE.toString(),     values.get(Settings.SORT_TYPE.toString() ) );
+    prefsEditor.putString(Settings.SORT_ORDER.toString(),    values.get(Settings.SORT_ORDER.toString() ) );
+    prefsEditor.putBoolean(Settings.MULTI_SELECT.toString(), values.get(Settings.MULTI_SELECT.toString() ) );
+    prefsEditor.putBoolean(Settings.SHOW_DETAILS.toString(), values.get(Settings.SHOW_DETAILS.toString() ) );
+    prefsEditor.putBoolean(Settings.IS_SCANNED.toString(),   values.get(Settings.IS_SCANNED.toString() ) );
+    
+    prefsEditor.commit();
+    // TODO should this be closed????
   }
-
-  private void _setSongName(Song song, String value) {
-    song.setSongName(value);
+  
+  public Map<String, ?> getSettings()
+  {
+    SharedPreferences prefsFile = mContext.getSharedPreferences("Settings", Context.MODE_PRIVATE);
+    return prefsFile.getAll();
   }
-
-  private void _setArtist(Song song, String value) {
-    song.setArtist(value);
-  }
-
-  private void _setAlbum(Song song, String value) {
-    song.setAlbum(value);
-  }
-
-  private void _setAlbumArtist(Song song, String value) {
-    song.setAlbumArtist(value);
-  }
-
-  private void _setGenre(Song song, Genre value) {
-    song.setGenre(value);
-  }
-
-  private void _setYear(Song song, String value) {
-    song.setYear(value);
-  }
-
-  private void _setTrack(Song song, String value) {
-    song.setTrack(value);
-  }
-
-  private void _setTrackTotal(Song song, String value) {
-    song.setTrackTotal(value);
-  }
-
-  private void _setExplicit(Song song, String value) {
-    song.setExplicit(value);
-  }
-
-  private void _setDisc(Song song, String value) {
-    song.setDisc(value);
-  }
-
-  private void _setDiscTotal(Song song, String value) {
-    song.setDiscTotal(value);
+  
+  private boolean _validateId3(String id3)
+  {
+    return !(id3 == null || id3 == "" || id3 == " ")
   }
 }

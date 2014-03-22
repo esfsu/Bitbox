@@ -1,7 +1,9 @@
-package com.teambitbox.bitbox.model;
+package com.teambitbox.bitbox;
 
 public enum Id3 {
-  SONG_FIRST("totalDiscs"),
+  SONG_FIRST("song"),
+  FILE_NAME("fileName"),
+  FILE_LOC("fileLocation"),
   SONG_NAME("songName"),
   ARTIST("totalartist"),
   ALBUM_ARTIST("albumArtist"),
@@ -15,6 +17,7 @@ public enum Id3 {
   TOTAL_DISCS("totalDiscs"),
   EXPLICIT("explicit"),
   BITRATE("bitrate"),
+  MISSING("missingData"),
   SONG_LAST("/song");
   
   private Id3(final String name) {
