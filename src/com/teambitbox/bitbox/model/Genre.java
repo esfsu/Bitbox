@@ -1,4 +1,4 @@
-package com.teambitbox.bitbox;
+package com.teambitbox.bitbox.model;
 
 public enum Genre {
   BLUES("Blue"),

@@ -1,4 +1,4 @@
-package com.teambitbox.bitbox;
+package com.teambitbox.bitbox.model;
 
 public enum Settings {
   SORT_TYPE("sortType"),

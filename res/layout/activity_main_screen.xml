@@ -2,71 +2,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainScreenActivity" >
+    tools:context=".MyMusicActivity" >
 
    <LinearLayout
-       android:id="@+id/linearLayout1"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:layout_alignParentLeft="true" >
+      android:id="@+id/linearLayout1"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentLeft="true" >
 
-        <ImageView
-            android:id="@+id/playButton"
-            android:layout_width="0dp"
-            android:layout_height="53dp"
-            android:layout_weight="16.7"
-            android:scaleType="fitStart"
-            android:src="@drawable/buttonimg2" />
-        
-        <ImageView
-            android:id="@+id/scanDirectoryButton"
-            android:layout_width="0dp"
-            android:layout_height="53dp"
-            android:layout_weight="16.7"
-            android:scaleType="fitStart"
-            android:src="@drawable/buttonimg2" />
-        
-        <ImageView
-            android:id="@+id/scanForMissingDataButton"
-            android:layout_width="0dp"
-            android:layout_height="53dp"
-            android:layout_weight="16.7"
-            android:scaleType="fitStart"
-            android:src="@drawable/buttonimg2" />
-        
-        <ImageView
-            android:id="@+id/editButton"
-            android:layout_width="0dp"
-            android:layout_height="53dp"
-            android:layout_weight="16.7"
-            android:scaleType="fitEnd"
-            android:src="@drawable/buttonimg2" />
+         <ImageView
+             android:id="@+id/playButton"
+             android:layout_width="0dp"
+             android:layout_height="53dp"
+             android:layout_weight="20"
+             android:src="@drawable/buttonimgtest" />
 
-        <ImageView
-            android:id="@+id/undoButton"
-            android:layout_width="0dp"
-            android:layout_height="53dp"
-            android:layout_weight="16.50"
-            android:scaleType="fitEnd"
-            android:src="@drawable/buttonimg2" />
+         <ImageView
+             android:id="@+id/undoButton"
+             android:layout_width="0dp"
+             android:layout_height="53dp"
+             android:layout_weight="20"
+             android:src="@drawable/buttonimgtest" />
 
-        <ImageView
-            android:id="@+id/settingsButton"
-            android:layout_width="0dp"
-            android:layout_height="53dp"
-            android:layout_weight="16.50"
-            android:scaleType="fitEnd"
-            android:src="@drawable/buttonimg2" />
+         <ImageView
+             android:id="@+id/scanDirectoryButton"
+             android:layout_width="0dp"
+             android:layout_height="53dp"
+             android:layout_weight="20"
+             android:src="@drawable/buttonimgtest" />
 
+         <ImageView
+             android:id="@+id/scanForMissingDataButton"
+             android:layout_width="0dp"
+             android:layout_height="53dp"
+             android:layout_weight="20"
+             android:src="@drawable/buttonimgtest" />
+
+         <ImageView
+             android:id="@+id/editButton"
+             android:layout_width="0dp"
+             android:layout_weight="20"
+             android:layout_height="53dp"
+             android:src="@drawable/buttonimgtest" />
     </LinearLayout>
 
    <ListView
-       android:id="@+id/listView"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:layout_alignParentBottom="true"
-       android:layout_alignParentLeft="true"
-       android:layout_below="@+id/linearLayout1" >
+      android:id="@+id/listView"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentLeft="true"
+      android:layout_below="@+id/linearLayout1"
+      android:choiceMode="singleChoice" >
    </ListView>
 
 </RelativeLayout>

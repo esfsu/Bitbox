@@ -1,72 +1,78 @@
 package com.teambitbox.bitbox.view;
 
+import java.util.ArrayList;
+
 import com.teambitbox.bitbox.R;
+import com.teambitbox.bitbox.SongStub;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import java.util.ArrayList;
 
-public class SongListView {
-  // array of string for file names example
-  private ArrayList<Song> filenames;
+// This class contains the ListView object where the songs will be displayed.
+
+public class SongListView extends CustomView{
   
-  private ListView filelist;
-  private Activity currentActivity;
-  private Context currentContext;
- 
-  public SongListView(Activity currentActivity, Context currentContext){
-	  setContext(currentContext);
-	  setActivity(currentActivity);
-	  filelist = (ListView) currentActivity.findViewById(R.id.listView); // initializes ListView
-    filelist.setAdapter(new SongListAdapter(this)); // sets adapter for ListView
-    
-    filelist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+	private ArrayList<SongStub> songList; // song list 
+  private ListView songListWidget; // ListView widget that displays the songs.
+  private SongListAdapter songListAdapter; // test object for SongListAdapter
+
+	public SongListView(Activity currentActivity, Context currentContext, ArrayList<SongStub> songList){
+	  setSongArrayList(songList);
+  	setCurrentContext(currentContext);
+	  setCurrentActivity(currentActivity);
+	  songListWidget = (ListView) currentActivity.findViewById(R.id.listView); // initializes ListView
+	  songListAdapter = new SongListAdapter(this); // initialize adapter
+	  
+	  songListAdapter.setNotifyOnChange(true);
+	  songListWidget.setAdapter(songListAdapter); // sets adapter for ListView
+    songListWidget.setTextFilterEnabled(true); // used for filtering text in the ListView
+   
+    songListWidget.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 	    @Override
 	    public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3){
 	    
       // TODO: Selection of List Item Event  
-	    	
+	    	 songListAdapter.setSelectedPosition(position); // sets the position of the object for the last selected object
+	    	 Log.d("SongListView", "adapter positon" + songListAdapter.getSelectedPosition()); // this is used for debugging purposes
 	    }        
     });
     
   }
- 
-  private void setActivity(Activity a){
-		this.currentActivity = a;	
-	}
+	
+  // returns the Song ArrayList
+	public ArrayList<SongStub> getSongArrayList(){
+		return songList; // to be replaced with "return ArrayList<Song>;"
+  }
 
-	public Activity getActivity(){
-		return currentActivity;
+	// sets the Song ArrayList for this object
+	private void setSongArrayList(ArrayList<SongStub> sl/*ArrayList<Song> sl*/){
+		this.songList = sl; // to be replaced with "this.songList = sl;"
 	}
 	
-	private void setContext(Context c){
-		this.currentContext = c;	
-	}
-
-	public Context getContext() {
-		return currentContext;
+	// gets individual Song
+	public SongStub getSong(int position){
+		return this.songList.get(position); // to be replaced with "this.songList[position];"
 	}
 	
-	public ArrayList<Song> getSongList() {
-	  // TODO: There is a dependency on the file system to load song file list.
-	  // Create sample data of an ArrayList<Song>
-	  
-	  /*
-	   * 
-	   *  for ()
-	  {
-	    Song tempSong = new Song(...);
-	    ArrayList.Put(song);
-	  }
-	  */
-		return filenames;
+	// returns the ListView widget 
+	public ListView getSongListWidget() {
+			return songListWidget;
+  }
+  
+  //	sets the ListView widget for this class
+  public void setSongListWidget(ListView songListWidget) {
+			this.songListWidget = songListWidget;
   }
 	
-	public String getElement(int position){
-		return this.filenames[position];
+  public SongListAdapter getSongListAdapter() {
+		return songListAdapter;
 	}
-	
+
+	public void setAdapterTest(SongListAdapter songListAdapter) {
+		this.songListAdapter = songListAdapter;
+	}
 }

@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-</LinearLayout>
+
+    <Button
+        android:id="@+id/editFileNameOptionButton"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="27dp"
+        android:layout_toLeftOf="@+id/button3"
+        android:text="Edit Filename\n Button" />
+
+    <Button
+        android:id="@+id/editIdTagOptionButton"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="Edit ID3 Tags\n Button" />
+
+    <Button
+        android:id="@+id/moveFileOptionButton"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editIdTagOptionButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="61dp"
+        android:text="Move File\n Button" />
+
+</RelativeLayout>

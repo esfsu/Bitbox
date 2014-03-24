@@ -4,7 +4,7 @@
 * 3/2/2014
 * Eric Saunders
 */
-package com.teambitbox.bitbox;
+package com.teambitbox.bitbox.model;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import org.xmlpull.v1.XmlPullParser;
+
 
 class FileEditor {
   Context mContext;
@@ -452,7 +453,7 @@ class FileEditor {
     }
     */
   }
-
+/*
   public void updateSettings(Map<String, ?> values)
   {
     SharedPreferences prefsFile = mContext.getSharedPreferences("Settings", Context.MODE_PRIVATE);
@@ -466,7 +467,7 @@ class FileEditor {
     
     prefsEditor.commit();
     // TODO should this be closed????
-  }
+  }*/
   
   public Map<String, ?> getSettings()
   {
@@ -476,6 +477,6 @@ class FileEditor {
   
   private boolean _validateId3(String id3)
   {
-    return !(id3 == null || id3 == "" || id3 == " ")
+    return !(id3 == null || id3 == "" || id3 == " ");
   }
 }
