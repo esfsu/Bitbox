@@ -3,7 +3,7 @@ package com.teambitbox.bitbox.view;
 import java.util.ArrayList;
 
 import com.teambitbox.bitbox.R;
-import com.teambitbox.bitbox.SongStub;
+import com.teambitbox.bitbox.model.Song;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,65 +14,78 @@ import android.widget.ListView;
 
 // This class contains the ListView object where the songs will be displayed.
 
-public class SongListView extends CustomView{
-  
-	private ArrayList<SongStub> songList; // song list 
-  private ListView songListWidget; // ListView widget that displays the songs.
-  private SongListAdapter songListAdapter; // test object for SongListAdapter
+public class SongListView extends CustomView {
 
-	public SongListView(Activity currentActivity, Context currentContext, ArrayList<SongStub> songList){
-	  setSongArrayList(songList);
-  	setCurrentContext(currentContext);
-	  setCurrentActivity(currentActivity);
-	  songListWidget = (ListView) currentActivity.findViewById(R.id.listView); // initializes ListView
-	  songListAdapter = new SongListAdapter(this); // initialize adapter
-	  
-	  songListAdapter.setNotifyOnChange(true);
-	  songListWidget.setAdapter(songListAdapter); // sets adapter for ListView
-    songListWidget.setTextFilterEnabled(true); // used for filtering text in the ListView
-   
-    songListWidget.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-	    @Override
-	    public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3){
-	    
-      // TODO: Selection of List Item Event  
-	    	 songListAdapter.setSelectedPosition(position); // sets the position of the object for the last selected object
-	    	 Log.d("SongListView", "adapter positon" + songListAdapter.getSelectedPosition()); // this is used for debugging purposes
-	    }        
-    });
-    
-  }
-	
-  // returns the Song ArrayList
-	public ArrayList<SongStub> getSongArrayList(){
-		return songList; // to be replaced with "return ArrayList<Song>;"
-  }
+	// song list
+	private ArrayList<Song> mSongList;
+	// ListView widget that displays the songs.
+	private ListView mSongListWidget;
+	// test object for SongListAdapter
+	private SongListAdapter mSongListAdapter;
+
+	public SongListView(Activity currentActivity, Context currentContext,
+			ArrayList<Song> songList) {
+		setSongArrayList(songList);
+		setCurrentContext(currentContext);
+		setCurrentActivity(currentActivity);
+		// initializes ListView
+		mSongListWidget = (ListView) currentActivity.findViewById(R.id.listView);
+		// initialize adapter
+		mSongListAdapter = new SongListAdapter(this);
+
+		mSongListAdapter.setNotifyOnChange(true);
+		// sets adapter for ListView
+		mSongListWidget.setAdapter(mSongListAdapter);
+		// used for filtering text in the ListView
+		mSongListWidget.setTextFilterEnabled(true);
+
+		mSongListWidget.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+					@Override
+					public void onItemClick(AdapterView<?> arg0, View view,
+							int position, long arg3) {
+
+						// TODO: Selection of List Item Event
+						// sets the position of the object for the last selected object
+					  mSongListAdapter.setSelectedPosition(position);
+						// this is used for debugging purposes
+						Log.d("SongListView", "adapter positon"
+								+ mSongListAdapter.getSelectedPosition());
+					}
+				});
+
+	}
+
+	// returns the Song ArrayList
+	public ArrayList<Song> getSongArrayList() {
+		// to be replaced with "return ArrayList<Song>;"
+		return mSongList;
+	}
 
 	// sets the Song ArrayList for this object
-	private void setSongArrayList(ArrayList<SongStub> sl/*ArrayList<Song> sl*/){
-		this.songList = sl; // to be replaced with "this.songList = sl;"
+	private void setSongArrayList(ArrayList<Song> sl) {
+		mSongList = sl;
 	}
-	
+
 	// gets individual Song
-	public SongStub getSong(int position){
-		return this.songList.get(position); // to be replaced with "this.songList[position];"
+	public Song getSong(int position) {
+		return mSongList.get(position);
 	}
-	
-	// returns the ListView widget 
+
+	// returns the ListView widget
 	public ListView getSongListWidget() {
-			return songListWidget;
-  }
-  
-  //	sets the ListView widget for this class
-  public void setSongListWidget(ListView songListWidget) {
-			this.songListWidget = songListWidget;
-  }
-	
-  public SongListAdapter getSongListAdapter() {
-		return songListAdapter;
+		return mSongListWidget;
+	}
+
+	// sets the ListView widget for this class
+	public void setSongListWidget(ListView songListWidget) {
+		mSongListWidget = songListWidget;
+	}
+
+	public SongListAdapter getSongListAdapter() {
+		return mSongListAdapter;
 	}
 
 	public void setAdapterTest(SongListAdapter songListAdapter) {
-		this.songListAdapter = songListAdapter;
+		mSongListAdapter = songListAdapter;
 	}
 }

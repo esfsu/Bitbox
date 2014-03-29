@@ -6,8 +6,6 @@ import java.io.File;
 import android.media.MediaMetadataRetriever;
 import android.util.Log;
 
-
-
 public class SongStub {
 	public MediaMetadataRetriever reader;
 	private String songTitle;

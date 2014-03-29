@@ -9,77 +9,82 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.teambitbox.bitbox.R;
-import com.teambitbox.bitbox.SongStub;
+import com.teambitbox.bitbox.model.Song;
 
 // Extends ArrayAdapter Class. This adapter is used to initialize the rows of the ListView 
+public class SongListAdapter extends ArrayAdapter<Song> {
 
-public class SongListAdapter extends ArrayAdapter<SongStub> {
+  // song widget that will be used for initial value for no item selected.
+  private SongListView currentSongListWidget;
+  private int selectedPosition = -1;
 
-  private SongListView currentSongListWidget; // song widget that will be used for
-  private int selectedPosition = -1; // initial value for no item selected.
-  
   // Adapter Constructor
   public SongListAdapter(SongListView songListView) {
-    super(songListView.getCurrentActivity(), R.layout.row_layout, songListView.getSongArrayList()); // uses parent Constructor
-    this.setCurrentSongList(songListView); // sets the current Song list to be used in this adapter
+    // uses parent Constructor
+    super(songListView.getCurrentActivity(), R.layout.row_layout, songListView.getSongArrayList());
+    // sets the current Song list to be used in this adapter
+    this.setCurrentSongList(songListView);
   }
-	    
-  @Override
-  public View getView(int position, View convertView,ViewGroup parent){
-  
-  	View row = convertView; // view to be returned
-    SongStub song = getItem(position); // gets the Song object from ArrayList in the SongClass depending on its position
-    
-    // inflates the view for the row in the ListView
-    if (row == null) {                          
-      LayoutInflater inflater = (LayoutInflater) getCurrentSongList().getCurrentContext().getSystemService( Context.LAYOUT_INFLATER_SERVICE );
-	    row = inflater.inflate(R.layout.row_layout, null);
-    }
-	  
-    
-    LinearLayout rowLayout = (LinearLayout)row.findViewById(R.id.rowLinearLayout); // initialized entire row layout
-    
-    TextView songNameView = (TextView)row.findViewById(R.id.songNameLabel); // initializes TextView for the song name 
-   
-    // uses Song from the ArrayList in the SongListView class to set the text for each song of the ListView
-    songNameView.setText(song.getSongTitle());
 
-    
-    // change the row color based on selected state
-    if(getSelectedPosition() == position){
-    	rowLayout.setBackgroundColor(Color.CYAN);
-    }else{
-    	rowLayout.setBackgroundColor(Color.WHITE);
+  @Override
+  public View getView(int position, View convertView, ViewGroup parent) {
+
+    // view to be returned
+    View row = convertView;
+    // gets the Song object from ArrayList in the SongClass depending on its position
+    Song song = getItem(position);
+
+    // inflates the view for the row in the ListView
+    if (row == null) {
+      LayoutInflater inflater = (LayoutInflater) getCurrentSongList().getCurrentContext()
+          .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+      row = inflater.inflate(R.layout.row_layout, null);
     }
-    
-    return(row);
-  } 
- 
+
+    // initialized entire row layout
+    LinearLayout rowLayout = (LinearLayout) row.findViewById(R.id.rowLinearLayout);
+
+    // initializes TextView for the song name
+    TextView songNameView = (TextView) row.findViewById(R.id.songNameLabel);
+
+    // uses Song from the ArrayList in the SongListView class to set the
+    // text for each song of the ListView
+    songNameView.setText(song.getSongName());
+
+    // change the row color based on selected state
+    if (getSelectedPosition() == position) {
+      rowLayout.setBackgroundColor(Color.CYAN);
+    } else {
+      rowLayout.setBackgroundColor(Color.WHITE);
+    }
+
+    return (row);
+  }
+
   // sets the SongListView widget to be used for this adapter
-  private void setCurrentSongList(SongListView sl){
-		this.currentSongListWidget = sl;	
-	}
+  private void setCurrentSongList(SongListView sl) {
+    this.currentSongListWidget = sl;
+  }
 
   // returns the SongListView widget used in this adapter
-	private SongListView getCurrentSongList(){
-		return this.currentSongListWidget;
-	}
-	
-	// sets the selected position number to the number of the item selected in the list
-	public void setSelectedPosition(int pos){
-		if (pos != getSelectedPosition()){
-		  this.selectedPosition = pos;
-		}
-		else{
-			this.selectedPosition = -1;
-		}
-		// inform the view of this change
-		notifyDataSetChanged();
-	}
+  private SongListView getCurrentSongList() {
+    return this.currentSongListWidget;
+  }
 
-	// returns the selected item position
-	public int getSelectedPosition(){
-		return this.selectedPosition;
-	}
+  // sets the selected position number to the number of the item selected in
+  // the list
+  public void setSelectedPosition(int pos) {
+    if (pos != getSelectedPosition()) {
+      this.selectedPosition = pos;
+    } else {
+      this.selectedPosition = -1;
+    }
+    // inform the view of this change
+    notifyDataSetChanged();
+  }
+
+  // returns the selected item position
+  public int getSelectedPosition() {
+    return this.selectedPosition;
+  }
 }
-

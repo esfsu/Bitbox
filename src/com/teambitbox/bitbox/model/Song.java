@@ -3,165 +3,166 @@ package com.teambitbox.bitbox.model;
 import java.lang.String;
 
 public class Song {
-  private String fileName;
-  private String songName;
-  private String location;
-  private String artist;
-  private String albumArtist;
-  private String album;
-  private int duration;
-  private String composer;
-  private Genre genre;
-  private int year;
-  private int bitrate;
-  private int track;
-  private int trackTotal;
-  private int disc;
-  private int discTotal;
+  
+  // Member variables
+  private String mFileName;
+  private String mSongName;
+  private String mLocation;
+  private String mArtist;
+  private String mAlbumArtist;
+  private String mAlbum;
+  private int mDuration;
+  private String mComposer;
+  private Genre mGenre;
+  private int mYear;
+  private int mTrackNum;
+  private int mTrackTotal;
+  private int mDiscNum;
+  private int mDiscTotal;
   private int mBitrate;
-  private boolean isExplicit;
-  private String[] missingData;
+  private boolean mIsExplicit;
+  private String[] mMissingData;
 
   public Song() {
 
   }
 
   public String getFileName() {
-    return fileName;
+    return mFileName;
   }
 
-  public void setFileName(String n) {
-    songName = n;
+  public void setFileName(String name) {
+    mSongName = name;
   }
 
   public String getSongName() {
-    return songName;
+    return mSongName;
   }
 
-  public void setSongName(String n) {
-    songName = n;
+  public void setSongName(String name) {
+    mSongName = name;
   }
 
   public String getLocation() {
-    return location;
+    return mLocation;
   }
 
-  public void setLocation(String l) {
-    location = l;
+  public void setLocation(String location) {
+    mLocation = location;
   }
 
   public String getArtist() {
-    return artist;
+    return mArtist;
   }
 
-  public void setArtist(String a) {
-    artist = a;
+  public void setArtist(String artist) {
+    mArtist = artist;
   }
 
   public String getAlbumArtist() {
-    return albumArtist;
+    return mAlbumArtist;
   }
 
-  public void setAlbumArtist(String aa) {
-    albumArtist = aa;
+  public void setAlbumArtist(String albumArtist) {
+    mAlbumArtist = albumArtist;
   }
 
   public String getAlbum() {
-    return album;
+    return mAlbum;
   }
 
-  public void setAlbum(String al) {
-    album = al;
+  public void setAlbum(String album) {
+    mAlbum = album;
   }
 
   public int getDuration() {
-    return duration;
+    return mDuration;
   }
 
-  public void setDuration(int d) {
-    duration = d;
+  public void setDuration(int duration) {
+    mDuration = duration;
   }
 
   public String getComposer() {
-    return composer;
+    return mComposer;
   }
 
-  public void setComposer(String c) {
-    composer = c;
+  public void setComposer(String composer) {
+    mComposer = composer;
   }
 
   public Genre getGenre() {
-    return genre;
+    return mGenre;
   }
 
-  public void setGenre(Genre g) {
-    genre = g;
+  public void setGenre(Genre genre) {
+    mGenre = genre;
   }
 
   public int getYear() {
-    return year;
+    return mYear;
   }
 
-  public void setYear(int y) {
-    year = y;
+  public void setYear(int year) {
+    mYear = year;
   }
 
   public int getBitRate() {
-    return bitrate;
+    return mBitrate;
   }
 
-  public void setBitRate(int b) {
-    bitrate = b;
+  public void setBitRate(int bitrate) {
+    mBitrate = bitrate;
   }
 
   public int getTrackNum() {
-    return track;
+    return mTrackNum;
   }
 
-  public void setTrackNum(int t) {
-    track = t;
+  public void setTrackNum(int trackNum) {
+    mTrackNum = trackNum;
   }
 
   public int getTrackTotal() {
-    return trackTotal;
+    return mTrackTotal;
   }
 
-  public void setTrackTotal(int tt) {
-    trackTotal = tt;
+  public void setTrackTotal(int trackTotal) {
+    mTrackTotal = trackTotal;
   }
 
   public int getDiscNum() {
-    return disc;
+    return mDiscNum;
   }
 
-  public void setDiscNum(int d) {
-    disc = d;
+  public void setDiscNum(int discNum) {
+    mDiscNum = discNum;
   }
 
   public int getDiscTotal() {
-    return discTotal;
+    return mDiscTotal;
   }
 
-  public void setDiscTotal(int dt) {
-    discTotal = dt;
+  public void setDiscTotal(int discTotal) {
+    mDiscTotal = discTotal;
   }
 
-  public void setMissingData(String[] md) {
-    missingData = md;
+  public void setMissingData(String[] missingData) {
+    mMissingData = missingData;
   }
   
   public String[] getMissingData()
   {
-    return missingData;
+    return mMissingData;
   }
 
-  public void setExplicit(boolean e) {
-    isExplicit = e;
+  public void setExplicit(boolean explicit) {
+    mIsExplicit = explicit;
   }
   
   public boolean getExplicit()
   {
-    return isExplicit;
+    return mIsExplicit;
   }
   
   public void setBitrate(int bitrate)

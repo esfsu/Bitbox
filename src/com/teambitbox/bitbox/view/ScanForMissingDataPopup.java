@@ -5,8 +5,7 @@ public class ScanForMissingDataPopup extends Popup {
 	@Override
 	void setLayout() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
 
 }
