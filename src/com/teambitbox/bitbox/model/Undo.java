@@ -12,25 +12,42 @@ import java.util.ArrayList;
 
 public class Undo
 {
-  private ArrayList<Song> songEditList;
+  private ArrayList<Song> mSongList;
+  private ArrayList<Id3Data> mDataList;
+  private String mDataValue;
   private FileOp mOperation;
   
-  // TODO THIS IS NOT OPTIMIZED
-  // Currently sets EVERYTHING, not only selected operations
-  public void setUndoList(ArrayList<Song> dataList, FileOp op)
+  // Set undo list (for Id3 tags)
+  public void setUndoList(ArrayList<Song> songs, ArrayList<Id3Data> data, FileOp op)
   {
-    songEditList = dataList;
-    setOperation(op);
+    mSongList  = songs;
+    mDataList  = data;
+    mOperation = op;
+    mDataValue = "";
+  }
+
+  // Set undo list (for rename and move, since there is only 1 data point)
+  public void setUndoList(ArrayList<Song> songs, String data, FileOp op)
+  {
+    mSongList  = songs;
+    mDataValue = data;
+    mOperation = op;
+    mDataList.clear();
   }
     
-  public ArrayList<Song> getUndoList(ArrayList<Song> songList)
+  public ArrayList<Song> getUndoSongList()
   {
-    return songEditList;
+    return mSongList;
   }
   
-  public void setOperation(FileOp op)
+  public ArrayList<Id3Data> getUndoDataList()
   {
-    mOperation = op;
+    return mDataList;
+  }
+  
+  public String getUndoDataValue()
+  {
+    return mDataValue;
   }
   
   public FileOp getOperation()
