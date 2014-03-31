@@ -1,7 +1,7 @@
 /*
  * FileEditor
  * A class to contain all file handling
- * 3/2/2014
+ * 3/30/2014
  * Eric Saunders
  */
 
@@ -14,6 +14,7 @@ import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import android.os.Environment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -31,20 +32,17 @@ import org.xmlpull.v1.XmlPullParser;
 
 class FileEditor {
   Context mContext;
-  ArrayList<Song> mSongList;
-  Undo mUndoList;
+  ArrayList<Song> mSongList = new ArrayList<Song>();
+  Undo mUndoList = new Undo();
+  
+  public FileEditor(Context context)
+  {
+    mContext = context;
+  }
 
-  //private static String DEFAULT_DIR = "Music/";
+  //private static String DEFAULT_DIR = Environment.DIRECTORY_MUSIC;
 
-  /*
-   * Open file for write try { FileOutputStream fOut = openFileOutput(fileName,
-   * MODE_PRIVATE); OutputStreamWriter osw = new OutputStreamWriter(fOut);
-   * return osw; } catch (FileNotFoundException e) { // TODO }
-   * 
-   * OpenFileOnDevice Context fileContext;
-   * fileContext.getExternalStoragePublicDirectory
-   * (android.os.Environment.DIRECTORY_MUSIC);
-   * 
+  /* 
    * private boolean _renameFile(Song song, String newName) { File oldFile = new
    * File(song.getLocation(), song.getFileName()); File newFile = new
    * File(song.getLocation(), newName);
@@ -65,10 +63,9 @@ class FileEditor {
    * return returnVal; }
    */
 
-  // Called after Scanner, and for any edits, write the entire file
+  // Called after Scanner
   public void createMyMusicFile(ArrayList<Song> songList) {
     try {
-      // TODO OPEN FILE
       FileOutputStream fOut = mContext.openFileOutput("MyMusic.xml", Context.MODE_PRIVATE);
       OutputStreamWriter osw = new OutputStreamWriter(fOut);
 
@@ -85,7 +82,7 @@ class FileEditor {
         fileContent += "    <" + Id3.ALBUM_ARTIST.toString() + " value=" + item.getAlbumArtist()
             + " />\n";
         fileContent += "    <" + Id3.COMPOSER.toString() + " value=" + item.getComposer() + " />\n";
-        fileContent += "    <" + Id3.GENRE.toString() + " value=" + item.getGenre().toString()
+        fileContent += "    <" + Id3.GENRE.toString() + " value=" + item.getGenreString()
             + " />\n";
         fileContent += "    <" + Id3.YEAR.toString() + " value=" + item.getYear() + " />\n";
         fileContent += "    <" + Id3.TRACK_NUM.toString() + " value=" + item.getTrackNum()
@@ -108,7 +105,7 @@ class FileEditor {
       }
 
       osw.write(fileContent);
-
+      osw.flush();
       osw.close();
       fOut.close();
     } catch (java.io.IOException e) {
@@ -195,9 +192,8 @@ class FileEditor {
                 currentSong.setExplicit(Boolean.parseBoolean(currentAttribute));
               } else if (name.equalsIgnoreCase(Id3.BITRATE.toString())) {
                 currentAttribute = parser.getAttributeValue(0);
-                currentSong.setBitrate(Integer.parseInt(currentAttribute));
+                currentSong.setBitRate(Integer.parseInt(currentAttribute));
               } else if (name.equalsIgnoreCase(Id3.MISSING.toString())) {
-                // TODO PARSE further?
                 String[] missingData = currentAttribute.split(",");
                 currentSong.setMissingData(missingData);
               }
@@ -228,8 +224,9 @@ class FileEditor {
   }
 
   // For MyMusic screen to get latest data
-  public void getUpdatedSongList() {
+  public ArrayList<Song> getUpdatedSongList() {
     _parseMyMusicFile();
+    return mSongList;
   }
 
   // Edit real file and MyMusic Id3 data
@@ -370,6 +367,7 @@ class FileEditor {
    return true;
   }
 
+  // TODO THIS OPERATION IS CUT!!!
   // Edit real file and MyMusic file name
   public void renameFile(ArrayList<Song> songList, String value) {
     // make sure we can reverse it

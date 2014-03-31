@@ -7,7 +7,7 @@ public enum FileOp {
   UNDO("undo");
   
   private FileOp(final String name) {
-      this.mName = name;
+      mName = name;
   }
 
   private final String mName;

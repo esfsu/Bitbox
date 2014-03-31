@@ -12,8 +12,8 @@ import java.util.ArrayList;
 
 public class Undo
 {
-  private ArrayList<Song> mSongList;
-  private ArrayList<Id3Data> mDataList;
+  private ArrayList<Song> mSongList = new ArrayList<Song>();
+  private ArrayList<Id3Data> mDataList = new ArrayList<Id3Data>();
   private String mDataValue;
   private FileOp mOperation;
   

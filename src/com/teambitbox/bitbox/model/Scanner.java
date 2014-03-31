@@ -1,34 +1,47 @@
+/*
+ * Scanner
+ * A class to scan for music files on the mobile device
+ * 3/30/2014
+ * Eric Saunders
+ */
+
 package com.teambitbox.bitbox.model;
 
 import java.io.File;
 import java.util.ArrayList;
 
+import android.content.Context;
+import android.os.Environment;
 import android.media.MediaMetadataRetriever;
 import android.util.Log;
 
 public class Scanner {
   
-  // Constants
-  private static String DEFAULT_DIR = "Music/";
-  
   // Member variables
-  ArrayList<Song> mSongList;
-  private FileEditor mEditor = new FileEditor();
+  ArrayList<Song> mSongList = new ArrayList<Song>();
+  private FileEditor mEditor;
+  private MediaMetadataRetriever mMediaReader;
   
+  
+  // Constructor
+  public Scanner(Context context)
+  {
+    mEditor = new FileEditor(context);
+  }
+  
+  // Scans the device for media files, gets data, calls FileEditor to 
+  // create persistent file.
   public ArrayList<Song> scanDevice() {
     try {
-      File songDirectoryFiles = null;
-      File[] paths;
+      File songDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
+      File[] files;
 
-      // create new file
-      songDirectoryFiles = new File(DEFAULT_DIR);
       // returns pathnames for files and directory
-      paths = songDirectoryFiles.listFiles();
+      files = songDirectory.listFiles();
 
-      for (File path : paths) {
-        MediaMetadataRetriever mediaRetriever = new MediaMetadataRetriever();
-        mediaRetriever.setDataSource(path.getAbsolutePath());
-        Log.d("ScannerStub", path.getAbsolutePath()); // debug purposes
+      for (File file : files) {
+        mMediaReader = new MediaMetadataRetriever();
+        mMediaReader.setDataSource(file.getAbsolutePath());
 
         // temporary object to store songs
         Song tempSong = new Song();
@@ -36,95 +49,108 @@ public class Scanner {
         String id3Data = "";
         // collector for id3 data that isn't validated
         String missingData = "";
+        
+        Log.d("File", file.getName());
+        tempSong.setFileName(file.getName());
+        tempSong.setLocation(file.getParent());
 
-        id3Data = mediaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+        id3Data = mMediaReader.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
         if (_validateId3(id3Data))
           tempSong.setSongName(id3Data);
         else
-          missingData += Id3.SONG_NAME.toString();
-
-        id3Data = mediaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+          missingData += Id3.SONG_NAME.toString() + ",";
+        
+        id3Data = mMediaReader.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
         if (_validateId3(id3Data))
           tempSong.setArtist(id3Data);
         else
-          missingData += Id3.ARTIST.toString();
+          missingData += Id3.ARTIST.toString() + ",";
 
-        id3Data = mediaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUMARTIST);
+        id3Data = mMediaReader.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUMARTIST);
         if (_validateId3(id3Data))
           tempSong.setAlbumArtist(id3Data);
         else
-          missingData += Id3.ALBUM_ARTIST.toString();
+          missingData += Id3.ALBUM_ARTIST.toString() + ",";
 
-        id3Data = mediaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
+        id3Data = mMediaReader.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
         if (_validateId3(id3Data))
           tempSong.setAlbum(id3Data);
         else
-          missingData += Id3.ALBUM.toString();
+          missingData += Id3.ALBUM.toString() + ",";
 
-        id3Data = mediaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_COMPOSER);
+        id3Data = mMediaReader.extractMetadata(MediaMetadataRetriever.METADATA_KEY_COMPOSER);
         if (_validateId3(id3Data))
           tempSong.setComposer(id3Data);
         else
-          missingData += Id3.COMPOSER.toString();
+          missingData += Id3.COMPOSER.toString() + ",";
 
-        id3Data = mediaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_GENRE);
+        id3Data = mMediaReader.extractMetadata(MediaMetadataRetriever.METADATA_KEY_GENRE);
         if (_validateId3(id3Data)) {
-          // tempSong.setGenre(id3Data);
+          // TODO set Genre properly
+          //tempSong.setGenre(id3Data);
+          tempSong.setGenre(Genre.GENRE_INVALID);
         } else
-          missingData += Id3.GENRE.toString();
+          missingData += Id3.GENRE.toString() + ",";
 
-        id3Data = mediaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_NUM_TRACKS);
+        id3Data = mMediaReader.extractMetadata(MediaMetadataRetriever.METADATA_KEY_NUM_TRACKS);
         if (_validateId3(id3Data))
           tempSong.setTrackTotal(Integer.parseInt(id3Data));
         else
-          missingData += Id3.TOTAL_TRACKS.toString();
+          missingData += Id3.TOTAL_TRACKS.toString() + ",";
 
-        id3Data = mediaRetriever
+        id3Data = mMediaReader
             .extractMetadata(MediaMetadataRetriever.METADATA_KEY_CD_TRACK_NUMBER);
         if (_validateId3(id3Data))
           tempSong.setTrackNum(Integer.parseInt(id3Data));
         else
-          missingData += Id3.TRACK_NUM.toString();
+          missingData += Id3.TRACK_NUM.toString() + ",";
 
-        id3Data = mediaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DISC_NUMBER);
+        id3Data = mMediaReader.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DISC_NUMBER);
         if (_validateId3(id3Data))
           tempSong.setDiscNum(Integer.parseInt(id3Data));
         else
-          missingData += Id3.DISC_NUM.toString();
+          missingData += Id3.DISC_NUM.toString() + ",";
 
-        id3Data = mediaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_YEAR);
+        id3Data = mMediaReader.extractMetadata(MediaMetadataRetriever.METADATA_KEY_YEAR);
         if (_validateId3(id3Data))
           tempSong.setYear(Integer.parseInt(id3Data));
         else
-          missingData += Id3.YEAR.toString();
+          missingData += Id3.YEAR.toString() + ",";
 
-        id3Data = mediaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_BITRATE);
+        id3Data = mMediaReader.extractMetadata(MediaMetadataRetriever.METADATA_KEY_BITRATE);
         if (_validateId3(id3Data))
           tempSong.setBitRate(Integer.parseInt(id3Data));
         else
-          missingData += Id3.BITRATE.toString();
+          missingData += Id3.BITRATE.toString() + ",";
 
         // turn our missing data String list into an Array
         tempSong.setMissingData(missingData.split(","));
+        
+        Log.d("Missing", missingData);
 
         // add all of the data to the list
         mSongList.add(tempSong);
 
-        mediaRetriever.release();
+        mMediaReader.release();
       }
+      
+      // after scanning, create the persistent copy of the data (file)
+      mEditor.createMyMusicFile(mSongList);
+      
     } catch (Exception e) {
       // if any error occurs
+      Log.e("FileError", "Files not found");
       e.printStackTrace();
     }
-
-    // after scanning, create the persistent copy of the data (file)
-    mEditor.createMyMusicFile(mSongList);
     
     return mSongList;
   }
   
-  // make sure we're not getting empty data. If it is, it goes to missing data
+  // make sure we're not getting empty data. If it is, it goes to missingData.
   private boolean _validateId3(String id3) {
+    if (id3 == null) Log.d("id3", "null");
+    if (id3 != null) Log.d("id3", id3);
+
     return !(id3 == null || id3 == "" || id3 == " ");
   }
 }

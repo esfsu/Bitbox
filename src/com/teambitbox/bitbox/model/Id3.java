@@ -5,7 +5,7 @@ public enum Id3 {
   FILE_NAME("fileName"),
   FILE_LOC("fileLocation"),
   SONG_NAME("songName"),
-  ARTIST("totalartist"),
+  ARTIST("artist"),
   ALBUM_ARTIST("albumArtist"),
   ALBUM("album"),
   COMPOSER("composer"),
@@ -21,7 +21,7 @@ public enum Id3 {
   SONG_LAST("/song");
   
   private Id3(final String name) {
-      this.mName = name;
+      mName = name;
   }
 
   private final String mName;

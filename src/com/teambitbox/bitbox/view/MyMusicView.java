@@ -20,7 +20,7 @@ public class MyMusicView extends CustomView {
     setCurrentActivity(currentActivity);
     setCurrentContext(currentContext);
     currentActivity.setContentView(R.layout.activity_main_screen);
-    mScanner = new Scanner();
+    mScanner = new Scanner(getCurrentContext());
 
     mOptionButtonsFactory = new OptionButtonsFactory(getCurrentActivity(), getCurrentContext());
     setMainSongListView(new SongListView(getCurrentActivity(), getCurrentContext(),

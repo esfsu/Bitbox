@@ -1,3 +1,10 @@
+/*
+ * Song
+ * A class to store music file data
+ * 3/30/2014
+ * Eric Saunders
+ */
+
 package com.teambitbox.bitbox.model;
 
 import java.lang.String;
@@ -5,27 +12,24 @@ import java.lang.String;
 public class Song {
   
   // Member variables
-  private String mFileName;
-  private String mSongName;
-  private String mLocation;
-  private String mArtist;
-  private String mAlbumArtist;
-  private String mAlbum;
-  private int mDuration;
-  private String mComposer;
-  private Genre mGenre;
-  private int mYear;
-  private int mTrackNum;
-  private int mTrackTotal;
-  private int mDiscNum;
-  private int mDiscTotal;
-  private int mBitrate;
-  private boolean mIsExplicit;
+  private String mFileName = "";
+  private String mSongName = "";
+  private String mLocation = "";
+  private String mArtist = "";
+  private String mAlbumArtist = "";
+  private String mAlbum = "";
+  private int mDuration = 0;
+  private String mComposer = "";
+  private Genre mGenre = Genre.GENRE_INVALID;
+  private int mYear = 0;
+  private int mTrackNum = 0;
+  private int mTrackTotal = 0;
+  private int mDiscNum = 0;
+  private int mDiscTotal = 0;
+  private int mBitrate = 0;
+  private boolean mIsExplicit = false;
   private String[] mMissingData;
 
-  public Song() {
-
-  }
 
   public String getFileName() {
     return mFileName;
@@ -93,6 +97,10 @@ public class Song {
 
   public Genre getGenre() {
     return mGenre;
+  }
+  
+  public String getGenreString() {
+    return mGenre.toString();
   }
 
   public void setGenre(Genre genre) {
@@ -163,10 +171,5 @@ public class Song {
   public boolean getExplicit()
   {
     return mIsExplicit;
-  }
-  
-  public void setBitrate(int bitrate)
-  {
-    mBitrate = bitrate;
   }
 }

@@ -8,7 +8,7 @@ public enum Settings {
   IS_SCANNED("isDeviceScanned");
 
   private Settings(final String name) {
-      this.mName = name;
+      mName = name;
   }
 
   private final String mName;

@@ -17,7 +17,7 @@ import android.widget.ListView;
 public class SongListView extends CustomView {
 
 	// song list
-	private ArrayList<Song> mSongList;
+	private ArrayList<Song> mSongList = new ArrayList<Song>();
 	// ListView widget that displays the songs.
 	private ListView mSongListWidget;
 	// test object for SongListAdapter
