@@ -1,3 +1,11 @@
+/*
+ * Id3
+ * An enum class to provided consistent references to Id3 tags,
+ * as well as used for creating the MyMusic.xml file tags.
+ * 3/30/2014
+ * Eric Saunders
+ */
+
 package com.teambitbox.bitbox.model;
 
 public enum Id3 {
@@ -15,8 +23,6 @@ public enum Id3 {
   TOTAL_TRACKS("totalTracks"),
   DISC_NUM("discNum"),
   TOTAL_DISCS("totalDiscs"),
-  EXPLICIT("explicit"),
-  BITRATE("bitrate"),
   MISSING("missingData"),
   SONG_LAST("/song");
   

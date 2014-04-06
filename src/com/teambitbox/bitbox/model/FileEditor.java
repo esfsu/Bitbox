@@ -19,15 +19,16 @@ import android.os.Environment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.media.MediaMetadataEditor;
-import android.media.MediaMetadataRetriever;
 import android.util.Log;
 import android.util.Xml;
 
-import java.lang.Integer;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.jaudiotagger.audio.AudioFileIO;
+import org.jaudiotagger.audio.mp3.MP3File;
+import org.jaudiotagger.tag.FieldKey;
+import org.jaudiotagger.tag.id3.ID3v24Tag;
 import org.xmlpull.v1.XmlPullParser;
 
 class FileEditor {
@@ -66,6 +67,12 @@ class FileEditor {
   // Called after Scanner
   public void createMyMusicFile(ArrayList<Song> songList) {
     try {
+      Log.d("Writing File", "");
+      File myMusic = new File("MyMusic.xml");
+      if (!myMusic.exists())
+      {
+        myMusic.createNewFile();
+      }
       FileOutputStream fOut = mContext.openFileOutput("MyMusic.xml", Context.MODE_PRIVATE);
       OutputStreamWriter osw = new OutputStreamWriter(fOut);
 
@@ -90,11 +97,6 @@ class FileEditor {
         fileContent += "    <" + Id3.TOTAL_TRACKS.toString() + " value=" + item.getTrackTotal()
             + " />\n";
         fileContent += "    <" + Id3.DISC_NUM.toString() + " value=" + item.getDiscNum() + " />\n";
-        fileContent += "    <" + Id3.TOTAL_DISCS.toString() + " value=" + item.getDiscTotal()
-            + " />\n";
-        fileContent += "    <" + Id3.EXPLICIT.toString() + " value=" + item.getExplicit() + " />\n";
-        fileContent += "    <" + Id3.BITRATE.toString() + " value=" + item.getBitRate() + " />\n";
-
         fileContent += "    <" + Id3.MISSING.toString() + " value=";
         for (String missingData : item.getMissingData()) {
           fileContent += missingData + ",";
@@ -108,14 +110,17 @@ class FileEditor {
       osw.flush();
       osw.close();
       fOut.close();
+      Log.d("Write Complete", "File writing complete");
     } catch (java.io.IOException e) {
       // TODO
       // do something if an IOException occurs.
+      Log.e("File Write Error", "File write could not complete");
     }
   }
 
   // Internally setup the songList
   private void _parseMyMusicFile() {
+    Log.d("Parsing File", "");
     XmlPullParser parser = Xml.newPullParser();
     try {
       FileInputStream fIn = mContext.openFileInput("MyMusic.xml");
@@ -174,25 +179,16 @@ class FileEditor {
                 // currentSong.setGenre(currentAttribute);
               } else if (name.equalsIgnoreCase(Id3.YEAR.toString())) {
                 currentAttribute = parser.getAttributeValue(0);
-                currentSong.setYear(Integer.parseInt(currentAttribute));
+                currentSong.setYear(currentAttribute);
               } else if (name.equalsIgnoreCase(Id3.TRACK_NUM.toString())) {
                 currentAttribute = parser.getAttributeValue(0);
-                currentSong.setTrackNum(Integer.parseInt(currentAttribute));
+                currentSong.setTrackNum(currentAttribute);
               } else if (name.equalsIgnoreCase(Id3.TOTAL_TRACKS.toString())) {
                 currentAttribute = parser.getAttributeValue(0);
-                currentSong.setTrackTotal(Integer.parseInt(currentAttribute));
+                currentSong.setTrackTotal(currentAttribute);
               } else if (name.equalsIgnoreCase(Id3.DISC_NUM.toString())) {
                 currentAttribute = parser.getAttributeValue(0);
-                currentSong.setDiscNum(Integer.parseInt(currentAttribute));
-              } else if (name.equalsIgnoreCase(Id3.TOTAL_DISCS.toString())) {
-                currentAttribute = parser.getAttributeValue(0);
-                currentSong.setDiscTotal(Integer.parseInt(currentAttribute));
-              } else if (name.equalsIgnoreCase(Id3.EXPLICIT.toString())) {
-                currentAttribute = parser.getAttributeValue(0);
-                currentSong.setExplicit(Boolean.parseBoolean(currentAttribute));
-              } else if (name.equalsIgnoreCase(Id3.BITRATE.toString())) {
-                currentAttribute = parser.getAttributeValue(0);
-                currentSong.setBitRate(Integer.parseInt(currentAttribute));
+                currentSong.setDiscNum(currentAttribute);
               } else if (name.equalsIgnoreCase(Id3.MISSING.toString())) {
                 String[] missingData = currentAttribute.split(",");
                 currentSong.setMissingData(missingData);
@@ -233,79 +229,75 @@ class FileEditor {
   public void /*boolean*/ editId3Data(ArrayList<Song> songList, ArrayList<Id3Data> dataList) {
     // make sure we can reverse it
     mUndoList.setUndoList(songList, dataList, FileOp.EDITID3);
-    
-    // TODO
-    // What doesn't work:
-    // MediaMetadataEditor, have yet to find an Android SDK supported way to edit tags
-    //  Will probably need an external library
-    // MediaMetadataEditor enums are false
-    // What does work:
-    // Basic structure for updating files based on data passed in
-    
-    /*
+        
     try {      
       for (Song song : songList) {
-        MediaMetadataEditor mediaEditor = new MediaMetadataEditor();
-        mediaEditor.setDataSource(song.getFileName());
-        Log.d("ScannerStub", song.getFileName()); // debug purposes
+        Log.d("Song", song.getFileName()); // debug purposes
+        File songFile = new File(song.getFileName());
         
+        MP3File f = (MP3File)AudioFileIO.read(songFile);
+        ID3v24Tag v24tag = f.getID3v2TagAsv24();
+                
         for (Id3Data data : dataList) {
           
           switch(data.id3)
           {
             case SONG_NAME:
-              mediaEditor.putString(MetadataEditor.METADATA_KEY_TITLE, data.value);
-              _updateMyMusicFileTag(song.GetFileName(), data.id3, data.value);
+              v24tag.setField(FieldKey.TITLE, data.value);
+              _updateMyMusicFileTag(song.getFileName(), data.id3, data.value);
               break;
     
             case ARTIST:
-              mediaEditor.putString(MediaMetadataEditor.METADATA_KEY_ARTIST, data.value);
-              _updateMyMusicFileTag(song.GetFileName(), data.id3, data.value);
+              v24tag.setField(FieldKey.ARTIST, data.value);
+              _updateMyMusicFileTag(song.getFileName(), data.id3, data.value);
               break;
     
             case ALBUM_ARTIST:
-              mediaEditor.putString(MediaMetadataEditor.METADATA_KEY_ALBUMARTIST, data.value);
-              _updateMyMusicFileTag(song.GetFileName(), data.id3, data.value);
+              v24tag.setField(FieldKey.ALBUM_ARTIST, data.value);
+              _updateMyMusicFileTag(song.getFileName(), data.id3, data.value);
               break;
     
             case ALBUM:
-              mediaEditor.putString(MediaMetadataEditor.METADATA_KEY_ALBUM, data.value);
-              _updateMyMusicFileTag(song.GetFileName(), data.id3, data.value);
+              v24tag.setField(FieldKey.ALBUM, data.value);
+              _updateMyMusicFileTag(song.getFileName(), data.id3, data.value);
               break;
     
             case COMPOSER:
-              mediaEditor.putString(MediaMetadataEditor.METADATA_KEY_COMPOSER, data.value);
-              _updateMyMusicFileTag(song.GetFileName(), data.id3, data.value);
+              v24tag.setField(FieldKey.COMPOSER, data.value);
+              _updateMyMusicFileTag(song.getFileName(), data.id3, data.value);
               break;
     
             case GENRE:
-              mediaEditor.putString(MediaMetadataEditor.METADATA_KEY_GENRE, data.value);
-              _updateMyMusicFileTag(song.GetFileName(), data.id3, data.value);
+              v24tag.setField(FieldKey.GENRE, data.value);
+              _updateMyMusicFileTag(song.getFileName(), data.id3, data.value);
               break;
     
             case TRACK_NUM:
-              mediaEditor.putString(MediaMetadataEditor.METADATA_KEY_NUM_TRACKS, data.value);
-              _updateMyMusicFileTag(song.GetFileName(), data.id3, data.value);
+              v24tag.setField(FieldKey.TRACK, data.value);
+              _updateMyMusicFileTag(song.getFileName(), data.id3, data.value);
             break;
     
             case TOTAL_TRACKS:
-              mediaEditor.putString(MediaMetadataEditor.METADATA_KEY_CD_TRACK_NUMBER, data.value);
-              _updateMyMusicFileTag(song.GetFileName(), data.id3, data.value);
+              v24tag.setField(FieldKey.TRACK_TOTAL, data.value);
+              _updateMyMusicFileTag(song.getFileName(), data.id3, data.value);
             break;
     
             case DISC_NUM:
-              mediaEditor.putString(MediaMetadataEditor.METADATA_KEY_DISC_NUMBER, data.value);
-              _updateMyMusicFileTag(song.GetFileName(), data.id3, data.value);
+              v24tag.setField(FieldKey.DISC_NO, data.value);
+              _updateMyMusicFileTag(song.getFileName(), data.id3, data.value);
               break;
     
             case YEAR:
-              mediaEditor.putString(MediaMetadataEditor.METADATA_KEY_YEAR, data.value);
-              _updateMyMusicFileTag(song.GetFileName(), data.id3, data.value);
+              v24tag.setField(FieldKey.YEAR, data.value);
+              _updateMyMusicFileTag(song.getFileName(), data.id3, data.value);
+              break;
+              
+            default:
+              Log.e("Invalid Tag", "An invalid ID3 tag " + data.id3 + " was found during tag update.");
               break;
           }
   
-          mediaEditor.apply();
-          mediaEditor.clear();
+          f.commit();
         }
       }
     } catch (Exception e) {
@@ -315,7 +307,6 @@ class FileEditor {
     }
     
     //return true;
-    */
   }
   
   // Update attributes in the MyMusic file
@@ -374,7 +365,13 @@ class FileEditor {
     mUndoList.setUndoList(songList, value, FileOp.RENAME);
 
      for (Song song : songList) {
-       //open realFile;
+       File sd = Environment.getExternalStorageDirectory();
+      // File (or directory) to be moved
+      String sourcePath = song.getLocation();
+      File file = new File(sd, sourcePath);
+      // Destination directory
+      file.renameTo(new File(sd, value));
+    
        //realFileName = value;
        _updateMyMusicFileTag(song.getFileName(), Id3.FILE_NAME, value);
      }
@@ -386,8 +383,13 @@ class FileEditor {
     mUndoList.setUndoList(songList, value, FileOp.RENAME);
 
      for (Song song : songList) {
-       //open realFile;
-       //realFileName = value;
+       File sd = Environment.getExternalStorageDirectory();
+      // File (or directory) to be moved
+      String sourcePath = song.getLocation();
+      File file = new File(sd, sourcePath);
+      // Destination directory
+      file.renameTo(new File(sd, value));
+      
        _updateMyMusicFileTag(song.getFileName(), Id3.FILE_NAME, value);
      }
   }

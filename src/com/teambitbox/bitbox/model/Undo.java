@@ -1,11 +1,11 @@
-package com.teambitbox.bitbox.model;
-
 /*
 * Undo
 * Class for holding undo button data
 * 3/2/2014
 * Eric Saunders
 */
+
+package com.teambitbox.bitbox.model;
 
 import java.util.ArrayList;
 

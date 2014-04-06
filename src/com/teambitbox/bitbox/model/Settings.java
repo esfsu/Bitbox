@@ -1,3 +1,10 @@
+/*
+ * Settings
+ * An enum class to provided consistent references to app settings
+ * 3/30/2014
+ * Eric Saunders
+ */
+
 package com.teambitbox.bitbox.model;
 
 public enum Settings {

@@ -18,16 +18,12 @@ public class Song {
   private String mArtist = "";
   private String mAlbumArtist = "";
   private String mAlbum = "";
-  private int mDuration = 0;
   private String mComposer = "";
-  private Genre mGenre = Genre.GENRE_INVALID;
-  private int mYear = 0;
-  private int mTrackNum = 0;
-  private int mTrackTotal = 0;
-  private int mDiscNum = 0;
-  private int mDiscTotal = 0;
-  private int mBitrate = 0;
-  private boolean mIsExplicit = false;
+  private String mGenre = Genre.GENRE_INVALID.toString();
+  private String mYear = "";
+  private String mTrackNum = "";
+  private String mTrackTotal = "";
+  private String mDiscNum = "";
   private String[] mMissingData;
 
 
@@ -79,14 +75,6 @@ public class Song {
     mAlbum = album;
   }
 
-  public int getDuration() {
-    return mDuration;
-  }
-
-  public void setDuration(int duration) {
-    mDuration = duration;
-  }
-
   public String getComposer() {
     return mComposer;
   }
@@ -95,7 +83,7 @@ public class Song {
     mComposer = composer;
   }
 
-  public Genre getGenre() {
+  public String getGenre() {
     return mGenre;
   }
   
@@ -103,58 +91,42 @@ public class Song {
     return mGenre.toString();
   }
 
-  public void setGenre(Genre genre) {
+  public void setGenre(String genre) {
     mGenre = genre;
   }
 
-  public int getYear() {
+  public String getYear() {
     return mYear;
   }
 
-  public void setYear(int year) {
+  public void setYear(String year) {
     mYear = year;
   }
 
-  public int getBitRate() {
-    return mBitrate;
-  }
-
-  public void setBitRate(int bitrate) {
-    mBitrate = bitrate;
-  }
-
-  public int getTrackNum() {
+  public String getTrackNum() {
     return mTrackNum;
   }
 
-  public void setTrackNum(int trackNum) {
+  public void setTrackNum(String trackNum) {
     mTrackNum = trackNum;
   }
 
-  public int getTrackTotal() {
+  public String getTrackTotal() {
     return mTrackTotal;
   }
 
-  public void setTrackTotal(int trackTotal) {
+  public void setTrackTotal(String trackTotal) {
     mTrackTotal = trackTotal;
   }
 
-  public int getDiscNum() {
+  public String getDiscNum() {
     return mDiscNum;
   }
 
-  public void setDiscNum(int discNum) {
+  public void setDiscNum(String discNum) {
     mDiscNum = discNum;
   }
-
-  public int getDiscTotal() {
-    return mDiscTotal;
-  }
-
-  public void setDiscTotal(int discTotal) {
-    mDiscTotal = discTotal;
-  }
-
+ 
   public void setMissingData(String[] missingData) {
     mMissingData = missingData;
   }
@@ -162,14 +134,5 @@ public class Song {
   public String[] getMissingData()
   {
     return mMissingData;
-  }
-
-  public void setExplicit(boolean explicit) {
-    mIsExplicit = explicit;
-  }
-  
-  public boolean getExplicit()
-  {
-    return mIsExplicit;
   }
 }

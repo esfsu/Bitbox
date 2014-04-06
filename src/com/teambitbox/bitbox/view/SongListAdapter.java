@@ -49,7 +49,10 @@ public class SongListAdapter extends ArrayAdapter<Song> {
 
     // uses Song from the ArrayList in the SongListView class to set the
     // text for each song of the ListView
-    songNameView.setText(song.getSongName());
+    
+    // TODO: if (sortingByArtist) song.getArtist() + "-" + song.getSongName()  (Default)
+    // TODO: if (sortingBySongName) song.getSongName() + "-" + song.getArtist()
+    songNameView.setText(song.getArtist() + "-" + song.getSongName());
 
     // change the row color based on selected state
     if (getSelectedPosition() == position) {

@@ -15,10 +15,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+import com.teambitbox.bitbox.model.Scanner;
 
 public class ScanForMusicPopup extends Popup {
 
-	private String inputDirectoryString = "";
+	private String mInputDirectoryString = "";
+	private Scanner mScanner = new Scanner(getCurrentContext());
 
 	public ScanForMusicPopup(Activity currentActivity, Context context) {
 		setCurrentActivity(currentActivity);
@@ -26,7 +28,6 @@ public class ScanForMusicPopup extends Popup {
 		this.builder = new AlertDialog.Builder(getCurrentContext());
 		this.setLayout();
 		this.showLayout();
-
 	}
 
 	@Override
@@ -93,13 +94,14 @@ public class ScanForMusicPopup extends Popup {
 									"You did not enter a directory",
 									Toast.LENGTH_SHORT).show();
 						} else {
-
 							progressBarDialog();
 						}
 					}
 				}).setNegativeButton(R.string.scanDeviceOption,
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
+					  // TODO: WARN USER THIS COULD TAKE A LONG TIME!
+					  setDirectoryInput("/sdcard/");
 						progressBarDialog();
 					}
 				});
@@ -109,23 +111,23 @@ public class ScanForMusicPopup extends Popup {
 	}
 
 	private void progressBarDialog() {
-		final ProgressDialog progressDialogPopup = new ProgressDialog(
-				getCurrentContext()); // initializes progressDialog popup
-		progressDialogPopup.setMax(100); // sets the maximum amount of the
-											// progress bar
-
+	  // initializes progressDialog popup
+		final ProgressDialog progressDialogPopup = new ProgressDialog(getCurrentContext());
+		// sets the maximum amount of the progress bar
+		progressDialogPopup.setMax(mScanner.getTotalFiles());
 		progressDialogPopup.setMessage("Scanning...");
 
-		// set the title of the progress bar popup depending on the scan
-		// selection of the user
-		if (getDirectoryInput().equals(""))
-			progressDialogPopup.setTitle(getDirectoryInput()
-					+ " is been scanned for music");
+		// set the title of the progress bar popup depending on the scan selection of the user
+		if (!getDirectoryInput().equals("") || getDirectoryInput() == null)
+			progressDialogPopup.setTitle(getDirectoryInput() + " is being scanned for music");
 		else
-			progressDialogPopup.setTitle("Device is been scanned for music");
+			progressDialogPopup.setTitle("Device is being scanned for music");
 
 		// style of progress bar
 		progressDialogPopup.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+		
+		/*
+		// TODO: We can't cancel this action as of yet.
 		// set cancel button
 		progressDialogPopup.setButton(DialogInterface.BUTTON_NEGATIVE,
 				"Cancel", new DialogInterface.OnClickListener() {
@@ -134,17 +136,23 @@ public class ScanForMusicPopup extends Popup {
 						dialog.dismiss();
 					}
 				});
+		*/
+		
 		progressDialogPopup.show();
+		
+		// TODO: This process is locking the visual state of the popup so that the progress bar doesn't show.
+    mScanner.scanDevice(getDirectoryInput());
 
-		// everything below is an example; a controller method needs to be
-		// implemented
+		// everything below is an example; a controller method needs to be implemented
 
 		// create handler to increment progress bar by one
 		final Handler handle = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
+			  
+			  // TODO: Any touch on the screen will dismiss this popup!
 				super.handleMessage(msg);
-				progressDialogPopup.incrementProgressBy(1);
+				progressDialogPopup.incrementProgressBy(mScanner.getFileProgress());
 			}
 		};
 
@@ -153,15 +161,12 @@ public class ScanForMusicPopup extends Popup {
 			@Override
 			public void run() {
 				try {
-					while (progressDialogPopup.getProgress() <= progressDialogPopup
-							.getMax()) {
-						Thread.sleep(200);
-						handle.sendMessage(handle.obtainMessage());
-						if (progressDialogPopup.getProgress() == progressDialogPopup
-								.getMax()) {
-							progressDialogPopup.dismiss();
-						}
-					}
+	         while (mScanner.getIsScanComplete() != true) {
+	            Thread.sleep(200);
+	            handle.sendMessage(handle.obtainMessage());
+            }
+	         
+	         progressDialogPopup.dismiss();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -172,7 +177,7 @@ public class ScanForMusicPopup extends Popup {
 
 	private void resultsDialog() {
 		builder = new AlertDialog.Builder(getCurrentContext());
-		builder.setTitle("x songs were found!")
+		builder.setTitle(mScanner.getTotalMusicFiles() + " songs were found")
 
 				.setPositiveButton(R.string.okOption,
 						new DialogInterface.OnClickListener() {
@@ -188,8 +193,7 @@ public class ScanForMusicPopup extends Popup {
 						})
 				.setItems(R.array.songsFoundListExample,
 						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int which) {
+							public void onClick(DialogInterface dialog, int which) {
 								// The 'which' argument contains the index position of the selected item
 							}
 						});
@@ -199,10 +203,10 @@ public class ScanForMusicPopup extends Popup {
 
 	//
 	private String getDirectoryInput() {
-		return this.inputDirectoryString;
+		return mInputDirectoryString;
 	}
 
 	private void setDirectoryInput(String directory) {
-		this.inputDirectoryString = directory;
+		mInputDirectoryString = directory;
 	}
 }

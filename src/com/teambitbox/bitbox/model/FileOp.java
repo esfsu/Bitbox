@@ -1,3 +1,10 @@
+/*
+ * FileOp
+ * An enum class to provided consistent references file operations.
+ * 3/30/2014
+ * Eric Saunders
+ */
+
 package com.teambitbox.bitbox.model;
 
 public enum FileOp {
