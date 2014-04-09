@@ -26,7 +26,7 @@ public class SettingsPopup extends Popup {
 	public SettingsPopup (Activity currentActivity, Context currentContext, SongListView songlist){
 		setCurrentActivity(currentActivity);
 		setCurrentContext(currentContext);
-		this.setLayout();
+		setLayout();
 		showLayout();
 	}
 	
@@ -68,7 +68,7 @@ public class SettingsPopup extends Popup {
                }
            });
 
-    builder.create();
+    popup = builder.create();
 		
 	}
 

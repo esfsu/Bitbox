@@ -34,28 +34,27 @@ public class ScanForMusicPopup extends Popup {
 	public ScanForMusicPopup(Activity currentActivity, Context context) {
 		setCurrentActivity(currentActivity);
 		setCurrentContext(context);
-		this.builder = new AlertDialog.Builder(getCurrentContext());
-		this.setLayout();
-		this.showLayout();
+		setLayout();
+		showLayout();
 	}
 
 	@Override
 	public void setLayout() {
-
+	  builder = new AlertDialog.Builder(getCurrentContext());
 		builder.setMessage(R.string.scanDirectoryTitle)
-				.setPositiveButton(R.string.okOption,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-								scanSelectionDialog();
-							}
-						})
-				.setNegativeButton(R.string.cancelOption,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-								// User cancelled the dialog
-							}
-						});
-		builder.create();
+				   .setPositiveButton(R.string.okOption,
+						  new DialogInterface.OnClickListener() {
+							  public void onClick(DialogInterface dialog, int id) {
+								  scanSelectionDialog();
+							  }
+						  })
+				   .setNegativeButton(R.string.cancelOption,
+						  new DialogInterface.OnClickListener() {
+							  public void onClick(DialogInterface dialog, int id) {
+								  // User cancelled the dialog
+							  }
+						  });
+		popup = builder.create();
 	}
 
 	private void scanSelectionDialog() {
@@ -92,10 +91,9 @@ public class ScanForMusicPopup extends Popup {
 
 		// add action buttons
 		builder.setPositiveButton(R.string.scanDirectoryOption,
-				new DialogInterface.OnClickListener() {
-					@Override
+			new DialogInterface.OnClickListener() {
+				@Override
 					public void onClick(DialogInterface dialog, int id) {
-
 						// if the user didn't enter a directory name, a toast
 						// message will appear.
 						if (getDirectoryInput().equals("")) {
@@ -115,7 +113,7 @@ public class ScanForMusicPopup extends Popup {
 					}
 				});
 
-		builder.create();
+		popup = builder.create();
 		showLayout(); // displays popup
 	}
 
@@ -206,7 +204,7 @@ public class ScanForMusicPopup extends Popup {
 								// The 'which' argument contains the index position of the selected item
 							}
 						});
-		builder.create();
+		popup = builder.create();
 		showLayout();
 	}
 

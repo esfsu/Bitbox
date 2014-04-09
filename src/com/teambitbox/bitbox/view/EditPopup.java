@@ -27,8 +27,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class EditPopup extends Popup {
-	
-	private AlertDialog dismissAlertDialog = null; // used to close dialogs
+
 	private String fileDestination = null; // where the file will go
 	
 	public EditPopup(Activity currentActivity, Context context) {
@@ -46,15 +45,15 @@ public class EditPopup extends Popup {
 
 		builder.setView(editDialog);
 		builder.setTitle("Select Edit Option");
-		builder.create();
 		Button editFileNameOption = (Button) editDialog.findViewById(R.id.editFileNameOptionButton);
 		Button editIdTagsOption = (Button) editDialog.findViewById(R.id.editIdTagOptionButton);
 		Button moveFileOption = (Button) editDialog.findViewById(R.id.moveFileOptionButton);
-		
+		popup = builder.create();
+
 		editIdTagsOption.setOnClickListener(new OnClickListener() { 
 	    @Override
 	    public void onClick(View arg0) {
-	    	dismissAlertDialog.dismiss();
+	    	popup.dismiss();
 	    	Intent myIntent = new Intent(getCurrentActivity(), EditID3Activity.class);
 	    	getCurrentActivity().startActivity(myIntent);
 	    }
@@ -64,11 +63,11 @@ public class EditPopup extends Popup {
 	    @Override
 	    public void onClick(View arg0) {
 	    	Log.d("EditPopup", "move file");
-	    
+	      popup.dismiss();
 	    	showMoveFileDialog();
 	    }   
 	  });
-    dismissAlertDialog = builder.create();
+   
 	}
 
 	private void showMoveFileDialog()
@@ -79,12 +78,12 @@ public class EditPopup extends Popup {
 
 		builder.setView(moveDialog);
 		builder.setTitle("Select File Destination");
-		builder.create();
+		popup = builder.create();
 		Button cancelOption = (Button) moveDialog.findViewById(R.id.cancelMoveButton);
 		Button moveToDefaultMusicDirectoryOption = (Button) moveDialog.findViewById(R.id.moveToDefaultMusicDirectoryButton);
 		Button moveToSelectedDirectoryOption = (Button) moveDialog.findViewById(R.id.moveToSelectedDirectoryButton);
 		EditText fileDestinationInputField = (EditText) moveDialog.findViewById(R.id.fileDestinationInputField);
-			
+	
 	  // listener for change of text event
 		fileDestinationInputField.addTextChangedListener(new TextWatcher() {
 		  @Override
@@ -106,7 +105,7 @@ public class EditPopup extends Popup {
 	     @Override
 	     public void onClick(View arg0) {
 	     	 SelectedSongsSingleton.getInstance().getSelectedSongs().clear();
-	    	 dismissAlertDialog.dismiss();
+	    	 popup.dismiss();
 	     }
 	  });
 		
@@ -116,6 +115,7 @@ public class EditPopup extends Popup {
 	      if (fileDestination.isEmpty())
 	      {
 	    	  Toast.makeText(getCurrentContext(), "You did not enter a directory", Toast.LENGTH_SHORT).show();
+	    	  SelectedSongsSingleton.getInstance().getSelectedSongs().clear();
 	      }
 	      /*else if (directory does not exist)
 	      {
@@ -125,7 +125,7 @@ public class EditPopup extends Popup {
 	      {
 	    	  // use method to move to default directory here
 	     	  SelectedSongsSingleton.getInstance().getSelectedSongs().clear();
-	    	  dismissAlertDialog.dismiss();
+	    	  popup.dismiss();
 	      } 
 	    } 
 	  });
@@ -136,9 +136,10 @@ public class EditPopup extends Popup {
     	 // use method to move to selected directory here
     	 
     	 SelectedSongsSingleton.getInstance().getSelectedSongs().clear();
-    	 dismissAlertDialog.dismiss(); 
+    	 popup.dismiss(); 
      }
    });
+   
  	 showLayout();
 	}
 	

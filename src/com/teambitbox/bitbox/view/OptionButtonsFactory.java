@@ -51,6 +51,13 @@ public class OptionButtonsFactory extends CustomView {
 	     }
 	   });
 		 
+		 undoOptionButton.setOnClickListener(new OnClickListener() { 
+       @Override
+       public void onClick(View arg0) {
+         PopupFactory.createPopup(PopupType.UNDO, getCurrentActivity(), currentContext);
+       }
+     });
+		 
 		 /*The popups for these options have not been implemented yet
 		 scanForMissingDataOptionButton.setOnClickListener(new OnClickListener() { 
 	     @Override
@@ -59,14 +66,6 @@ public class OptionButtonsFactory extends CustomView {
 	     }
 	   });
 		 
-		 
-		 
-		 undoOptionButton.setOnClickListener(new OnClickListener() { 
-	     @Override
-	     public void onClick(View arg0) {
-	     PopupFactory.createPopup(PopupType.UNDO, getCurrentActivity() currentContext);
-	     }
-	   });
 	   */
 	 }
 

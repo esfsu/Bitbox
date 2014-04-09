@@ -29,7 +29,7 @@ public class MyMusicView extends CustomView {
 	{
 		setCurrentActivity(currentActivity);
 		setCurrentContext(currentContext);
-		currentActivity.setContentView(R.layout.activity_main_screen);
+		currentActivity.setContentView(R.layout.my_music_activity_screen);
 		mScanner = new Scanner(getCurrentContext());
 		setMainSongListView(new SongListView(getCurrentActivity(), getCurrentContext(),
 	        mScanner.scanDevice("")));

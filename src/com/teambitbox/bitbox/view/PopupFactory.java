@@ -23,8 +23,8 @@ public class PopupFactory {
     	   return new ScanForMissingDataPopup(currentActivity, currentContext);  */
       case EDIT:
       	return new EditPopup(currentActivity, currentContext);
-      /*case UNDO:
-      	return new UndoPopup(currentActivity, currentContext);*/  
+      case UNDO:
+      	return new UndoPopup(currentActivity, currentContext);  
       default:
         return null;
       }

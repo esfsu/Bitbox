@@ -22,5 +22,7 @@
     <string name="settingsTitle">Settings</string>
     <string name="moveFileToDefaultDirectoryOption">Move File to Default Directory</string>
     <string name="moveFileToChosenDirectory">Move File to Selected Directory</string>
+    <string name="undoTitle">Undo</string>
+    <string name="undoMessage">Do you want to undo the latest changes?</string>
 
 </resources>

@@ -14,11 +14,12 @@ import android.app.AlertDialog;
 
 public abstract class Popup extends CustomView {
 	protected AlertDialog.Builder builder;
+	protected AlertDialog popup;
 
 	abstract void setLayout();
 	
 	public void showLayout(){
-		builder.show();
+		popup.show();
 	}
 
 }
