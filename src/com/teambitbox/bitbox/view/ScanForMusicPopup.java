@@ -1,3 +1,12 @@
+/*
+ * ScanForMusicPopup class
+ *
+ * Popup for Scan for Music option 
+ * 
+ * 
+ * Eric Fernandez
+ */
+
 package com.teambitbox.bitbox.view;
 
 import com.teambitbox.bitbox.R;
@@ -201,7 +210,6 @@ public class ScanForMusicPopup extends Popup {
 		showLayout();
 	}
 
-	//
 	private String getDirectoryInput() {
 		return mInputDirectoryString;
 	}

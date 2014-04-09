@@ -1,8 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MyMusicActivity" >
+   xmlns:tools="http://schemas.android.com/tools"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   tools:context=".MyMusicActivity" >
 
    <LinearLayout
       android:id="@+id/linearLayout1"
@@ -10,50 +10,49 @@
       android:layout_height="wrap_content"
       android:layout_alignParentLeft="true" >
 
-         <ImageView
-             android:id="@+id/playButton"
-             android:layout_width="0dp"
-             android:layout_height="53dp"
-             android:layout_weight="20"
-             android:src="@drawable/buttonimgtest" />
+        <Button
+            android:id="@+id/undoButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="19.84"
+            android:src="@drawable/buttonimgtest"
+            android:text="Undo" />
 
-         <ImageView
-             android:id="@+id/undoButton"
-             android:layout_width="0dp"
-             android:layout_height="53dp"
-             android:layout_weight="20"
-             android:src="@drawable/buttonimgtest" />
+        <Button
+            android:id="@+id/scanDirectoryButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="19.02"
+            android:src="@drawable/buttonimgtest"
+            android:text="Scan for Music" />
 
-         <ImageView
-             android:id="@+id/scanDirectoryButton"
-             android:layout_width="0dp"
-             android:layout_height="53dp"
-             android:layout_weight="20"
-             android:src="@drawable/buttonimgtest" />
+        <Button
+            android:id="@+id/scanForMissingDataButton"
+            android:layout_width="0dp"
+            android:layout_height="125dp"
+            android:layout_weight="22.56"
+            android:src="@drawable/buttonimgtest"
+            android:text="Scan for Missing\n Data" />
 
-         <ImageView
-             android:id="@+id/scanForMissingDataButton"
-             android:layout_width="0dp"
-             android:layout_height="53dp"
-             android:layout_weight="20"
-             android:src="@drawable/buttonimgtest" />
+        <Button
+            android:id="@+id/editButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="19.84"
+            android:src="@drawable/buttonimgtest"
+            android:text="Edit" />
 
-         <ImageView
-             android:id="@+id/editButton"
-             android:layout_width="0dp"
-             android:layout_weight="20"
-             android:layout_height="53dp"
-             android:src="@drawable/buttonimgtest" />
     </LinearLayout>
 
    <ListView
-      android:id="@+id/listView"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_alignParentBottom="true"
-      android:layout_alignParentLeft="true"
-      android:layout_below="@+id/linearLayout1"
-      android:choiceMode="singleChoice" >
+       android:id="@+id/listView"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_alignParentBottom="true"
+       android:layout_alignParentLeft="true"
+       android:layout_below="@+id/linearLayout1"
+       android:choiceMode="multipleChoice" >
+
    </ListView>
 
 </RelativeLayout>

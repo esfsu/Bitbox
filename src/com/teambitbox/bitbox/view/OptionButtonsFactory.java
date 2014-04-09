@@ -1,31 +1,38 @@
+/*
+ * OptionButtonFactory class
+ *
+ * This class is used to build the buttons with their respective listeners.
+ * 
+ * 02/03/2014
+ * Eric Fernandez
+ */
+
 package com.teambitbox.bitbox.view;
 
 import com.teambitbox.bitbox.R;
-
 import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageView;
+import android.widget.Button;
 
 public class OptionButtonsFactory extends CustomView {
    
-	 private ImageView scanForMusicOptionButton;
-	 private ImageView scanForMissingDataOptionButton;
-	 private ImageView editOptionButton;
-	 private ImageView undoOptionButton;
+	 private Button scanForMusicOptionButton;
+	 private Button scanForMissingDataOptionButton;
+	 private Button editOptionButton;
+	 private Button undoOptionButton;
 	 
 	 public OptionButtonsFactory(Activity currentActivity, Context currentContext){
 		 
 		 setCurrentActivity(currentActivity);
 		 setCurrentContext(currentContext);
-		 scanForMusicOptionButton = (ImageView) getCurrentActivity().findViewById(R.id.scanDirectoryButton);
-		 scanForMissingDataOptionButton = (ImageView) getCurrentActivity().findViewById(R.id.scanForMissingDataButton);
-		 editOptionButton = (ImageView) getCurrentActivity().findViewById(R.id.editButton);
-		 undoOptionButton = (ImageView) getCurrentActivity().findViewById(R.id.undoButton);
-     
-		 this.setOnClickListeners(currentContext);
+		 scanForMusicOptionButton = (Button) getCurrentActivity().findViewById(R.id.scanDirectoryButton);
+		 scanForMissingDataOptionButton = (Button) getCurrentActivity().findViewById(R.id.scanForMissingDataButton);
+		 editOptionButton = (Button) getCurrentActivity().findViewById(R.id.editButton);
+		 undoOptionButton = (Button) getCurrentActivity().findViewById(R.id.undoButton);
 		 
+		 setOnClickListeners(getCurrentContext());
 	 }
 	 
 	 private void setOnClickListeners(final Context currentContext){
@@ -44,11 +51,11 @@ public class OptionButtonsFactory extends CustomView {
 	     }
 	   });
 		 
-		 /* The popups for these options have not been implemented yet
+		 /*The popups for these options have not been implemented yet
 		 scanForMissingDataOptionButton.setOnClickListener(new OnClickListener() { 
 	     @Override
 	     public void onClick(View arg0) {
-	     PopupFactory.createPopup(PopupType.SCANFORMISSINGDATA, currentContext);
+	     PopupFactory.createPopup(PopupType.SCANFORMISSINGDATA, getCurrentActivity(), currentContext);
 	     }
 	   });
 		 
@@ -57,7 +64,7 @@ public class OptionButtonsFactory extends CustomView {
 		 undoOptionButton.setOnClickListener(new OnClickListener() { 
 	     @Override
 	     public void onClick(View arg0) {
-	     PopupFactory.createPopup(PopupType.UNDO, currentContext);
+	     PopupFactory.createPopup(PopupType.UNDO, getCurrentActivity() currentContext);
 	     }
 	   });
 	   */
