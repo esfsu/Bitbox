@@ -281,5 +281,8 @@ public class EditID3Activity extends Activity{
     confirmButton = (Button) findViewById(R.id.confirmButton);
     cancelButton = (Button) findViewById(R.id.cancelButton);
   }
-
+  @Override
+  public void onBackPressed() {
+     onDestroy();
+  }
 }

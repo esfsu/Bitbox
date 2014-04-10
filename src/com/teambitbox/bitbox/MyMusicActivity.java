@@ -46,6 +46,7 @@ public class MyMusicActivity extends Activity /*implements OnQueryTextListener*/
            return super.onOptionsItemSelected(item);
    }
   }
+ 
  /* This is an experiment with the action bar. The methods below are used
   * to add the actions to the event listeners. OnQuery methods are used
   * for the Search functionality

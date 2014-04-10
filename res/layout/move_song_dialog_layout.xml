@@ -1,48 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:orientation="vertical" >
-
-  <EditText
-    android:id="@+id/fileDestinationInputField"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="4dp"
-    android:layout_marginLeft="4dp"
-    android:layout_marginRight="4dp"
-    android:layout_marginTop="16dp"
-    android:ems="10"
-    android:inputType="textUri" >
-  </EditText>
-    
-  <LinearLayout 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal" >
-    
-    <Button
-      android:id="@+id/cancelMoveButton"
-      style="?android:attr/buttonStyleSmall"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:text="Cancel"
-      android:layout_weight="33.3" />
+    android:orientation="vertical"
+    android:showDividers="none" >
 
-    <Button
-       android:id="@+id/moveToDefaultMusicDirectoryButton"
-       style="?android:attr/buttonStyleSmall"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:text="Move to Default Music Directory" 
-       android:layout_weight="33.3"/>
-    
-    <Button
-      android:id="@+id/moveToSelectedDirectoryButton"
-      style="?android:attr/buttonStyleSmall"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:text="Move to Selected Directory"
-      android:layout_weight="33.4" />
-  </LinearLayout>
+    <EditText
+        android:id="@+id/fileDestinationInputField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="textUri" >
+    </EditText>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:background="?android:attr/dividerHorizontal" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="51dp"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/cancelMoveButton"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="33.3"
+            android:text="Cancel"
+            android:textSize="10sp" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="?android:attr/dividerVertical" />
+
+        <Button
+            android:id="@+id/moveToDefaultMusicDirectoryButton"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="33.3"
+            android:text="Move to Default Music Directory"
+            android:textSize="10sp" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="?android:attr/dividerVertical" />
+
+        <Button
+            android:id="@+id/moveToSelectedDirectoryButton"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="33.4"
+            android:text="Move to Selected Directory"
+            android:textSize="10sp" />
+    </LinearLayout>
+
 </LinearLayout>

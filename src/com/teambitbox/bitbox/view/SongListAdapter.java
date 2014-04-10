@@ -26,18 +26,17 @@ import com.teambitbox.bitbox.model.Song;
 
 public class SongListAdapter extends ArrayAdapter<Song> {
 
-  private SongListView currentSongListWidget; // song widget that will be used for
-  private ArrayList <Integer> selectedSongsPositions = new ArrayList<Integer>(); // all the positions of the songs selected.
+  private SongListView mCurrentSongListWidget; // song widget that will be used for
+  private ArrayList <Integer> mSelectedSongsPositions = new ArrayList<Integer>(); // all the positions of the songs selected.
   
   // Adapter Constructor
   public SongListAdapter(SongListView songListView) {
     super(songListView.getCurrentActivity(), R.layout.row_layout, songListView.getSongArrayList()); // uses parent Constructor
-    this.setCurrentSongList(songListView); // sets the current Song list to be used in this adapter
+    setCurrentSongList(songListView); // sets the current Song list to be used in this adapter
   }
 	    
   @Override
   public View getView(int position, View convertView,ViewGroup parent){
-  
   	View row = convertView; // view to be returned
     Song song = getItem(position); // gets the Song object from ArrayList in the SongClass depending on its position
     
@@ -73,21 +72,21 @@ public class SongListAdapter extends ArrayAdapter<Song> {
  
   // sets the SongListView widget to be used for this adapter
   private void setCurrentSongList(SongListView sl){
-		this.currentSongListWidget = sl;	
+    mCurrentSongListWidget = sl;	
 	}
 
   // returns the SongListView widget used in this adapter
 	private SongListView getCurrentSongList(){
-		return this.currentSongListWidget;
+		return mCurrentSongListWidget;
 	}
 	
 	// sets the selected position number to the number of the item selected in the list
 	public void setSelectedPositions(Integer pos){
 		if (!getSelectedPositions().contains(pos)){
-		  this.selectedSongsPositions.add(pos);
+		  mSelectedSongsPositions.add(pos);
 		}
 		else{
-			selectedSongsPositions.remove(pos);
+			mSelectedSongsPositions.remove(pos);
 		}
 		// inform the view of this change
 		notifyDataSetChanged();
@@ -95,6 +94,6 @@ public class SongListAdapter extends ArrayAdapter<Song> {
 
 	// returns the selected item position
 	public ArrayList<Integer> getSelectedPositions(){
-		return this.selectedSongsPositions;
+		return mSelectedSongsPositions;
 	}
 }
