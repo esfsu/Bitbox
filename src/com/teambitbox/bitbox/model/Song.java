@@ -24,7 +24,7 @@ public class Song {
   private String mTrackNum = "";
   private String mTrackTotal = "";
   private String mDiscNum = "";
-  private String[] mMissingData;
+  private String mMissingData;
 
 
   public String getFileName() {
@@ -32,15 +32,7 @@ public class Song {
   }
 
   public void setFileName(String name) {
-    mSongName = name;
-  }
-
-  public String getSongName() {
-    return mSongName;
-  }
-
-  public void setSongName(String name) {
-    mSongName = name;
+    mFileName = name;
   }
 
   public String getLocation() {
@@ -49,6 +41,14 @@ public class Song {
 
   public void setLocation(String location) {
     mLocation = location;
+  }
+  
+  public String getSongName() {
+    return mSongName;
+  }
+
+  public void setSongName(String name) {
+    mSongName = name;
   }
 
   public String getArtist() {
@@ -87,10 +87,6 @@ public class Song {
     return mGenre;
   }
   
-  public String getGenreString() {
-    return mGenre.toString();
-  }
-
   public void setGenre(String genre) {
     mGenre = genre;
   }
@@ -127,11 +123,11 @@ public class Song {
     mDiscNum = discNum;
   }
  
-  public void setMissingData(String[] missingData) {
+  public void setMissingData(String missingData) {
     mMissingData = missingData;
   }
   
-  public String[] getMissingData()
+  public String getMissingData()
   {
     return mMissingData;
   }

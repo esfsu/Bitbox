@@ -67,7 +67,6 @@ public class Scanner {
       Log.d("Tag read complete", "");
       // after scanning, create the persistent copy of the data (file)
       mEditor.createMyMusicFile(mSongList);
-      Log.d("mEditor done", "");
       
       mIsScanComplete = true;
       
@@ -107,7 +106,7 @@ public class Scanner {
       for (File file : files)
       {
         ++mNumFilesScanned;
-        Log.d("Checking", file.getAbsolutePath());
+        //Log.d("Checking", file.getAbsolutePath());
         if (file.isDirectory() && file.canRead())
         {
           _recursiveScan(file.listFiles());
@@ -136,7 +135,6 @@ public class Scanner {
             if (f.hasID3v2Tag())
             {
               Log.d("V2 Tag", "");
-              
               Log.d("File", file.getName());
               tempSong.setFileName(file.getName());
               tempSong.setLocation(file.getParent());
@@ -205,7 +203,6 @@ public class Scanner {
             {
               // id3V1 has many fewer tags than id3V2, so we set those as missing by default
               Log.d("V1 Tag", "");
-              
               Log.d("File", file.getName());
               tempSong.setFileName(file.getName());
               tempSong.setLocation(file.getParent());
@@ -257,11 +254,10 @@ public class Scanner {
             } // end tag versioning
                         
             // turn our missing data String list into an Array
-            tempSong.setMissingData(missingData.split(","));
+            tempSong.setMissingData(missingData);
             
-            Log.d("Missing", missingData);
             // turn our missing data String list into an Array
-            tempSong.setMissingData(missingData.split(","));
+            tempSong.setMissingData(missingData);
             
             // add all of the data to the list
             mSongList.add(tempSong);
@@ -277,8 +273,8 @@ public class Scanner {
   
   // make sure we're not getting empty data. If it is, it goes to missingData.
   private boolean _validateId3(String id3) {
-    if (id3 == null) Log.d("id3", "null");
-    if (id3 != null) Log.d("id3", id3);
+    //if (id3 == null) Log.d("id3", "null");
+    //if (id3 != null) Log.d("id3", id3);
 
     return !(id3 == null || id3 == "null" || id3 == "" || id3 == " ");
   }

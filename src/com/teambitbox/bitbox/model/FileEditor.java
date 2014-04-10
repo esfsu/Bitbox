@@ -7,13 +7,16 @@
 
 package com.teambitbox.bitbox.model;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+
 import android.os.Environment;
 
 import android.content.Context;
@@ -67,50 +70,63 @@ class FileEditor {
   // Called after Scanner
   public void createMyMusicFile(ArrayList<Song> songList) {
     try {
-      Log.d("Writing File", "");
-      File myMusic = new File("MyMusic.xml");
-      if (!myMusic.exists())
-      {
-        myMusic.createNewFile();
-      }
+      Log.d("Writing File", "Writing File");
       FileOutputStream fOut = mContext.openFileOutput("MyMusic.xml", Context.MODE_PRIVATE);
       OutputStreamWriter osw = new OutputStreamWriter(fOut);
-
+      
       String fileContent = "";
+      fileContent += "<MyMusic>\n";
+      osw.write(fileContent);
+      osw.flush();
+       
       for (Song item : songList) {
-        fileContent += "  " + Id3.SONG_FIRST.toString() + "\n";
-        fileContent += "    <" + Id3.FILE_NAME.toString() + " value=" + item.getFileName()
-            + " />\n";
-        fileContent += "    <" + Id3.FILE_LOC.toString() + " value=" + item.getLocation() + " />\n";
-        fileContent += "    <" + Id3.SONG_NAME.toString() + " value=" + item.getSongName()
-            + " />\n";
-        fileContent += "    <" + Id3.ARTIST.toString() + " value=" + item.getArtist() + " />\n";
-        fileContent += "    <" + Id3.ALBUM.toString() + " value=" + item.getAlbum() + " />\n";
-        fileContent += "    <" + Id3.ALBUM_ARTIST.toString() + " value=" + item.getAlbumArtist()
-            + " />\n";
-        fileContent += "    <" + Id3.COMPOSER.toString() + " value=" + item.getComposer() + " />\n";
-        fileContent += "    <" + Id3.GENRE.toString() + " value=" + item.getGenreString()
-            + " />\n";
-        fileContent += "    <" + Id3.YEAR.toString() + " value=" + item.getYear() + " />\n";
-        fileContent += "    <" + Id3.TRACK_NUM.toString() + " value=" + item.getTrackNum()
-            + " />\n";
-        fileContent += "    <" + Id3.TOTAL_TRACKS.toString() + " value=" + item.getTrackTotal()
-            + " />\n";
-        fileContent += "    <" + Id3.DISC_NUM.toString() + " value=" + item.getDiscNum() + " />\n";
-        fileContent += "    <" + Id3.MISSING.toString() + " value=";
-        for (String missingData : item.getMissingData()) {
-          fileContent += missingData + ",";
-        }
-        fileContent += " />\n";
-
-        fileContent += "  " + Id3.SONG_LAST.toString() + "\n\n";
+        fileContent = "";
+        fileContent += "  <" + Id3.SONG_FIRST.toString() + ">\n";
+        fileContent += "    <" + Id3.FILE_NAME.toString() + " value=\"" + item.getFileName()
+            + "\" />\n";
+        fileContent += "    <" + Id3.FILE_LOC.toString() + " value=\"" + item.getLocation() + "\" />\n";
+        fileContent += "    <" + Id3.SONG_NAME.toString() + " value=\"" + item.getSongName()
+            + "\" />\n";
+        fileContent += "    <" + Id3.ARTIST.toString() + " value=\"" + item.getArtist() + "\" />\n";
+        fileContent += "    <" + Id3.ALBUM.toString() + " value=\"" + item.getAlbum() + "\" />\n";
+        fileContent += "    <" + Id3.ALBUM_ARTIST.toString() + " value=\"" + item.getAlbumArtist()
+            + "\" />\n";
+        fileContent += "    <" + Id3.COMPOSER.toString() + " value=\"" + item.getComposer() + "\" />\n";
+        fileContent += "    <" + Id3.GENRE.toString() + " value=\"" + item.getGenre()
+            + "\" />\n";
+        fileContent += "    <" + Id3.YEAR.toString() + " value=\"" + item.getYear() + "\" />\n";
+        fileContent += "    <" + Id3.TRACK_NUM.toString() + " value=\"" + item.getTrackNum()
+            + "\" />\n";
+        fileContent += "    <" + Id3.TOTAL_TRACKS.toString() + " value=\"" + item.getTrackTotal()
+            + "\" />\n";
+        fileContent += "    <" + Id3.DISC_NUM.toString() + " value=\"" + item.getDiscNum() + "\" />\n";
+        fileContent += "    <" + Id3.MISSING.toString() + " value=\"" + item.getMissingData() + "\" />\n";
+        fileContent += "  <" + Id3.SONG_LAST.toString() + ">\n";
+        
+        osw.write(fileContent);
+        osw.flush();
       }
-
+      fileContent += "</MyMusic>\n\n";
       osw.write(fileContent);
       osw.flush();
       osw.close();
       fOut.close();
       Log.d("Write Complete", "File writing complete");
+      
+      /* Debug only
+      InputStream fIn = mContext.openFileInput("MyMusic.xml");
+      BufferedReader input = new BufferedReader(new InputStreamReader(fIn));
+      Log.d("xml", input.readLine());
+      input.close();
+      fIn.close();
+      
+      _parseMyMusicFile();
+      
+      Log.d("SongList", String.valueOf(mSongList.size()));
+      for (Song song : mSongList) {
+        Log.d("SongFile", song.getFileName());
+      }
+      */
     } catch (java.io.IOException e) {
       // TODO
       // do something if an IOException occurs.
@@ -120,10 +136,10 @@ class FileEditor {
 
   // Internally setup the songList
   private void _parseMyMusicFile() {
-    Log.d("Parsing File", "");
+    Log.d("Parsing File", "parse");
     XmlPullParser parser = Xml.newPullParser();
     try {
-      FileInputStream fIn = mContext.openFileInput("MyMusic.xml");
+      InputStream fIn = mContext.openFileInput("MyMusic.xml");
       InputStreamReader isr = new InputStreamReader(fIn);
 
       // auto-detect the encoding from the stream
@@ -132,82 +148,77 @@ class FileEditor {
       Song currentSong = null;
       boolean done = false;
 
-      while (eventType != XmlPullParser.END_DOCUMENT && !done) {
+      while (eventType != XmlPullParser.END_DOCUMENT && done != true) {
         String name = null;
         
         switch (eventType) {
           case XmlPullParser.START_DOCUMENT:
+            Log.d("Start", "START_DOC");
             // move on to the next tag
             break;
 
           case XmlPullParser.START_TAG:
             name = parser.getName();
+            Log.d("Name", name);
   
             if (name.equalsIgnoreCase("MyMusic")) {
               // create a new list container at the root
               mSongList = new ArrayList<Song>();
-            } else if (mSongList != null) {
+              Log.d("Parsing", "New Song List");
+            }
+            else if (mSongList != null)
+            {
               // getting attributes
-              String currentAttribute = "";
-              currentSong = new Song();
               if (name.equalsIgnoreCase(Id3.SONG_FIRST.toString())) {
                 currentSong = new Song();
               } else if (name.equalsIgnoreCase(Id3.FILE_NAME.toString())) {
-                currentAttribute = parser.getAttributeValue(0);
-                currentSong.setFileName(currentAttribute);
+                currentSong.setFileName(parser.getAttributeValue(0));
+                Log.d("FileName1", parser.getAttributeValue(null, "value"));
               } else if (name.equalsIgnoreCase(Id3.FILE_LOC.toString())) {
-                currentAttribute = parser.getAttributeValue(0);
-                currentSong.setLocation(currentAttribute);
+                currentSong.setLocation(parser.getAttributeValue(0));
               } else if (name.equalsIgnoreCase(Id3.SONG_NAME.toString())) {
-                currentAttribute = parser.getAttributeValue(0);
-                currentSong.setSongName(currentAttribute);
+                currentSong.setSongName(parser.getAttributeValue(0));
               } else if (name.equalsIgnoreCase(Id3.ARTIST.toString())) {
-                currentAttribute = parser.getAttributeValue(0);
-                currentSong.setArtist(currentAttribute);
+                currentSong.setArtist(parser.getAttributeValue(0));
               } else if (name.equalsIgnoreCase(Id3.ALBUM_ARTIST.toString())) {
-                currentAttribute = parser.getAttributeValue(0);
-                currentSong.setAlbumArtist(currentAttribute);
-              }
-              else if (name.equalsIgnoreCase(Id3.ALBUM.toString())) {
-                currentAttribute = parser.getAttributeValue(0);
-                currentSong.setAlbum(currentAttribute);
+                currentSong.setAlbumArtist(parser.getAttributeValue(0));
+              } else if (name.equalsIgnoreCase(Id3.ALBUM.toString())) {
+                currentSong.setAlbum(parser.getAttributeValue(0));
               } else if (name.equalsIgnoreCase(Id3.COMPOSER.toString())) {
-                currentAttribute = parser.getAttributeValue(0);
-                currentSong.setComposer(currentAttribute);
+                currentSong.setComposer(parser.getAttributeValue(0));
               } else if (name.equalsIgnoreCase(Id3.GENRE.toString())) {
-                currentAttribute = parser.getAttributeValue(0);
-                // currentSong.setGenre(currentAttribute);
+                currentSong.setGenre(parser.getAttributeValue(0));
               } else if (name.equalsIgnoreCase(Id3.YEAR.toString())) {
-                currentAttribute = parser.getAttributeValue(0);
-                currentSong.setYear(currentAttribute);
+                currentSong.setYear(parser.getAttributeValue(0));
               } else if (name.equalsIgnoreCase(Id3.TRACK_NUM.toString())) {
-                currentAttribute = parser.getAttributeValue(0);
-                currentSong.setTrackNum(currentAttribute);
+                currentSong.setTrackNum(parser.getAttributeValue(0));
               } else if (name.equalsIgnoreCase(Id3.TOTAL_TRACKS.toString())) {
-                currentAttribute = parser.getAttributeValue(0);
-                currentSong.setTrackTotal(currentAttribute);
+                currentSong.setTrackTotal(parser.getAttributeValue(0));
               } else if (name.equalsIgnoreCase(Id3.DISC_NUM.toString())) {
-                currentAttribute = parser.getAttributeValue(0);
-                currentSong.setDiscNum(currentAttribute);
+                currentSong.setDiscNum(parser.getAttributeValue(0));
               } else if (name.equalsIgnoreCase(Id3.MISSING.toString())) {
-                String[] missingData = currentAttribute.split(",");
-                currentSong.setMissingData(missingData);
+                currentSong.setMissingData(parser.getAttributeValue(0));
               }
-            }
+            } // end getting attributes
             break;
 
           case XmlPullParser.END_TAG:
             name = parser.getName();
   
             if (name.equalsIgnoreCase(Id3.SONG_FIRST.toString()) && currentSong != null) {
+              Log.d("Adding to List", currentSong.getFileName());
               // add to list at closing song tag
               mSongList.add(currentSong);
-            } else if (name.equalsIgnoreCase("MyMusicList")) {
+            } else if (name.equalsIgnoreCase("MyMusic")) {
               // quit if done
               done = true;
             }
             break;
-          }
+            
+          default:
+            // move on to the next tag
+            break;
+          }      
         eventType = parser.next();
       }
     } catch (FileNotFoundException e) {
@@ -363,18 +374,19 @@ class FileEditor {
   public void renameFile(ArrayList<Song> songList, String value) {
     // make sure we can reverse it
     mUndoList.setUndoList(songList, value, FileOp.RENAME);
-
-     for (Song song : songList) {
-       File sd = Environment.getExternalStorageDirectory();
-      // File (or directory) to be moved
-      String sourcePath = song.getLocation();
-      File file = new File(sd, sourcePath);
-      // Destination directory
-      file.renameTo(new File(sd, value));
     
-       //realFileName = value;
-       _updateMyMusicFileTag(song.getFileName(), Id3.FILE_NAME, value);
-     }
+    for (Song song : songList) {
+      Log.d("Rename New", value + song.getFileName());
+      Log.d("Rename Old", song.getLocation() + song.getFileName());
+      // destination file
+      File newFile = new File(value + song.getFileName());
+      // File (or directory) to be moved
+      File file = new File(song.getLocation() + song.getFileName());
+      // Destination directory
+      file.renameTo(newFile);
+    
+      _updateMyMusicFileTag(song.getFileName(), Id3.FILE_NAME, value);
+    }
   }
 
   // Edit real file and MyMusic file location (same as rename)
@@ -382,13 +394,20 @@ class FileEditor {
     // make sure we can reverse it
     mUndoList.setUndoList(songList, value, FileOp.RENAME);
 
-     for (Song song : songList) {
-       File sd = Environment.getExternalStorageDirectory();
+    if (value == null || value == "") {
+      // set default dir
+      value = "/storage/sdcard0/" + Environment.DIRECTORY_MUSIC;
+    }
+    
+    for (Song song : songList) {
+      Log.d("Rename New", value + song.getFileName());
+      Log.d("Rename Old", song.getLocation() + song.getFileName());
+      // destination file
+      File newFile = new File(value + song.getFileName());
       // File (or directory) to be moved
-      String sourcePath = song.getLocation();
-      File file = new File(sd, sourcePath);
+      File file = new File(song.getLocation() + song.getFileName());
       // Destination directory
-      file.renameTo(new File(sd, value));
+      file.renameTo(newFile);
       
        _updateMyMusicFileTag(song.getFileName(), Id3.FILE_NAME, value);
      }
