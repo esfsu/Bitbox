@@ -96,15 +96,14 @@ public class ScanForMusicPopup extends Popup {
 					public void onClick(DialogInterface dialog, int id) {
 						// if the user didn't enter a directory name, a toast
 						// message will appear.
-						if (getDirectoryInput().equals("")) {
+						/*if (getDirectoryInput().equals("")) {
 							Toast.makeText(getCurrentContext(),
 									"You did not enter a directory",
 									Toast.LENGTH_SHORT).show();
-						} else {
-							progressBarDialog();
-						}
-					}
-				}).setNegativeButton(R.string.scanDeviceOption,
+						} else*/ 
+							progressBarDialog();}
+				});
+			builder.setNegativeButton(R.string.scanDeviceOption,
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 					  // TODO: WARN USER THIS COULD TAKE A LONG TIME!
@@ -132,6 +131,7 @@ public class ScanForMusicPopup extends Popup {
 
 		// style of progress bar
 		progressDialogPopup.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+		progressDialogPopup.setCanceledOnTouchOutside(false);
 		
 		/*
 		// TODO: We can't cancel this action as of yet.
@@ -173,7 +173,6 @@ public class ScanForMusicPopup extends Popup {
 	            handle.sendMessage(handle.obtainMessage());
             }
 	         
-	         progressDialogPopup.dismiss();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
