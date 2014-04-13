@@ -9,10 +9,13 @@
 
 package com.teambitbox.bitbox;
 
+import java.util.ArrayList;
+
 import com.teambitbox.bitbox.view.BitboxApp;
 import com.teambitbox.bitbox.view.SelectedSongsSingleton;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -22,8 +25,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import com.teambitbox.bitbox.R;
+import com.teambitbox.bitbox.model.Id3;
+import com.teambitbox.bitbox.model.Song;
+import com.teambitbox.bitbox.model.Id3Data;
+import com.teambitbox.bitbox.model.FileEditor;
 
-public class EditID3Activity extends Activity{
+public class EditID3Activity extends Activity {
   
   private EditText editSongTitleInputField;
   private EditText editArtistNameInputField;
@@ -31,20 +39,22 @@ public class EditID3Activity extends Activity{
   private EditText editGenreInputField;
   private EditText editComposerInputField;
   private EditText editTrackBeginningInputField;
-  private EditText editTrackEndInputField;
   private EditText editDiscBeginningInputField;
-  private EditText editDiscEndInputField;
   private EditText editYearInputField;
   private Button confirmButton;
   private Button cancelButton;
   protected BitboxApp singletonHolder;
+  private FileEditor mEditor;
+  private final String MULTIVAL = "<Multiple Values>";
   
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    
     setContentView(R.layout.edit_id3_layout);
     setViewIds();
     singletonHolder = (BitboxApp)getApplication();
+    mEditor = new FileEditor(singletonHolder.getBaseContext());
     final Intent myIntent = new Intent(this, MyMusicActivity.class);
     // loop to check if the song list has the correct songs
     for (int start = 0; start < SelectedSongsSingleton.getInstance().getSelectedSongs().size(); start++){
@@ -172,46 +182,8 @@ public class EditID3Activity extends Activity{
       }
     });
 
-    // edit second track field
-    editTrackEndInputField.addTextChangedListener(new TextWatcher() {
-      @Override
-      public void afterTextChanged(Editable s) {
-        // call metadata editor method
-      }
-
-      @Override
-      public void beforeTextChanged(CharSequence s, int start, int count,
-          int after) {
-        // save old metadata information
-      }
-
-      @Override
-      public void onTextChanged(final CharSequence s, int start, int before,
-          int count) {
-      }
-    });
-
     // edit first disc field
     editDiscBeginningInputField.addTextChangedListener(new TextWatcher() {
-      @Override
-      public void afterTextChanged(Editable s) {
-        // call metadata editor method
-      }
-
-      @Override
-      public void beforeTextChanged(CharSequence s, int start, int count,
-          int after) {
-        // save old metadata information
-      }
-
-      @Override
-      public void onTextChanged(final CharSequence s, int start, int before,
-          int count) {
-      }
-    });
-
-    // edit second disc field
-    editDiscEndInputField.addTextChangedListener(new TextWatcher() {
       @Override
       public void afterTextChanged(Editable s) {
         // call metadata editor method
@@ -248,10 +220,56 @@ public class EditID3Activity extends Activity{
       }
     });
 
+    // Change the metadata!
     confirmButton.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View arg0) {
-        // save updates
+             
+        // Create the Id3 data list
+        ArrayList<Id3Data> id3List = new ArrayList<Id3Data>();
+        Id3Data id3Val;
+        if (editSongTitleInputField.getText().toString() != MULTIVAL) {
+          id3Val = new Id3Data(Id3.SONG_NAME, editSongTitleInputField.getText().toString());
+          id3List.add(id3Val);
+          Log.d("NewName", "id3Val");
+        }
+        if (editArtistNameInputField.getText().toString() != MULTIVAL) {
+          id3Val = new Id3Data(Id3.ARTIST, editArtistNameInputField.getText().toString());
+          id3List.add(id3Val);
+        }
+        if (editAlbumArtistInputField.getText().toString() != MULTIVAL) {
+          id3Val = new Id3Data(Id3.ALBUM_ARTIST, editAlbumArtistInputField.getText().toString());
+          id3List.add(id3Val);
+        }
+        if (editGenreInputField.getText().toString() != MULTIVAL) {
+          id3Val = new Id3Data(Id3.GENRE, editGenreInputField.getText().toString());
+          id3List.add(id3Val);
+        }
+        if (editComposerInputField.getText().toString() != MULTIVAL) {
+          id3Val = new Id3Data(Id3.COMPOSER, editComposerInputField.getText().toString());
+          id3List.add(id3Val);
+        }
+        if (editTrackBeginningInputField.getText().toString() != MULTIVAL) {
+          id3Val = new Id3Data(Id3.TRACK_NUM, editTrackBeginningInputField.getText().toString());
+          id3List.add(id3Val);
+        }
+        if (editDiscBeginningInputField.getText().toString() != MULTIVAL) {
+          id3Val = new Id3Data(Id3.DISC_NUM, editDiscBeginningInputField.getText().toString());
+          id3List.add(id3Val);
+        }
+        if (editYearInputField.getText().toString() != MULTIVAL) {
+          id3Val = new Id3Data(Id3.YEAR, editYearInputField.getText().toString());
+          id3List.add(id3Val);
+        }
+        
+        Log.d("Edit", "Starting");
+        
+        // Do the dirty work
+        mEditor.editId3Data(SelectedSongsSingleton.getInstance().getSelectedSongs(), id3List);
+        
+        Log.d("Edit", "Complete");
+        
+        // Return from whence we came
         startActivity(myIntent);
       }
     });
@@ -274,12 +292,49 @@ public class EditID3Activity extends Activity{
     editGenreInputField = (EditText) findViewById(R.id.editGenreField);
     editComposerInputField = (EditText) findViewById(R.id.editComposerField);
     editTrackBeginningInputField = (EditText) findViewById(R.id.trackBeginningField);
-    editTrackEndInputField = (EditText) findViewById(R.id.trackEndField);
     editDiscBeginningInputField = (EditText) findViewById(R.id.discBeginningField);
-    editDiscEndInputField = (EditText) findViewById(R.id.discEndField);
     editYearInputField = (EditText) findViewById(R.id.yearInputField);
     confirmButton = (Button) findViewById(R.id.confirmButton);
     cancelButton = (Button) findViewById(R.id.cancelButton);
+    
+    // Set text if it's the same for all fields
+    if (SelectedSongsSingleton.getInstance().getSelectedSongs().size() > 1)
+    {
+      // set initial comparison string
+      String songName = SelectedSongsSingleton.getInstance().getSelectedSongs().get(0).getSongName();
+      String artist = SelectedSongsSingleton.getInstance().getSelectedSongs().get(0).getArtist();
+      String albumArtist = SelectedSongsSingleton.getInstance().getSelectedSongs().get(0).getAlbumArtist();
+      String genre = SelectedSongsSingleton.getInstance().getSelectedSongs().get(0).getGenre();
+      String composer = SelectedSongsSingleton.getInstance().getSelectedSongs().get(0).getComposer();
+      String trackNum = SelectedSongsSingleton.getInstance().getSelectedSongs().get(0).getTrackNum();
+      String discNum = SelectedSongsSingleton.getInstance().getSelectedSongs().get(0).getDiscNum();
+      String year = SelectedSongsSingleton.getInstance().getSelectedSongs().get(0).getYear();
+      
+      // compare against all other songs
+      // if same, keep value, if different, notify user 
+      for (Song song : SelectedSongsSingleton.getInstance().getSelectedSongs())
+      {
+        songName = (songName == song.getSongName()) ? song.getSongName() : MULTIVAL;
+        artist = (artist == song.getArtist()) ? song.getArtist() : MULTIVAL;
+        albumArtist = (albumArtist == song.getAlbumArtist()) ? song.getAlbumArtist() : MULTIVAL;
+        genre = (genre == song.getGenre()) ? song.getGenre() : MULTIVAL;
+        composer = (composer == song.getComposer()) ? song.getComposer() : MULTIVAL;
+        trackNum = (trackNum == song.getTrackNum()) ? song.getTrackNum() : MULTIVAL;
+        discNum = (discNum == song.getDiscNum()) ? song.getDiscNum() : MULTIVAL;
+        year = (year == song.getYear()) ? song.getYear() : MULTIVAL;
+      }
+    }
+    else
+    {
+      editSongTitleInputField.setText(SelectedSongsSingleton.getInstance().getSelectedSongs().get(0).getSongName());
+      editArtistNameInputField.setText(SelectedSongsSingleton.getInstance().getSelectedSongs().get(0).getArtist());
+      editAlbumArtistInputField.setText(SelectedSongsSingleton.getInstance().getSelectedSongs().get(0).getAlbumArtist());
+      editGenreInputField.setText(SelectedSongsSingleton.getInstance().getSelectedSongs().get(0).getGenre());
+      editComposerInputField.setText(SelectedSongsSingleton.getInstance().getSelectedSongs().get(0).getComposer());
+      editTrackBeginningInputField.setText(SelectedSongsSingleton.getInstance().getSelectedSongs().get(0).getTrackNum());
+      editDiscBeginningInputField.setText(SelectedSongsSingleton.getInstance().getSelectedSongs().get(0).getDiscNum());
+      editYearInputField.setText(SelectedSongsSingleton.getInstance().getSelectedSongs().get(0).getYear());
+    }
   }
   @Override
   public void onBackPressed() {

@@ -137,7 +137,7 @@ public class Scanner {
               Log.d("V2 Tag", "");
               Log.d("File", file.getName());
               tempSong.setFileName(file.getName());
-              tempSong.setLocation(file.getParent());
+              tempSong.setLocation(file.getParent() + "/");
     
               id3Data = (v24tag.hasField(FieldKey.TITLE)) ? v24tag.getFirst(FieldKey.TITLE) : null;
               if (_validateId3(id3Data))

@@ -11,8 +11,21 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="18dp"
-        android:layout_marginTop="24dp"
-        android:text="Song Info" />
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="SONG INFORMATION"
+        android:textStyle="bold"
+        android:textSize="20dp" />
+    
+     <TextView
+         android:id="@+id/infoView"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_above="@+id/songTitleTextView"
+         android:layout_alignLeft="@+id/songInfoTitleTextView"
+         android:layout_marginTop="5dp"
+         android:text="Changes will apply to *all* selected songs."
+         android:textSize="12dp" />
 
     <TextView
         android:id="@+id/songTitleTextView"
@@ -20,219 +33,203 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/songInfoTitleTextView"
         android:layout_below="@+id/songInfoTitleTextView"
-        android:layout_marginBottom="4dp"
-        android:layout_marginTop="28dp"
-        android:text="Song Title" />
+        android:layout_marginTop="20dp"
+        android:text="Song Title"
+        android:textSize="15dp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/artistTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/songTitleTextView"
+        android:layout_alignLeft="@+id/songInfoTitleTextView"
         android:layout_below="@+id/songTitleTextView"
-        android:layout_marginBottom="4dp"
-        android:text="Artist" />
+        android:layout_marginTop="15dp"
+        android:text="Artist"
+        android:textSize="15dp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/albumArtistTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/artistTextView"
+        android:layout_alignLeft="@+id/songInfoTitleTextView"
         android:layout_below="@+id/artistTextView"
-        android:layout_marginBottom="4dp"
-        android:layout_toLeftOf="@+id/editAlbumArtistField"
-        android:text="Album Artist" />
+        android:layout_marginTop="15dp"
+        android:text="Album Artist  "
+        android:textSize="15dp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/genreTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/albumArtistTextView"
-        android:layout_alignRight="@+id/albumArtistTextView"
+        android:layout_alignLeft="@+id/songInfoTitleTextView"
         android:layout_below="@+id/albumArtistTextView"
-        android:layout_marginBottom="4dp"
-        android:text="Genre" />
+        android:layout_marginTop="15dp"
+        android:text="Genre"
+        android:textSize="15dp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/composerTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/genreTextView"
+        android:layout_alignLeft="@+id/songInfoTitleTextView"
         android:layout_below="@+id/genreTextView"
-        android:layout_marginBottom="4dp"
-        android:text="Composer" />
+        android:layout_marginTop="15dp"
+        android:text="Composer"
+        android:textSize="15dp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/trackTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/composerTextView"
-        android:layout_alignRight="@+id/composerTextView"
+        android:layout_alignLeft="@+id/songInfoTitleTextView"
         android:layout_below="@+id/composerTextView"
-        android:layout_marginBottom="4dp"
-        android:text="Track" />
+        android:layout_marginTop="15dp"
+        android:text="Track"
+        android:textSize="15dp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/discTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/trackTextView"
+        android:layout_alignLeft="@+id/songInfoTitleTextView"
         android:layout_below="@+id/trackTextView"
-        android:layout_marginBottom="4dp"
-        android:text="Disc" />
+        android:layout_marginTop="15dp"
+        android:text="Disc"
+        android:textSize="15dp"
+        android:textStyle="bold" />
+    
+     <TextView
+        android:id="@+id/yearTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/songInfoTitleTextView"
+        android:layout_below="@+id/discTextView"
+        android:layout_marginTop="15dp"
+        android:text="Year"
+        android:textSize="15dp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/editSongTitleField"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/editArtistField"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/songTitleTextView"
+        android:layout_weight="1"
+        android:layout_toRightOf="@+id/albumArtistTextView"
+        android:layout_alignBottom="@+id/songTitleTextView"
+        android:layout_marginRight="18dp"
         android:ems="10"
         android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/editArtistField"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/editAlbumArtistField"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/songTitleTextView"
+        android:layout_weight="1"
+        android:layout_alignLeft="@+id/editSongTitleField"
+        android:layout_alignBottom="@+id/artistTextView"
+        android:layout_marginRight="18dp"
         android:ems="10"
         android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/editAlbumArtistField"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/editGenreField"
-        android:layout_alignLeft="@id/editArtistField"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/albumArtistTextView"
+        android:layout_weight="1"
+        android:layout_alignLeft="@+id/editSongTitleField"
+        android:layout_alignBottom="@+id/albumArtistTextView"
+        android:layout_marginRight="18dp"
         android:ems="10"
         android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/editGenreField"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/editComposerField"
-        android:layout_alignLeft="@+id/editAlbumArtistField"
-        android:layout_alignTop="@+id/genreTextView"
+        android:layout_weight="1"
+        android:layout_alignLeft="@+id/editSongTitleField"
+        android:layout_alignBottom="@+id/genreTextView"
+        android:layout_marginRight="18dp"
         android:ems="10" />
 
     <EditText
         android:id="@+id/editComposerField"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/trackLayout"
-        android:layout_alignLeft="@+id/editGenreField"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/composerTextView"
+        android:layout_weight="1"
+        android:layout_alignLeft="@+id/editSongTitleField"
+        android:layout_alignBottom="@+id/composerTextView"
+        android:layout_marginRight="18dp"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+
+    <EditText
+        android:id="@+id/trackBeginningField"
+        android:layout_width="35dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editSongTitleField"
+        android:layout_alignBottom="@+id/trackTextView"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+
+    <EditText
+        android:id="@+id/discBeginningField"
+        android:layout_width="35dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editSongTitleField"
+        android:layout_alignBottom="@+id/discTextView"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/yearInputField"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_alignLeft="@+id/editSongTitleField"
+        android:layout_alignBottom="@+id/yearTextView"
         android:ems="10"
         android:inputType="textPersonName" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/discLayout"
-        android:layout_alignLeft="@+id/editComposerField"
-        android:layout_alignTop="@+id/trackTextView"
-        android:orientation="horizontal"
-        android:id="@+id/trackLayout" >
-
-        <EditText
-            android:id="@+id/trackBeginningField"
-            android:layout_width="28dp"
-            android:layout_height="22dp"
-            android:ems="10"
-            android:inputType="textPersonName" />
-
-        <TextView
-            android:id="@+id/trackof"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="of" />
-
-        <EditText
-            android:id="@+id/trackEndField"
-            android:layout_width="28dp"
-            android:layout_height="21dp"
-            android:ems="10"
-            android:inputType="textPersonName" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/discLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/yearInputField"
-        android:layout_alignLeft="@+id/editComposerField"
-        android:layout_alignTop="@+id/discTextView"
-        android:orientation="horizontal" >
-
-        <EditText
-            android:id="@+id/discBeginningField"
-            android:layout_width="28dp"
-            android:layout_height="21dp"
-            android:ems="10"
-            android:inputType="textPersonName" />
-
-        <TextView
-            android:id="@+id/discof"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="of" />
-
-        <EditText
-            android:id="@+id/discEndField"
-            android:layout_width="28dp"
-            android:layout_height="21dp"
-            android:ems="10"
-            android:inputType="textPersonName" />
-    </LinearLayout>
-
-    <EditText
-        android:id="@+id/yearInputField"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/yearTextView"
-        android:layout_alignRight="@+id/trackLayout"
-        android:layout_alignTop="@+id/yearTextView"
-        android:layout_toRightOf="@+id/genreTextView"
-        android:ems="10"
-        android:inputType="numberDecimal" />
-
-    <TextView
-        android:id="@+id/yearTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/discTextView"
-        android:layout_centerVertical="true"
-        android:text="Year" />
-
-    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/yearInputField"
         android:layout_alignParentLeft="true"
-        android:orientation="horizontal" >
+        android:orientation="vertical" >
 
         <Button
             android:id="@+id/confirmButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Confirm"
-            android:layout_weight="50" />
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:background="@android:color/holo_green_dark"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:text="Confirm" />
 
         <Button
             android:id="@+id/cancelButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cancel"
-            android:layout_weight="50" />
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"
+            android:layout_marginBottom="300dp"
+            android:background="@android:color/darker_gray"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:text="Cancel" />
     </LinearLayout>
-
+    
 </RelativeLayout>

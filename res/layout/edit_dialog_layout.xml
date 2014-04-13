@@ -6,30 +6,29 @@
 
     <Button
         android:id="@+id/editIdTagOptionButton"
-        style="?android:attr/buttonStyleSmall"
+        style="?android:attr/buttonStyle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:text="Edit ID3\n Tags" />
+        android:layout_height="75dp"
+        android:layout_weight="1"
+        android:layout_alignParentLeft="true"
+        android:text="Edit Song\nData" />
 
     <Button
         android:id="@+id/editFileNameOptionButton"
-        style="?android:attr/buttonStyleSmall"
+        style="?android:attr/buttonStyle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editIdTagOptionButton"
+        android:layout_height="75dp"
+        android:layout_weight="1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="61dp"
-        android:text="Edit File\n Name" />
+        android:text="Edit File\nNames" />
 
     <Button
         android:id="@+id/moveFileOptionButton"
-        style="?android:attr/buttonStyleSmall"
+        style="?android:attr/buttonStyle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:text="Move File" />
+        android:layout_height="75dp"
+        android:layout_weight="1"
+        android:layout_alignParentRight="true"
+        android:text="Move Files" />
 
 </RelativeLayout>
