@@ -106,6 +106,7 @@ public class EditPopup extends Popup {
 	     public void onClick(View arg0) {
 	     	 SelectedSongsSingleton.getInstance().getSelectedSongs().clear();
 	    	 popup.dismiss();
+	    	
 	     }
 	  });
 		
@@ -126,6 +127,7 @@ public class EditPopup extends Popup {
 	    	  // use method to move to default directory here
 	     	  SelectedSongsSingleton.getInstance().getSelectedSongs().clear();
 	    	  popup.dismiss();
+	    	  //popup.getOwnerActivity()
 	      } 
 	    } 
 	  });

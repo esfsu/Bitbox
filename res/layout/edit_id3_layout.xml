@@ -15,7 +15,8 @@
         android:layout_marginBottom="20dp"
         android:text="SONG INFORMATION"
         android:textStyle="bold"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        />
     
      <TextView
          android:id="@+id/infoView"
@@ -124,7 +125,8 @@
         android:layout_alignBottom="@+id/songTitleTextView"
         android:layout_marginRight="18dp"
         android:ems="10"
-        android:inputType="textPersonName" />
+        android:inputType="textEmailAddress"
+        android:imeOptions="actionDone" />
 
     <EditText
         android:id="@+id/editArtistField"
@@ -135,7 +137,8 @@
         android:layout_alignBottom="@+id/artistTextView"
         android:layout_marginRight="18dp"
         android:ems="10"
-        android:inputType="textPersonName" />
+         android:inputType="textEmailAddress"
+        android:imeOptions="actionDone" />
 
     <EditText
         android:id="@+id/editAlbumArtistField"
@@ -146,7 +149,8 @@
         android:layout_alignBottom="@+id/albumArtistTextView"
         android:layout_marginRight="18dp"
         android:ems="10"
-        android:inputType="textPersonName" />
+         android:inputType="textEmailAddress"
+        android:imeOptions="actionDone" />
 
     <EditText
         android:id="@+id/editGenreField"
@@ -167,7 +171,8 @@
         android:layout_alignBottom="@+id/composerTextView"
         android:layout_marginRight="18dp"
         android:ems="10"
-        android:inputType="textPersonName" />
+        android:inputType="textEmailAddress"
+        android:imeOptions="actionDone" />
 
 
     <EditText
@@ -177,7 +182,8 @@
         android:layout_alignLeft="@+id/editSongTitleField"
         android:layout_alignBottom="@+id/trackTextView"
         android:ems="10"
-        android:inputType="textPersonName" />
+        android:inputType="textEmailAddress"
+        android:imeOptions="actionDone" />
 
 
     <EditText
@@ -187,7 +193,8 @@
         android:layout_alignLeft="@+id/editSongTitleField"
         android:layout_alignBottom="@+id/discTextView"
         android:ems="10"
-        android:inputType="textPersonName" />
+        android:inputType="textEmailAddress"
+        android:imeOptions="actionDone" />
 
     <EditText
         android:id="@+id/yearInputField"
@@ -197,7 +204,8 @@
         android:layout_alignLeft="@+id/editSongTitleField"
         android:layout_alignBottom="@+id/yearTextView"
         android:ems="10"
-        android:inputType="textPersonName" />
+        android:inputType="textEmailAddress"
+        android:imeOptions="actionDone" />
 
     <LinearLayout
         android:layout_width="match_parent"

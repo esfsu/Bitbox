@@ -55,7 +55,6 @@ public class EditID3Activity extends Activity {
     setViewIds();
     singletonHolder = (BitboxApp)getApplication();
     mEditor = new FileEditor(singletonHolder.getBaseContext());
-    final Intent myIntent = new Intent(this, MyMusicActivity.class);
     // loop to check if the song list has the correct songs
     for (int start = 0; start < SelectedSongsSingleton.getInstance().getSelectedSongs().size(); start++){
   	  Log.d("Edit ID3", "Current selected song number is :" + start);
@@ -64,15 +63,14 @@ public class EditID3Activity extends Activity {
   
     /* TODO: 1) create a method called setListeners and move these listeners to that method once
      *          the editors are working correctly
-     *       2) create a method to compare artists name
-     *       3) set listener for cancel button
-     *       4) override "back" action */
+     *       2) create a method to compare artists names */
     
     // edit song title field
     editSongTitleInputField.addTextChangedListener(new TextWatcher() {
       @Override
       public void afterTextChanged(Editable s) {
         // call metadata editor method
+    	  
       }
 
       @Override
@@ -270,7 +268,7 @@ public class EditID3Activity extends Activity {
         Log.d("Edit", "Complete");
         
         // Return from whence we came
-        startActivity(myIntent);
+        finish();
       }
     });
 
@@ -280,7 +278,7 @@ public class EditID3Activity extends Activity {
         SelectedSongsSingleton.getInstance().getSelectedSongs().clear();
         // ignore updates; goes back to my music activity
         
-        startActivity(myIntent);
+        finish();
       }
     });
   }
@@ -336,8 +334,13 @@ public class EditID3Activity extends Activity {
       editYearInputField.setText(SelectedSongsSingleton.getInstance().getSelectedSongs().get(0).getYear());
     }
   }
+  
   @Override
   public void onBackPressed() {
-     onDestroy();
+	  SelectedSongsSingleton.getInstance().getSelectedSongs().clear();
+      // ignore updates; goes back to my music activity
+      
+      finish();
   }
+  
 }

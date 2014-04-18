@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
@@ -14,14 +15,37 @@ import android.widget.SearchView;
 public class MyMusicActivity extends Activity /*implements OnQueryTextListener*/ {
 
   final Context currentContext = this; // defines the context to be used in popups
+  BitboxApp singletonInitializer;
+  
   private MyMusicView mainScreenViewObjectTest; // 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    singletonInitializer = (BitboxApp)getApplication();
+    SelectedSongsSingleton.initInstance();
     mainScreenViewObjectTest = new MyMusicView(this, currentContext);
-
+    Log.d("MyMusicActivity", "onCreate");
   }
-  
+  @Override
+  public void onResume() {
+	  super.onResume();
+	  SelectedSongsSingleton.getInstance().getSelectedSongs().clear();
+	  mainScreenViewObjectTest = new MyMusicView(this, currentContext);
+      Log.e("DEBUG", "OnResume");
+     
+    
+  }
+
+  @Override
+  public void onPause() {
+	super.onPause();
+	mainScreenViewObjectTest.getMainSongListView().getSongListAdapter().getSelectedPositions().clear();
+	/*if (!(mainScreenViewObjectTest.getMainSongListView().getSongListAdapter().isEmpty())) {
+	mainScreenViewObjectTest.getMainSongListView().getSongListAdapter().getSelectedPositions().get(0);
+	}*/
+    Log.e("DEBUG", "OnPause");
+    
+  }
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     // Inflate the menu items for use in the action bar
