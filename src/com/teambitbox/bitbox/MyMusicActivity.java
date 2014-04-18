@@ -5,6 +5,7 @@ import com.teambitbox.bitbox.view.*;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.view.ActionProvider;
 import android.support.v4.view.MenuItemCompat;
 import android.util.Log;
 import android.view.Menu;
@@ -15,8 +16,7 @@ import android.widget.SearchView;
 public class MyMusicActivity extends Activity /*implements OnQueryTextListener*/ {
 
   final Context currentContext = this; // defines the context to be used in popups
-  BitboxApp singletonInitializer;
-  
+  private BitboxApp singletonInitializer;
   private MyMusicView mainScreenViewObjectTest; // 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +40,6 @@ public class MyMusicActivity extends Activity /*implements OnQueryTextListener*/
   public void onPause() {
 	super.onPause();
 	mainScreenViewObjectTest.getMainSongListView().getSongListAdapter().getSelectedPositions().clear();
-	/*if (!(mainScreenViewObjectTest.getMainSongListView().getSongListAdapter().isEmpty())) {
-	mainScreenViewObjectTest.getMainSongListView().getSongListAdapter().getSelectedPositions().get(0);
-	}*/
     Log.e("DEBUG", "OnPause");
     
   }
@@ -54,7 +51,9 @@ public class MyMusicActivity extends Activity /*implements OnQueryTextListener*/
     MenuItem searchItem = menu.findItem(R.id.action_search); // search action button item
     SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
     // Configure the search info and add any event listeners
-       
+    // Set up ShareActionProvider's default share intent
+   
+     
     //setupSearchView(searchView);
     return super.onCreateOptionsMenu(menu);
   }

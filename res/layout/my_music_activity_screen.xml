@@ -3,7 +3,7 @@
    android:layout_width="match_parent"
    android:layout_height="match_parent"
    tools:context=".MyMusicActivity" >
-
+<!--
    <LinearLayout
       android:id="@+id/linearLayout1"
       android:layout_width="match_parent"
@@ -34,25 +34,31 @@
             android:src="@drawable/buttonimgtest"
             android:text="Scan for Missing\n Data" />
 
-        <Button
-            android:id="@+id/editButton"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="19.84"
-            android:src="@drawable/buttonimgtest"
-            android:text="Edit" />
+       
 
     </LinearLayout>
+     -->
 
    <ListView
        android:id="@+id/listView"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
-       android:layout_alignParentBottom="true"
+       android:layout_above="@+id/editButton"
        android:layout_alignParentLeft="true"
-       android:layout_below="@+id/linearLayout1"
        android:choiceMode="multipleChoice" >
 
    </ListView>
+
+    <Button
+        android:id="@+id/editButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:background="@android:color/holo_green_dark"
+        android:src="@drawable/buttonimgtest"
+        android:text="Edit"
+        android:textColor="@android:color/white" />
 
 </RelativeLayout>
