@@ -1,36 +1,60 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
    android:id="@+id/additionalRowLinearLayout"
    android:layout_width="wrap_content"
    android:layout_height="wrap_content"
    android:orientation="vertical" >
 
-   <TextView
-      android:id="@+id/additionalSongNameLabel"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      
-      android:textSize="15sp"
-      android:paddingLeft="4dp"
-      android:paddingBottom="8dp"
-      >
-   </TextView>
+      <TextView
+          android:id="@+id/additionalSongNameLabel"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:layout_alignParentTop="true"
+          android:paddingBottom="8dp"
+          android:paddingLeft="4dp"
+          android:textSize="15sp" />
 
-   <TextView
-      android:id="@+id/additionalArtistLabel"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      
-      android:textSize="10sp"
-      android:paddingLeft="4dp"
-      android:paddingBottom="8dp">
-   </TextView>
+      <TextView
+          android:id="@+id/additionalArtistLabel"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:layout_below="@+id/additionalSongNameLabel"
+          android:paddingBottom="8dp"
+          android:paddingLeft="4dp"
+          android:textSize="10sp" />
 
-   <TextView
-       android:id="@+id/additionalAlbumLabel"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:paddingBottom="8dp"
-       android:paddingLeft="4dp"
-       android:textSize="10sp" />
+      <TextView
+          android:id="@+id/additionalAlbumLabel"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:layout_below="@+id/additionalArtistLabel"
+          android:paddingBottom="8dp"
+          android:paddingLeft="4dp"
 
-</LinearLayout> 
+          android:textSize="10sp" />
+
+       <TextView
+           android:id="@+id/additionalComposerLabel"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignLeft="@+id/additionalGenreLabel"
+           android:layout_below="@+id/additionalGenreLabel"
+           android:paddingBottom="8dp"
+           android:paddingLeft="16dp"
+       
+           android:textSize="10sp" />
+
+       <TextView
+           android:id="@+id/additionalGenreLabel"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_above="@+id/additionalAlbumLabel"
+           android:layout_toRightOf="@+id/additionalArtistLabel"
+           android:paddingBottom="8dp"
+           android:paddingLeft="16dp"
+        
+           android:textSize="10sp" />
+
+</RelativeLayout> 

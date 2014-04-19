@@ -4,12 +4,11 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.teambitbox.bitbox.R;
@@ -36,16 +35,20 @@ public class SongListAdditionalAdapter extends ArrayAdapter<Song> {
 	      	Context.LAYOUT_INFLATER_SERVICE);
 		    row = inflater.inflate(R.layout.additional_info_layout, null);
 	    }
-	    LinearLayout rowLayout = (LinearLayout)row.findViewById(R.id.additionalRowLinearLayout); // initialized entire row layout
+	    RelativeLayout rowLayout = (RelativeLayout)row.findViewById(R.id.additionalRowLinearLayout); // initialized entire row layout
 	    	
 	        TextView additionalSongTitleView = (TextView)row.findViewById(R.id.additionalSongNameLabel); // initializes TextView for the song name
 	        TextView artistNameView = (TextView)row.findViewById(R.id.additionalArtistLabel); // initializes TextView for the song name 
-	        TextView albumNameView = (TextView)row.findViewById(R.id.additionalAlbumLabel);   
+	        TextView albumNameView = (TextView)row.findViewById(R.id.additionalAlbumLabel);  
+	        TextView genreView = (TextView)row.findViewById(R.id.additionalGenreLabel);
+	        TextView composerView = (TextView)row.findViewById(R.id.additionalComposerLabel);
 	        // uses Song from the ArrayList in the SongListView class to set the name and artist of each song of the ListView
 	       
 	        additionalSongTitleView.setText(song.getSongName());
-	        artistNameView.setText(song.getArtist());
-	        albumNameView.setText(song.getAlbum());
+	        artistNameView.setText("Artist: " + song.getArtist());
+	        albumNameView.setText("Album: " + song.getAlbum());
+	        genreView.setText("Genre: " + song.getGenre());
+	        composerView.setText("Composer: " + song.getComposer());;
 	    
 	        if (getCurrentSongList().getSharedPreferences().getBoolean("prefSingleSelect", false) == false) {
 	            if (getSelectedPositions().contains(position)) {
