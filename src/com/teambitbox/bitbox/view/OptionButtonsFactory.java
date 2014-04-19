@@ -52,7 +52,7 @@ public class OptionButtonsFactory extends CustomView {
 		   }
 		   else {
 			 Toast.makeText(currentContext,
-			   "You did not selected a song",
+			   "You did not select a song.",
 				  Toast.LENGTH_SHORT).show();
 		   }
 		 }
