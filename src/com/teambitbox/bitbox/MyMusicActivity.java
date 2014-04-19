@@ -4,7 +4,10 @@ import com.teambitbox.bitbox.view.*;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.view.ActionProvider;
 import android.support.v4.view.MenuItemCompat;
 import android.util.Log;
@@ -17,20 +20,20 @@ public class MyMusicActivity extends Activity /*implements OnQueryTextListener*/
 
   final Context currentContext = this; // defines the context to be used in popups
   private BitboxApp singletonInitializer;
-  private MyMusicView mainScreenViewObjectTest; // 
+  private MyMusicView mainScreenViewObjectTest;
+  private static final int RESULT_SETTINGS = 1;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     singletonInitializer = (BitboxApp)getApplication();
     SelectedSongsSingleton.initInstance();
-    mainScreenViewObjectTest = new MyMusicView(this, currentContext);
-    Log.d("MyMusicActivity", "onCreate");
+    updateView();
   }
   @Override
   public void onResume() {
 	  super.onResume();
 	  SelectedSongsSingleton.getInstance().getSelectedSongs().clear();
-	  mainScreenViewObjectTest = new MyMusicView(this, currentContext);
+	  updateView();
       Log.e("DEBUG", "OnResume");
      
     
@@ -39,7 +42,6 @@ public class MyMusicActivity extends Activity /*implements OnQueryTextListener*/
   @Override
   public void onPause() {
 	super.onPause();
-	mainScreenViewObjectTest.getMainSongListView().getSongListAdapter().getSelectedPositions().clear();
     Log.e("DEBUG", "OnPause");
     
   }
@@ -63,13 +65,34 @@ public class MyMusicActivity extends Activity /*implements OnQueryTextListener*/
    // Handle presses on the action bar items
    switch (item.getItemId()) {
        case R.id.action_settings:
-           new SettingsPopup(this, currentContext, mainScreenViewObjectTest.getMainSongListView());
+    	   Intent i = new Intent(this, SettingsActivity.class);
+           startActivityForResult(i, RESULT_SETTINGS);
            return true;
        default:
            return super.onOptionsItemSelected(item);
    }
   }
  
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+      super.onActivityResult(requestCode, resultCode, data);
+
+      switch (requestCode) {
+      case RESULT_SETTINGS:
+          updateView();
+          break;
+
+      }
+
+  }
+  
+  private void updateView() {
+      SharedPreferences sharedPrefs = PreferenceManager
+              .getDefaultSharedPreferences(this);
+
+      mainScreenViewObjectTest = new MyMusicView(this, currentContext);
+
+  }
  /* This is an experiment with the action bar. The methods below are used
   * to add the actions to the event listeners. OnQuery methods are used
   * for the Search functionality

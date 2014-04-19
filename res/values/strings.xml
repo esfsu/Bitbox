@@ -15,14 +15,13 @@
     </string-array>
     <string name="scanDirectoryOption">Scan Directory</string>
     <string name="scanDeviceOption">Scan Device</string>
-    <string-array name="settingOptions">
-        <item android:layout_width="wrap_content" android:id="@+id/multipleFileSelection" android:layout_height="wrap_content">Multiple File Selection</item>
-        <item android:layout_width="wrap_content" android:id="@+id/additionalInformation" android:layout_height="wrap_content">Show Additional Information</item>
-    </string-array>
     <string name="settingsTitle">Settings</string>
     <string name="moveFileToDefaultDirectoryOption">Move File to Default Directory</string>
     <string name="moveFileToChosenDirectory">Move File to Selected Directory</string>
     <string name="undoTitle">Undo</string>
     <string name="undoMessage">Do you want to undo the latest changes?</string>
+    <string name="multiSelectSetting">Select single file</string>
+    <string name="additionalInfoSetting">Show Additional Information</string>
+    <string name="settingTitle">List Settings</string>
 
 </resources>

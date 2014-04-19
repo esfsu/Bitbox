@@ -1,28 +1,36 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-   android:id="@+id/rowLinearLayout"
+   android:id="@+id/additionalRowLinearLayout"
    android:layout_width="wrap_content"
    android:layout_height="wrap_content"
    android:orientation="vertical" >
 
    <TextView
-      android:id="@+id/songNameLabel"
+      android:id="@+id/additionalSongNameLabel"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:text="@+id/label"
+      
       android:textSize="15sp"
-      android:paddingLeft="4dp"
-      android:paddingTop="8dp"
-      >
-   </TextView>
-
-   <TextView
-      android:id="@+id/artistLabel"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:textSize="10sp"
       android:paddingLeft="4dp"
       android:paddingBottom="8dp"
       >
    </TextView>
+
+   <TextView
+      android:id="@+id/additionalArtistLabel"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      
+      android:textSize="10sp"
+      android:paddingLeft="4dp"
+      android:paddingBottom="8dp">
+   </TextView>
+
+   <TextView
+       android:id="@+id/additionalAlbumLabel"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:paddingBottom="8dp"
+       android:paddingLeft="4dp"
+       android:textSize="10sp" />
+
 </LinearLayout> 

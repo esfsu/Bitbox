@@ -38,7 +38,7 @@ public class SettingsPopup extends Popup {
     builder.setTitle(R.string.settingsTitle)
     // Specify the list array, the items to be selected by default (null for none),
     // and the listener through which to receive callbacks when items are selected
-           .setMultiChoiceItems(R.array.settingOptions, null,
+           /*.setMultiChoiceItems(R.array.settingOptions, null,
                       new DialogInterface.OnMultiChoiceClickListener() {
                @Override
                public void onClick(DialogInterface dialog, int which,
@@ -51,7 +51,7 @@ public class SettingsPopup extends Popup {
                        mSelectedItems.remove(Integer.valueOf(which));
                    }
                }
-           })
+           })*/
     // Set the action buttons
            .setPositiveButton(R.string.okOption, new DialogInterface.OnClickListener() {
                @Override

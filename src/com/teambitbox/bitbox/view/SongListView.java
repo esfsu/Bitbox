@@ -15,31 +15,43 @@ import java.util.ArrayList;
 
 import com.teambitbox.bitbox.R;
 import com.teambitbox.bitbox.model.Song;
+
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class SongListView extends CustomView{
   
   private ArrayList<Song> mSongList = new ArrayList<Song>(); // song list to be displayed
   private ListView mSongListWidget; // ListView widget that displays the songs.
-  private SongListAdapter mSongListAdapter; // test object for mSongListAdapter
-
+  private ArrayAdapter<Song> mSongListAdapter; // test object for mSongListAdapter
+  private SharedPreferences mSharedPrefs;
 
 	// Constructor
 	public SongListView(Activity currentActivity, Context currentContext, final ArrayList<Song> mSongList){
 	  mSongListWidget = (ListView) currentActivity.findViewById(R.id.listView); // initializes ListView
-		 
+	   
 	  // sets all the attributes of this object
 	  setSongArrayList(mSongList);
 	  setCurrentContext(currentContext);
 	  setCurrentActivity(currentActivity);
-	  mSongListAdapter = new SongListAdapter(this); // initialize adapter
+	  mSharedPrefs = PreferenceManager
+              .getDefaultSharedPreferences(getCurrentActivity());	
+	  if (mSharedPrefs.getBoolean("prefAdditionalInfo", false) == false) {
+	    mSongListAdapter = new SongListDefaultAdapter(this); // initialize adapter
+	  }
+	  else if(mSharedPrefs.getBoolean("prefAdditionalInfo", false) == true) {
+		mSongListAdapter = new SongListAdditionalAdapter(this); // initialize adapter  
+	  }
 	  mSongListWidget.setAdapter(mSongListAdapter); // sets adapter for ListView
-	  mSongListAdapter.setNotifyOnChange(true); // reflect changes made to the list of songs set to true  
+	  mSongListAdapter.setNotifyOnChange(true); // reflect changes made to the list of songs set to true
+	  
       mSongListWidget.setTextFilterEnabled(true); // used for filtering text in the ListView for the search feature
   
       /* setOnItemClick Listener for the ListView widget. When the user clicks a song in the list, That song is added 
@@ -47,7 +59,12 @@ public class SongListView extends CustomView{
        mSongListWidget.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 	     @Override
 	     public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3){
-	       mSongListAdapter.setSelectedPositions(position); // sets the position of the object for the last selected object
+	       if (mSharedPrefs.getBoolean("prefAdditionalInfo", false) == false) {
+	    	   ((SongListDefaultAdapter) mSongListAdapter).setSelectedPositions(position); // sets the position of the object for the last selected object
+	       }
+	       else if(mSharedPrefs.getBoolean("prefAdditionalInfo", false) == true) {
+	    	   ((SongListAdditionalAdapter) mSongListAdapter).setSelectedPositions(position); // sets the position of the object for the last selected object 
+	       }
 	    	
 	       /* If list is empty, add song to mSelectedSongs else, if the song selected is on the list and it was selected 
 	    	* again, remove it from the selectedSong ArrayList. If the song the array contains elements and the 
@@ -72,6 +89,7 @@ public class SongListView extends CustomView{
 	    		+ "Song has been deselected: " + SelectedSongsSingleton.getInstance().getSelectedSongs().size());
 	    		
 	    		SelectedSongsSingleton.getInstance().getSelectedSongs().remove(mSongList.get(position)); // remove song from mSelectedSongs ArrayList
+	 
 	    	  /* This is used for debugging purposes in the logcat window. This should no longer show true 
 	    	   * since the song is no longer in the array
 	    	   */
@@ -83,15 +101,30 @@ public class SongListView extends CustomView{
 	    	else{
 	    	  // Used for debugging purposes in the logcat window. The size should be greater or equal to one.
 	    		Log.d("mSongListView", "Third Case: Array with size : " + SelectedSongsSingleton.getInstance().getSelectedSongs().size()); 
+	    		
+	    		if ((mSharedPrefs.getBoolean("prefSingleSelect", false) == true)) {
+	    			SelectedSongsSingleton.getInstance().getSelectedSongs().clear();
+	    			Log.d("mSongListView", "Third Case: Array with size : " + SelectedSongsSingleton.getInstance().getSelectedSongs().size()); 
+	    		}
 	    		SelectedSongsSingleton.getInstance().getSelectedSongs().add(mSongList.get(position)); // add song to the mSelectedSongs ArrayList
 	    	  
 	    		// Used for debugging purposes in the logcat window. After adding a song to the selectedSong 
 	    		Log.d("mSongListView", "Third Case: Array with size: " + SelectedSongsSingleton.getInstance().getSelectedSongs().size()); 
-	    		Log.d("SelectedSongsSingleton", "Array second song is: " + SelectedSongsSingleton.getInstance().getSelectedSongs().get(1).getSongName() ); 
+	    		if ((mSharedPrefs.getBoolean("prefSingleSelect", false) == false)) {
+	    			Log.d("SelectedSongsSingleton", "Array second song is: " + SelectedSongsSingleton.getInstance().getSelectedSongs().get(1).getSongName() ); 
+	    		}
+	    		Log.d("SelectedSongsSingleton", "Size is: " + SelectedSongsSingleton.getInstance().getSelectedSongs().size());
+	    		
 	    	}
-	       // Used for debugging purposes in the logcat window. It should show the selected songs' positions 
-	    	 Log.d("mSongListView", "Adapter positions" + mSongListAdapter.getSelectedPositions()); 
-	    }        
+	       if (mSharedPrefs.getBoolean("prefAdditionalInfo", false) == false) {
+	    	 // Used for debugging purposes in the logcat window. It should show the selected songs' positions 
+		     Log.d("mSongListView", "Adapter positions" + ((SongListDefaultAdapter) mSongListAdapter).getSelectedPositions()); 	       
+		    }
+	       else if(mSharedPrefs.getBoolean("prefAdditionalInfo", false) == true) {
+	    	 // Used for debugging purposes in the logcat window. It should show the selected songs' positions 
+		     Log.d("mSongListView", "Adapter positions" + ((SongListAdditionalAdapter) mSongListAdapter).getSelectedPositions()); 	       
+		   }
+	     }         
     }); // end setOnItemClickListener 
   } // end Constructor
 	
@@ -123,13 +156,20 @@ public class SongListView extends CustomView{
   } // ends setmSongListWidget
 	
   // returns adapter for this ListView
-  public SongListAdapter getSongListAdapter() {
+  public ArrayAdapter<Song> getSongListAdapter() {
 	return mSongListAdapter;
   } // ends getmSongListAdapter
 
   // sets the adapter for this ListView
-  public void setSongListAdapter(SongListAdapter songListAdapter) {
+  public void setSongListAdapter(SongListDefaultAdapter songListAdapter) {
 	mSongListAdapter = songListAdapter;
   } // ends setmSongListAdapter
-	
+
+  public SharedPreferences getSharedPreferences() {
+	return mSharedPrefs;
+  }
+
+  private void setSharedPreferences(SharedPreferences sharedPrefs) {
+	mSharedPrefs = sharedPrefs;
+  }
 }// ends mSongListView class
