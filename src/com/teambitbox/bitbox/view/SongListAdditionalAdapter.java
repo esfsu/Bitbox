@@ -42,13 +42,15 @@ public class SongListAdditionalAdapter extends ArrayAdapter<Song> {
 	        TextView albumNameView = (TextView)row.findViewById(R.id.additionalAlbumLabel);  
 	        TextView genreView = (TextView)row.findViewById(R.id.additionalGenreLabel);
 	        TextView composerView = (TextView)row.findViewById(R.id.additionalComposerLabel);
+	        TextView yearView = (TextView)row.findViewById(R.id.additionalYearLabel);
 	        // uses Song from the ArrayList in the SongListView class to set the name and artist of each song of the ListView
 	       
 	        additionalSongTitleView.setText(song.getSongName());
 	        artistNameView.setText("Artist: " + song.getArtist());
 	        albumNameView.setText("Album: " + song.getAlbum());
 	        genreView.setText("Genre: " + song.getGenre());
-	        composerView.setText("Composer: " + song.getComposer());;
+	        composerView.setText("Composer: " + song.getComposer());
+	        yearView.setText("Year: " + song.getYear());
 	    
 	        if (getCurrentSongList().getSharedPreferences().getBoolean("prefSingleSelect", false) == false) {
 	            if (getSelectedPositions().contains(position)) {

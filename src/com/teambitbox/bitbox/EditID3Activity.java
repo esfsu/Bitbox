@@ -45,7 +45,7 @@ public class EditID3Activity extends Activity {
   private Button cancelButton;
   protected BitboxApp singletonHolder;
   private FileEditor mEditor;
-  private final String MULTIVAL = "<Multiple Values>";
+  private final String MULTIVAL = "<Multi>";
   
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -226,36 +226,35 @@ public class EditID3Activity extends Activity {
         // Create the Id3 data list
         ArrayList<Id3Data> id3List = new ArrayList<Id3Data>();
         Id3Data id3Val;
-        if (editSongTitleInputField.getText().toString() != MULTIVAL) {
+        if (!editSongTitleInputField.getText().toString().equalsIgnoreCase(MULTIVAL)) {
           id3Val = new Id3Data(Id3.SONG_NAME, editSongTitleInputField.getText().toString());
           id3List.add(id3Val);
-          Log.d("NewName", "id3Val");
         }
-        if (editArtistNameInputField.getText().toString() != MULTIVAL) {
+        if (!editArtistNameInputField.getText().toString().equalsIgnoreCase(MULTIVAL)) {
           id3Val = new Id3Data(Id3.ARTIST, editArtistNameInputField.getText().toString());
           id3List.add(id3Val);
         }
-        if (editAlbumArtistInputField.getText().toString() != MULTIVAL) {
+        if (!editAlbumArtistInputField.getText().toString().equalsIgnoreCase(MULTIVAL)) {
           id3Val = new Id3Data(Id3.ALBUM_ARTIST, editAlbumArtistInputField.getText().toString());
           id3List.add(id3Val);
         }
-        if (editGenreInputField.getText().toString() != MULTIVAL) {
+        if (!editGenreInputField.getText().toString().equalsIgnoreCase(MULTIVAL)) {
           id3Val = new Id3Data(Id3.GENRE, editGenreInputField.getText().toString());
           id3List.add(id3Val);
         }
-        if (editComposerInputField.getText().toString() != MULTIVAL) {
+        if (!editComposerInputField.getText().toString().equalsIgnoreCase(MULTIVAL)) {
           id3Val = new Id3Data(Id3.COMPOSER, editComposerInputField.getText().toString());
           id3List.add(id3Val);
         }
-        if (editTrackBeginningInputField.getText().toString() != MULTIVAL) {
+        if (!editTrackBeginningInputField.getText().toString().equalsIgnoreCase(MULTIVAL)) {
           id3Val = new Id3Data(Id3.TRACK_NUM, editTrackBeginningInputField.getText().toString());
           id3List.add(id3Val);
         }
-        if (editDiscBeginningInputField.getText().toString() != MULTIVAL) {
+        if (!editDiscBeginningInputField.getText().toString().equalsIgnoreCase(MULTIVAL)) {
           id3Val = new Id3Data(Id3.DISC_NUM, editDiscBeginningInputField.getText().toString());
           id3List.add(id3Val);
         }
-        if (editYearInputField.getText().toString() != MULTIVAL) {
+        if (!editYearInputField.getText().toString().equalsIgnoreCase(MULTIVAL)) {
           id3Val = new Id3Data(Id3.YEAR, editYearInputField.getText().toString());
           id3List.add(id3Val);
         }
@@ -321,6 +320,15 @@ public class EditID3Activity extends Activity {
         discNum = (discNum == song.getDiscNum()) ? song.getDiscNum() : MULTIVAL;
         year = (year == song.getYear()) ? song.getYear() : MULTIVAL;
       }
+      
+      editSongTitleInputField.setText(songName);
+      editArtistNameInputField.setText(artist);
+      editAlbumArtistInputField.setText(albumArtist);
+      editGenreInputField.setText(genre);
+      editComposerInputField.setText(composer);
+      editTrackBeginningInputField.setText(trackNum);
+      editDiscBeginningInputField.setText(discNum);
+      editYearInputField.setText(year);
     }
     else
     {

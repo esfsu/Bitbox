@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.lang.NumberFormatException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 
 import android.os.Environment;
+import android.provider.DocumentsContract.Document;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -28,10 +30,16 @@ import android.util.Xml;
 import java.util.ArrayList;
 import java.util.Map;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.mp3.MP3File;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.id3.ID3v24Tag;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xmlpull.v1.XmlPullParser;
 
 public class FileEditor {
@@ -49,8 +57,7 @@ public class FileEditor {
   public void createMyMusicFile(ArrayList<Song> songList) {
     try {
       Log.d("Writing File", "Writing File");
-      FileOutputStream fOut = mContext.openFileOutput("MyMusic.xml",
-          Context.MODE_PRIVATE);
+      FileOutputStream fOut = mContext.openFileOutput("MyMusic.xml", Context.MODE_PRIVATE);
       OutputStreamWriter osw = new OutputStreamWriter(fOut);
 
       String fileContent = "";
@@ -184,8 +191,7 @@ public class FileEditor {
         case XmlPullParser.END_TAG:
           name = parser.getName();
 
-          if (name.equalsIgnoreCase(Id3.SONG_FIRST.toString())
-              && currentSong != null) {
+          if (name.equalsIgnoreCase(Id3.SONG_FIRST.toString()) && currentSong != null) {
             Log.d("Adding to List", currentSong.getFileName());
             // add to list at closing song tag
             mSongList.add(currentSong);
@@ -202,9 +208,7 @@ public class FileEditor {
         eventType = parser.next();
       }
     } catch (FileNotFoundException e) {
-      // TODO
     } catch (IOException e) {
-      // TODO
     } catch (Exception e) {
       // TODO
     }
@@ -217,11 +221,12 @@ public class FileEditor {
   }
 
   // Edit real file and MyMusic Id3 data
-  public void /* boolean */ editId3Data(ArrayList<Song> songList,
-      ArrayList<Id3Data> dataList) {
+  public void /* boolean */ editId3Data(ArrayList<Song> songList, ArrayList<Id3Data> dataList) {
     // make sure we can reverse it
     mUndoList.setUndoList(songList, dataList, FileOp.EDITID3);
 
+    Log.d("NumSongs", String.valueOf(songList.size()));
+    
     try {
       for (Song song : songList) {
         Log.d("Song", song.getFileName()); // debug purposes
@@ -231,9 +236,7 @@ public class FileEditor {
         MP3File f = (MP3File) AudioFileIO.read(songFile);
         ID3v24Tag v24tag = f.getID3v2TagAsv24();
         
-
         for (Id3Data data : dataList) {
-          
           Log.d(data.mId3.toString(), data.mValue);
 
           switch (data.mId3) {
@@ -295,57 +298,22 @@ public class FileEditor {
 
           f.commit();
         }
-        songFile.setWritable(false);
+        songFile.setWritable(false);        
       }
 
-      /*
+      //*
       // Debug only
       InputStream fIn = mContext.openFileInput("MyMusic.xml");
       BufferedReader input = new BufferedReader(new InputStreamReader(fIn));
-      Log.d("xml", input.readLine());
-      Log.d("xml", input.readLine());
-      Log.d("xml", input.readLine());
-      Log.d("xml", input.readLine());
-      Log.d("xml", input.readLine());
-      Log.d("xml", input.readLine());
-      Log.d("xml", input.readLine());
-      Log.d("xml", input.readLine());
-      Log.d("xml", input.readLine());
-      Log.d("xml", input.readLine());
-      Log.d("xml", input.readLine());
-      Log.d("xml", input.readLine());
-      Log.d("xml", input.readLine());
-      Log.d("xml", input.readLine());
-      Log.d("xml", input.readLine());
-      Log.d("xml", input.readLine());
-      Log.d("xml", input.readLine());
-      Log.d("xml", input.readLine());
-      Log.d("xml", input.readLine());
-      Log.d("xml", input.readLine());
-      Log.d("xml", input.readLine());
-      Log.d("xml", input.readLine());
-      Log.d("xml", input.readLine());
-      Log.d("xml", input.readLine());
-      Log.d("xml", input.readLine());
-      Log.d("xml", input.readLine());
-      Log.d("xml", input.readLine());
-      Log.d("xml", input.readLine());
-      Log.d("xml", input.readLine());
-      Log.d("xml", input.readLine());
-      Log.d("xml", input.readLine());
+      while (Log.d("xml", input.readLine()) != 0);
       input.close();
       fIn.close();
+      //*/
 
-      Log.d("SongList", String.valueOf(mSongList.size()));
-      for (Song song2 : mSongList) {
-        Log.d("SongFile", song2.getFileName());
-      }
-      */
-
+    } catch (NumberFormatException e) {
     } catch (Exception e) {
-      // if any error occurs
+      // if any other error occurs
       e.printStackTrace();
-      // return false;
     }
 
     // return true;
@@ -353,47 +321,32 @@ public class FileEditor {
 
   // Update attributes in the MyMusic file
   private boolean _updateMyMusicFileTag(String fileName, Id3 id3, String value) {
-    XmlPullParser parser = Xml.newPullParser();
     try {
-      FileInputStream fIn = mContext.openFileInput("MyMusic.xml");
-      InputStreamReader isr = new InputStreamReader(fIn);
+      DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+      dbf.setValidating(false);
+      DocumentBuilder db = dbf.newDocumentBuilder();
+      org.w3c.dom.Document doc = db.parse(mContext.openFileInput("MyMusic.xml"));
 
-      // auto-detect the encoding from the stream
-      parser.setInput(isr);
-      int eventType = parser.getEventType();
-      boolean done = false;
-
-      while (eventType != XmlPullParser.END_DOCUMENT && !done) {
-        String name = null;
-
-        switch (eventType) {
-        case XmlPullParser.START_TAG:
-          name = parser.getName();
-
-          // look for file name
-          if (name.equalsIgnoreCase(fileName)) {
-            // look for tag
-            if (name.equalsIgnoreCase(id3.toString())) {
-              parser.setProperty(id3.toString(), value);
-              done = true;
-            }
-          }
-          break;
-
-        case XmlPullParser.END_TAG:
-          done = true;
+      NodeList keyList = doc.getElementsByTagName(Id3.FILE_NAME.toString());
+      int count = 0;
+      for (int x = 0; x < keyList.getLength(); x++)
+      {
+        Node keynode = keyList.item(x);
+        Element elm = (Element) keynode; 
+        Log.d("elm att", "*"+elm.getAttribute("value")+"*");
+        Log.d("file", "*"+fileName+"*");
+        if (elm.getAttribute("value").equalsIgnoreCase(fileName))
+        {
+          count = x;
+          Node tag = doc.getElementsByTagName(id3.toString()).item(x);
+          tag.setNodeValue(value);
           break;
         }
-        eventType = parser.next();
       }
-    } catch (FileNotFoundException e) {
-      // TODO
-      return false;
-    } catch (IOException e) {
-      // TODO
-      return false;
+      Log.d("count", String.valueOf(count));
+      
     } catch (Exception e) {
-      // TODO
+      e.printStackTrace();
       return false;
     }
     return true;

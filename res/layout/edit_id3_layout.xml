@@ -4,6 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <!-- Label Fields -->
+    
     <TextView
         android:id="@+id/songInfoTitleTextView"
         android:layout_width="wrap_content"
@@ -115,36 +117,34 @@
         android:text="Year"
         android:textSize="15dp"
         android:textStyle="bold" />
+     
+     
+    <!-- Input Fields -->
 
     <EditText
         android:id="@+id/editSongTitleField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_toRightOf="@+id/albumArtistTextView"
         android:layout_alignBottom="@+id/songTitleTextView"
         android:layout_marginRight="18dp"
         android:ems="10"
-        android:inputType="textEmailAddress"
         android:imeOptions="actionDone" />
 
     <EditText
         android:id="@+id/editArtistField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_alignLeft="@+id/editSongTitleField"
         android:layout_alignBottom="@+id/artistTextView"
         android:layout_marginRight="18dp"
         android:ems="10"
-         android:inputType="textEmailAddress"
         android:imeOptions="actionDone" />
 
     <EditText
         android:id="@+id/editAlbumArtistField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_alignLeft="@+id/editSongTitleField"
         android:layout_alignBottom="@+id/albumArtistTextView"
         android:layout_marginRight="18dp"
@@ -156,17 +156,16 @@
         android:id="@+id/editGenreField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_alignLeft="@+id/editSongTitleField"
         android:layout_alignBottom="@+id/genreTextView"
         android:layout_marginRight="18dp"
-        android:ems="10" />
+        android:ems="10"
+        android:imeOptions="actionDone" />
 
     <EditText
         android:id="@+id/editComposerField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_alignLeft="@+id/editSongTitleField"
         android:layout_alignBottom="@+id/composerTextView"
         android:layout_marginRight="18dp"
@@ -174,17 +173,14 @@
         android:inputType="textEmailAddress"
         android:imeOptions="actionDone" />
 
-
     <EditText
         android:id="@+id/trackBeginningField"
         android:layout_width="35dp"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/editSongTitleField"
         android:layout_alignBottom="@+id/trackTextView"
-        android:ems="10"
-        android:inputType="textEmailAddress"
+        android:ems="25"
         android:imeOptions="actionDone" />
-
 
     <EditText
         android:id="@+id/discBeginningField"
@@ -192,21 +188,20 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/editSongTitleField"
         android:layout_alignBottom="@+id/discTextView"
-        android:ems="10"
-        android:inputType="textEmailAddress"
+        android:ems="25"
         android:imeOptions="actionDone" />
 
     <EditText
         android:id="@+id/yearInputField"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_alignLeft="@+id/editSongTitleField"
         android:layout_alignBottom="@+id/yearTextView"
-        android:ems="10"
-        android:inputType="textEmailAddress"
+        android:ems="25"
         android:imeOptions="actionDone" />
 
+    <!-- Buttons -->
+    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

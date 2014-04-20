@@ -34,8 +34,6 @@
             android:src="@drawable/buttonimgtest"
             android:text="Scan for Missing\n Data" />
 
-       
-
     </LinearLayout>
      -->
 
@@ -45,8 +43,8 @@
        android:layout_height="wrap_content"
        android:layout_above="@+id/editButton"
        android:layout_alignParentLeft="true"
+       android:layout_alignParentTop="true"
        android:choiceMode="multipleChoice" >
-
    </ListView>
 
     <Button
