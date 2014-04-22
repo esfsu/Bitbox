@@ -125,11 +125,12 @@
         android:id="@+id/editSongTitleField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/albumArtistTextView"
         android:layout_alignBottom="@+id/songTitleTextView"
         android:layout_marginRight="18dp"
+        android:layout_toRightOf="@+id/albumArtistTextView"
         android:ems="10"
-        android:imeOptions="actionDone" />
+        android:imeOptions="actionDone"
+        android:maxLines="1" />
 
     <EditText
         android:id="@+id/editArtistField"

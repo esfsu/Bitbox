@@ -51,21 +51,46 @@ public class SongListAdditionalAdapter extends ArrayAdapter<Song> {
 	        genreView.setText("Genre: " + song.getGenre());
 	        composerView.setText("Composer: " + song.getComposer());
 	        yearView.setText("Year: " + song.getYear());
+	       
 	    
 	        if (getCurrentSongList().getSharedPreferences().getBoolean("prefSingleSelect", false) == false) {
 	            if (getSelectedPositions().contains(position)) {
-	       	    rowLayout.setBackgroundColor(Color.CYAN);
+	       	    rowLayout.setBackgroundColor(Color.DKGRAY);
+	       	    additionalSongTitleView.setTextColor(Color.WHITE);
+	  	        artistNameView.setTextColor(Color.WHITE);
+	  	        albumNameView.setTextColor(Color.WHITE);
+		        genreView.setTextColor(Color.WHITE);
+		        composerView.setTextColor(Color.WHITE);
+		        yearView.setTextColor(Color.WHITE);
 	       	  }
 	       	  else {
 	       	    rowLayout.setBackgroundColor(Color.WHITE);
+	       	    additionalSongTitleView.setTextColor(Color.DKGRAY);
+	  	        artistNameView.setTextColor(Color.DKGRAY);
+	  	        albumNameView.setTextColor(Color.DKGRAY);
+		        genreView.setTextColor(Color.DKGRAY);
+		        composerView.setTextColor(Color.DKGRAY);
+		        yearView.setTextColor(Color.DKGRAY);
 	       	  }
 	      	}
 	      	else if (getCurrentSongList().getSharedPreferences().getBoolean("prefSingleSelect", false) == true) {
 	      	  if (getLastSelectedSongPosition() == position){
-	      	    rowLayout.setBackgroundColor(Color.CYAN);
+	      	    rowLayout.setBackgroundColor(Color.DKGRAY);
+	      	    additionalSongTitleView.setTextColor(Color.WHITE);
+	  	        artistNameView.setTextColor(Color.WHITE);
+	  	        albumNameView.setTextColor(Color.WHITE);
+		        genreView.setTextColor(Color.WHITE);
+		        composerView.setTextColor(Color.WHITE);
+		        yearView.setTextColor(Color.WHITE);
 	      	  }
 	      	  else {
 	      	    rowLayout.setBackgroundColor(Color.WHITE);
+	      	    additionalSongTitleView.setTextColor(Color.DKGRAY);
+	  	        artistNameView.setTextColor(Color.DKGRAY);
+	  	        albumNameView.setTextColor(Color.DKGRAY);
+		        genreView.setTextColor(Color.DKGRAY);
+		        composerView.setTextColor(Color.DKGRAY);
+		        yearView.setTextColor(Color.DKGRAY);
 	      	  }
 	      	}
 	        notifyDataSetChanged();

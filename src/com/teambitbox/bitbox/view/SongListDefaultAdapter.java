@@ -61,18 +61,26 @@ public class SongListDefaultAdapter extends ArrayAdapter<Song> {
     artistNameView.setText(song.getArtist());
     if (getCurrentSongList().getSharedPreferences().getBoolean("prefSingleSelect", false) == false) {
       if (getSelectedPositions().contains(position)) {
- 	    rowLayout.setBackgroundColor(Color.CYAN);
+ 	    rowLayout.setBackgroundColor(Color.DKGRAY);
+ 	    songTitleView.setTextColor(Color.WHITE);
+ 	    artistNameView.setTextColor(Color.WHITE);
  	  }
  	  else {
  	    rowLayout.setBackgroundColor(Color.WHITE);
+ 	    songTitleView.setTextColor(Color.DKGRAY);
+ 	    artistNameView.setTextColor(Color.DKGRAY);
  	  }
 	}
 	else if (getCurrentSongList().getSharedPreferences().getBoolean("prefSingleSelect", false) == true) {
 	  if (getLastSelectedSongPosition() == position){
-	    rowLayout.setBackgroundColor(Color.CYAN);
+	    rowLayout.setBackgroundColor(Color.DKGRAY);
+	    songTitleView.setTextColor(Color.WHITE);
+ 	    artistNameView.setTextColor(Color.WHITE);
 	  }
 	  else {
 	    rowLayout.setBackgroundColor(Color.WHITE);
+	    songTitleView.setTextColor(Color.DKGRAY);
+ 	    artistNameView.setTextColor(Color.DKGRAY);
 	  }
 	}
     

@@ -57,6 +57,7 @@
         android:background="@android:color/holo_green_dark"
         android:src="@drawable/buttonimgtest"
         android:text="Edit"
+        android:textStyle="bold"
         android:textColor="@android:color/white" />
 
 </RelativeLayout>

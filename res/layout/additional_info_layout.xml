@@ -4,59 +4,65 @@
    android:layout_height="wrap_content"
    android:orientation="vertical" >
 
-      <TextView
+      <com.teambitbox.bitbox.view.CustomTextView
           android:id="@+id/additionalSongNameLabel"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
           android:layout_alignParentLeft="true"
           android:layout_alignParentTop="true"
-          android:paddingLeft="4dp"
-          android:textSize="15sp" />
+          android:paddingLeft="16dp"
+          android:textSize="15sp" 
+          style="@style/HeaderStyle"/>
 
-      <TextView
+      <com.teambitbox.bitbox.view.CustomTextView
           android:id="@+id/additionalArtistLabel"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_alignParentLeft="true"
           android:layout_below="@+id/additionalSongNameLabel"
-          android:paddingLeft="4dp"
-          android:textSize="13sp" />
+          android:paddingLeft="16dp"
+          android:textSize="13sp"
+          style="@style/otherData" />
       
-      <TextView
+      <com.teambitbox.bitbox.view.CustomTextView
           android:id="@+id/additionalGenreLabel"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_below="@+id/additionalSongNameLabel"
           android:layout_toRightOf="@+id/additionalArtistLabel"
           android:paddingLeft="12dp"
-          android:textSize="13sp" />
+          android:textSize="13sp"
+          style="@style/otherData" />
       
-      <TextView
+      <com.teambitbox.bitbox.view.CustomTextView
           android:id="@+id/additionalYearLabel"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_below="@+id/additionalSongNameLabel"
           android:layout_toRightOf="@+id/additionalGenreLabel"
           android:paddingLeft="12dp"
-          android:textSize="13sp" />
+          android:textSize="13sp" 
+          style="@style/otherData"/>
       
-      <TextView
+      <com.teambitbox.bitbox.view.CustomTextView
           android:id="@+id/additionalAlbumLabel"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_alignParentLeft="true"
           android:layout_below="@+id/additionalArtistLabel"
-          android:paddingLeft="4dp"
-          android:textSize="13sp" />
+          android:paddingLeft="16dp"
+          android:textSize="13sp" 
+          style="@style/otherData"/>
 
-       <TextView
+       <com.teambitbox.bitbox.view.CustomTextView
            android:id="@+id/additionalComposerLabel"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:layout_alignParentLeft="true"
            android:layout_below="@+id/additionalAlbumLabel"
-           android:paddingLeft="4dp"
+           android:paddingLeft="16dp"
            android:paddingBottom="4dp"
-           android:textSize="13sp" />
+           android:textSize="13sp" 
+           style="@style/otherData"/>
        
 </RelativeLayout> 

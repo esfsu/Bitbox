@@ -2,14 +2,17 @@ package com.teambitbox.bitbox;
 
 import com.teambitbox.bitbox.view.*;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.view.ActionProvider;
 import android.support.v4.view.MenuItemCompat;
+import android.text.Spannable;
+import android.text.SpannableString;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,6 +30,14 @@ public class MyMusicActivity extends Activity /*implements OnQueryTextListener*/
     super.onCreate(savedInstanceState);
     singletonInitializer = (BitboxApp)getApplication();
     SelectedSongsSingleton.initInstance();
+    SpannableString s = new SpannableString(" BITBOX");
+    s.setSpan(new TypefaceSpan(this, "8-Bit-Wonder.ttf"), 0, s.length(),
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+ 
+    // Update the action bar title with the TypefaceSpan instance
+    ActionBar actionBar = getActionBar();
+    actionBar.setTitle(s);
+
     updateView();
   }
   @Override

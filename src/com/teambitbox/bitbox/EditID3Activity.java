@@ -13,18 +13,23 @@ import java.util.ArrayList;
 
 import com.teambitbox.bitbox.view.BitboxApp;
 import com.teambitbox.bitbox.view.SelectedSongsSingleton;
+import com.teambitbox.bitbox.view.TypefaceSpan;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+
 import com.teambitbox.bitbox.R;
 import com.teambitbox.bitbox.model.Id3;
 import com.teambitbox.bitbox.model.Song;
@@ -53,6 +58,14 @@ public class EditID3Activity extends Activity {
     
     setContentView(R.layout.edit_id3_layout);
     setViewIds();
+    SpannableString s = new SpannableString(" BITBOX");
+    s.setSpan(new TypefaceSpan(this, "8-Bit-Wonder.ttf"), 0, s.length(),
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+ 
+    // Update the action bar title with the TypefaceSpan instance
+    ActionBar actionBar = getActionBar();
+    actionBar.setTitle(s);
+    
     singletonHolder = (BitboxApp)getApplication();
     mEditor = new FileEditor(singletonHolder.getBaseContext());
     // loop to check if the song list has the correct songs

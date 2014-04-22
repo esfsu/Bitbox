@@ -20,7 +20,7 @@
     <string name="moveFileToChosenDirectory">Move File to Selected Directory</string>
     <string name="undoTitle">Undo</string>
     <string name="undoMessage">Do you want to undo the latest changes?</string>
-    <string name="multiSelectSetting">Select single file</string>
+    <string name="multiSelectSetting">Select Single File</string>
     <string name="additionalInfoSetting">Show Additional Information</string>
     <string name="settingTitle">List Settings</string>
 
