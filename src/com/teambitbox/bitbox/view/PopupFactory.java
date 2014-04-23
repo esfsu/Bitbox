@@ -23,21 +23,21 @@ public class PopupFactory {
 	  
 	  if (!(SelectedSongsSingleton.getInstance().getSelectedSongs().isEmpty())) {
 	    switch(pt){
-          /*case SCANFORMUSIC:
+          case SCANFORMUSIC:
             return new ScanForMusicPopup(currentActivity, currentContext);
-           case SCANFORMISSINGDATA:
-    	       return new ScanForMissingDataPopup(currentActivity, currentContext);  */
+       /* case SCANFORMISSINGDATA:
+    	    return new ScanForMissingDataPopup(currentActivity, currentContext); 
           case EDIT:
       	    return new EditPopup(currentActivity, currentContext);
-         // case UNDO:
-      	  //  return new UndoPopup(currentActivity, currentContext);  
+          case UNDO:
+      	    return new UndoPopup(currentActivity, currentContext);   */
           default:
             return null;
         }
 	  }
 	  else{
 	    Toast.makeText(currentContext,
-		  "You did not selected a song",
+		  "Please select a song.",
 		     Toast.LENGTH_SHORT).show();
 		return null;
 	  }

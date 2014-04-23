@@ -18,13 +18,7 @@
             android:src="@drawable/buttonimgtest"
             android:text="Undo" />
 
-        <Button
-            android:id="@+id/scanDirectoryButton"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="19.02"
-            android:src="@drawable/buttonimgtest"
-            android:text="Scan for Music" />
+        
 
         <Button
             android:id="@+id/scanForMissingDataButton"
@@ -41,23 +35,42 @@
        android:id="@+id/listView"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
-       android:layout_above="@+id/editButton"
+       android:layout_above="@+id/linearLayout1"
        android:layout_alignParentLeft="true"
        android:layout_alignParentTop="true"
        android:choiceMode="multipleChoice" >
    </ListView>
 
-    <Button
-        android:id="@+id/editButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:background="@android:color/holo_green_dark"
-        android:src="@drawable/buttonimgtest"
-        android:text="Edit"
-        android:textStyle="bold"
-        android:textColor="@android:color/white" />
+   <LinearLayout
+       android:id="@+id/linearLayout1"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_alignParentBottom="true"
+       android:layout_alignParentLeft="true" >
+
+         <Button
+           android:id="@+id/scanDirectoryButton"
+           android:layout_width="0dp"
+           android:layout_height="match_parent"
+           android:layout_weight="50"
+           android:background="@android:color/holo_blue_light"
+           android:src="@drawable/buttonimgtest"
+           android:text="Scan"
+           android:textColor="@android:color/white"
+           android:textStyle="bold" />
+         
+       <Button
+           android:id="@+id/editButton"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="50"
+           android:background="@android:color/holo_green_dark"
+           android:src="@drawable/buttonimgtest"
+           android:text="Edit"
+           android:textColor="@android:color/white"
+           android:textStyle="bold" />
+
+     
+   </LinearLayout>
 
 </RelativeLayout>

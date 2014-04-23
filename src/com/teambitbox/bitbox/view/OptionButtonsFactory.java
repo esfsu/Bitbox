@@ -22,7 +22,7 @@ import android.widget.Toast;
 
 public class OptionButtonsFactory extends CustomView {
    
-	// private Button scanForMusicOptionButton;
+	 private Button scanForMusicOptionButton;
 	//  private Button scanForMissingDataOptionButton;
 	 private Button editOptionButton;
 	// private Button undoOptionButton;
@@ -31,7 +31,7 @@ public class OptionButtonsFactory extends CustomView {
 		 
 		 setCurrentActivity(currentActivity);
 		 setCurrentContext(currentContext);
-		// scanForMusicOptionButton = (Button) getCurrentActivity().findViewById(R.id.scanDirectoryButton);
+		 scanForMusicOptionButton = (Button) getCurrentActivity().findViewById(R.id.scanDirectoryButton);
 		// scanForMissingDataOptionButton = (Button) getCurrentActivity().findViewById(R.id.scanForMissingDataButton);
 		 editOptionButton = (Button) getCurrentActivity().findViewById(R.id.editButton);
 		// undoOptionButton = (Button) getCurrentActivity().findViewById(R.id.undoButton);
@@ -57,14 +57,15 @@ public class OptionButtonsFactory extends CustomView {
 		   }
 		 }
 	   });
+		 scanForMusicOptionButton.setOnClickListener(new OnClickListener() { 
+		     @Override
+		     public void onClick(View arg0) {
+		       PopupFactory.createPopup(PopupType.SCANFORMUSIC, getCurrentActivity(), currentContext);
+		     }
+		   });
 		 
 		 /* These features will not be used
-		 scanForMusicOptionButton.setOnClickListener(new OnClickListener() { 
-	     @Override
-	     public void onClick(View arg0) {
-	       PopupFactory.createPopup(PopupType.SCANFORMUSIC, getCurrentActivity(), currentContext);
-	     }
-	   });
+	
 		 
 		
 		 

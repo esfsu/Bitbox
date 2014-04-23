@@ -96,18 +96,18 @@ public class ScanForMusicPopup extends Popup {
 					public void onClick(DialogInterface dialog, int id) {
 						// if the user didn't enter a directory name, a toast
 						// message will appear.
-						/*if (getDirectoryInput().equals("")) {
+						if (getDirectoryInput().equals("")) {
 							Toast.makeText(getCurrentContext(),
-									"You did not enter a directory",
+									"You did not enter a directory.",
 									Toast.LENGTH_SHORT).show();
-						} else*/ 
+						} else 
 							progressBarDialog();}
 				});
 			builder.setNegativeButton(R.string.scanDeviceOption,
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 					  // TODO: WARN USER THIS COULD TAKE A LONG TIME!
-					  setDirectoryInput("/sdcard/");
+					  //setDirectoryInput("/sdcard/");
 						progressBarDialog();
 					}
 				});
@@ -159,7 +159,7 @@ public class ScanForMusicPopup extends Popup {
 			  
 			  // TODO: Any touch on the screen will dismiss this popup!
 				super.handleMessage(msg);
-				progressDialogPopup.incrementProgressBy(mScanner.getFileProgress());
+				progressDialogPopup.incrementProgressBy(1);
 			}
 		};
 
@@ -168,12 +168,17 @@ public class ScanForMusicPopup extends Popup {
 			@Override
 			public void run() {
 				try {
-	         while (mScanner.getIsScanComplete() != true) {
+	        /* while (mScanner.getIsScanComplete() != true) {
 	            Thread.sleep(200);
-	            handle.sendMessage(handle.obtainMessage());
-            }
-	         
-				} catch (Exception e) {
+	            handle.sendMessage(handle.obtainMessage());*/
+			   while (progressDialogPopup.getProgress() <= progressDialogPopup.getMax()) {
+			        Thread.sleep(200);
+			        handle.sendMessage(handle.obtainMessage());
+			        if (progressDialogPopup.getProgress() == progressDialogPopup.getMax()) {
+			              	progressDialogPopup.dismiss();
+                    }
+			     }
+	           } catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
