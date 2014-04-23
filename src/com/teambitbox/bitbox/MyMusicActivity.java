@@ -12,18 +12,18 @@ import android.preference.PreferenceManager;
 import android.support.v4.view.MenuItemCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
-
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
 
 
-public class MyMusicActivity extends Activity /*implements OnQueryTextListener*/ {
+public class MyMusicActivity extends Activity implements OnQueryTextListener {
 
   final Context currentContext = this; // defines the context to be used in popups
   private BitboxApp singletonInitializer;
-  private MyMusicView mainScreenViewObjectTest;
+  
   private static final int RESULT_SETTINGS = 1;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +36,7 @@ public class MyMusicActivity extends Activity /*implements OnQueryTextListener*/
  
     // Update the action bar title with the TypefaceSpan instance
     ActionBar actionBar = getActionBar();
-    actionBar.setTitle(s);
-
+    actionBar.setTitle(s);    
     updateView();
   }
   @Override
@@ -97,16 +96,12 @@ public class MyMusicActivity extends Activity /*implements OnQueryTextListener*/
 
   }
   
-  private void updateView() {
+  public void updateView() {
       SharedPreferences sharedPrefs = PreferenceManager
               .getDefaultSharedPreferences(this);
-
-      mainScreenViewObjectTest = new MyMusicView(this, currentContext);
-
+      SelectedSongsSingleton.getInstance().mainScreenViewObjectTest = new MyMusicView(this, currentContext);
   }
- /* This is an experiment with the action bar. The methods below are used
-  * to add the actions to the event listeners. OnQuery methods are used
-  * for the Search functionality
+
    
   
   
@@ -123,10 +118,10 @@ public class MyMusicActivity extends Activity /*implements OnQueryTextListener*/
   public boolean onQueryTextChange(String searchedItem) {
     if (searchedItem.isEmpty()) {
     	Log.d("MainScreenActivity", "onQueryTextChange Empty");
-    	mainScreenViewObjectTest.getMainSongListView().getSongListWidget().clearTextFilter();
+    	SelectedSongsSingleton.getInstance().mainScreenViewObjectTest.getMainSongListView().getSongListWidget().clearTextFilter();
     } else {
     	Log.d("MainScreenActivity", "onQueryTextChange " + searchedItem.toString());
-    	mainScreenViewObjectTest.getMainSongListView().getSongListAdapter().getFilter().filter(searchedItem.toString());
+    	SelectedSongsSingleton.getInstance().mainScreenViewObjectTest.getMainSongListView().getSongListAdapter().getFilter().filter(searchedItem.toString());
     }
     return true;
   }
@@ -135,7 +130,6 @@ public class MyMusicActivity extends Activity /*implements OnQueryTextListener*/
   public boolean onQueryTextSubmit(String query) {
     return false;
   }
-  */
 }   
 
     
