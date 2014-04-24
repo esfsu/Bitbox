@@ -11,14 +11,13 @@
 package com.teambitbox.bitbox.view;
 
 import java.util.ArrayList;
-
 import com.teambitbox.bitbox.model.Song;
 
 public class SelectedSongsSingleton {
   
-  private static SelectedSongsSingleton instance;
+	private static SelectedSongsSingleton instance;
+  
   private ArrayList<Song> mSelectedSongs = new ArrayList<Song>();
-  public MyMusicView mainScreenViewObjectTest;
    
   public ArrayList<Song> getSelectedSongs() {
 		return mSelectedSongs;
@@ -47,14 +46,4 @@ public class SelectedSongsSingleton {
   public void customSingletonMethod(){
     // Custom method
   }
-
-  public MyMusicView getMainScreenViewObjectTest() {
-	return mainScreenViewObjectTest;
-  }
-
-  public void setMainScreenViewObjectTest(MyMusicView mSV) {
-	mainScreenViewObjectTest = mSV;
-  }
-  
-  
 }

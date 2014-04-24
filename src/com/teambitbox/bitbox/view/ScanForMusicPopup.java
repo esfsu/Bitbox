@@ -9,7 +9,6 @@
 
 package com.teambitbox.bitbox.view;
 
-import com.teambitbox.bitbox.MyMusicActivity;
 import com.teambitbox.bitbox.R;
 
 import android.app.Activity;
@@ -25,7 +24,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.teambitbox.bitbox.model.Scanner;
 
 public class ScanForMusicPopup extends Popup {
@@ -177,7 +175,7 @@ public class ScanForMusicPopup extends Popup {
 			        Thread.sleep(200);
 			        handle.sendMessage(handle.obtainMessage());
 			        if (progressDialogPopup.getProgress() == progressDialogPopup.getMax()) {
-			        	progressDialogPopup.dismiss();
+			              	progressDialogPopup.dismiss();
                     }
 			     }
 	           } catch (Exception e) {
@@ -185,8 +183,7 @@ public class ScanForMusicPopup extends Popup {
 				}
 			}
 		}).start();
-		
-    	SelectedSongsSingleton.getInstance().mainScreenViewObjectTest = new MyMusicView(getCurrentActivity(), getCurrentContext());
+
 	}
 
 	private void resultsDialog() {

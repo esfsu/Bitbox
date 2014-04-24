@@ -33,7 +33,7 @@ public class MyMusicView extends CustomView {
 		mScanner = new Scanner(getCurrentContext());
 		setMainSongListView(new SongListView(getCurrentActivity(), getCurrentContext(),
 	        mScanner.scanDevice("")));
-	    optionButtonsFactory = new OptionButtonsFactory(getCurrentActivity(), getCurrentContext());
+		optionButtonsFactory = new OptionButtonsFactory(getCurrentActivity(), getCurrentContext());		
 	}
 	public SongListView getMainSongListView() {
 		return mMainSongListView;
