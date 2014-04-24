@@ -10,6 +10,7 @@
 package com.teambitbox.bitbox.view;
 
 import com.teambitbox.bitbox.EditID3Activity;
+import com.teambitbox.bitbox.MyMusicActivity;
 import com.teambitbox.bitbox.R;
 
 import android.app.Activity;
@@ -20,7 +21,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class OptionButtonsFactory extends CustomView {
+public class OptionButtonsFactory<MyActivity> extends CustomView {
    
 	 private Button scanForMusicOptionButton;
 	//  private Button scanForMissingDataOptionButton;
@@ -51,7 +52,7 @@ public class OptionButtonsFactory extends CustomView {
 		     // PopupFactory.createPopup(PopupType.EDIT, getCurrentActivity(), currentContext);
 		   }
 		   else {
-			 Toast.makeText(currentContext,
+			 Toast.makeText(getCurrentContext(),
 			   "Please select a song.",
 				  Toast.LENGTH_SHORT).show();
 		   }
@@ -60,14 +61,11 @@ public class OptionButtonsFactory extends CustomView {
 		 scanForMusicOptionButton.setOnClickListener(new OnClickListener() { 
 		     @Override
 		     public void onClick(View arg0) {
-		       PopupFactory.createPopup(PopupType.SCANFORMUSIC, getCurrentActivity(), currentContext);
+		       PopupFactory.createPopup(PopupType.SCANFORMUSIC, getCurrentActivity(), getCurrentContext());
 		     }
 		   });
 		 
 		 /* These features will not be used
-	
-		 
-		
 		 
 		 undoOptionButton.setOnClickListener(new OnClickListener() { 
        @Override

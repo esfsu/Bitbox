@@ -10,18 +10,15 @@
 
 package com.teambitbox.bitbox.view;
 
+import com.teambitbox.bitbox.MyMusicActivity;
+
 import android.app.Activity;
 import android.content.Context;
 import android.widget.Toast;
 
 public class PopupFactory {
-	
-	static BitboxApp selectedSongsHolder ;
   
-  public static Popup createPopup(PopupType pt, Activity currentActivity, Context currentContext){
-	  selectedSongsHolder = (BitboxApp)(currentActivity).getApplication();
-	  
-	  if (!(SelectedSongsSingleton.getInstance().getSelectedSongs().isEmpty())) {
+  public static Popup createPopup(PopupType pt, Activity currentActivity, Context currentContext ){
 	    switch(pt){
           case SCANFORMUSIC:
             return new ScanForMusicPopup(currentActivity, currentContext);
@@ -34,14 +31,8 @@ public class PopupFactory {
           default:
             return null;
         }
-	  }
-	  else{
-	    Toast.makeText(currentContext,
-		  "Please select a song.",
-		     Toast.LENGTH_SHORT).show();
-		return null;
-	  }
-  }
+   }
+	  
 }  
 
   
